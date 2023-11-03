@@ -1,0 +1,75 @@
+Present and stay on point 
+https://www.linkedin.com/learning/how-to-present-and-stay-on-point-2019/present-and-stay-on-point?contextUrn=urn%3Ali%3AlyndaLearningPath%3A1~AAAAAAAgNkk%3D2558073&u=2111049
+
+	1. Know your audience 
+	2. Gather main idea
+	3. Place in logical order
+	4. Script or outline
+	5. Practice
+	6. Increase your emotion
+	
+
+Prepare to present
+
+Never assume equipment is working
+
+Show up early , check room setup
+
+Bring water
+
+Effective handouts and slides
+
+Use 10 second rule
+Use fewest words possible
+
+Simplify graphs
+
+
+What is the 10-second rule?
+A: The audience should be able to understand a slide in 10 seconds.
+
+You have already prepared and practiced your presentation. How should you get ready for the event?
+A: Anticipate something going wrong.
+
+How can you increase your emotional presence?
+A: Use gestures, pauses, and expressions.
+
+
+	2. How to Stay on point ?
+Defer unrelated questions
+
+Engage and focus
+
+Keep answers on Topic
+
+Interruptions and mistakes
+
+
+ git clone https://github.com/jiasimon/training.git
+
+
+Handling interruptions
+Minor one,
+
+Power loss; fire alarm
+
+Treat feedback gracefully
+
+Deal with tech errors
+
+software tips
+
+Disable screensaver and pop-ups
+
+What is the best way to avoid technical errors during your presentation?
+A: Implement a checklist.
+
+Three times during your presentation, an audience member's phone rings. How should you respond?
+A: Smile knowingly and carry on. 
+Correct 
+Any other action or response would cause a diversion. 
+
+What should you say if you receive an irrelevant question?
+A: "That's interesting, but it might be too much off-topic. Can I discuss this with you later?"
+
+
