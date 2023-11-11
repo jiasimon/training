@@ -1,0 +1,214 @@
+Communication within Teams
+https://www.linkedin.com/learning/communication-within-teams/how-high-performing-teams-communicate?contextUrn=urn%3Ali%3AlyndaLearningPath%3A1~AAAAAAAgNkk%3D2684049&u=2111049
+
+Why should everyone on a team have defined roles and responsibilities?
+A: 
+to avoid duplicate efforts and missed opportunities 
+Correct 
+Having defined roles and responsibilities reduces task redundancy and optimizes team efficiency. 
+
+ 
+M1: Communicate within Teams
+=====
+Meeting convener, recorder, monitor
+
+Establish roles
+
+Convener (leader)
+
+Delegate responsibilities
+
+RACI
+Responsible, accountable, consulted, informed
+
+Go or No-Go
+
+KPI, SMART
+
+Conditions of satisfaction, low end, bare minimum
+
+Team charter
+
+Define expectation
+
+Build trust in teams
+
+Say-Do Gap
+
+Simon says
+
+Document expectations
+
+
+Course "holding your team accountable"
+
+SBI framework
+Situation
+Behavior
+Impact
+
+Feedback be specific
+
+Provide feedbacks in teams
+
+Manage conflicts
+
+Task conflict
+How work done ?
+
+Interpersonal difference
+
+
+	1. Ack conflicts
+	2. Identify a good time for discussion
+	3. Articulate perspectives
+	4. How to avoid it in future
+	
+
+When you do/say X,  I feel Y
+
+	1. Create virtual spaces/times
+	2. Host monthly socials , 
+	3. Ask good questions ( ask open ended questions)
+
+Document in agreed central place
+
+Cross culture communication
+
+Language
+Env
+Socially organized
+Context (high or low context culture)
+Authority
+Nonverbal communication
+Time
+
+
+Measure success
+What was supposed to happen?
+What actually happen?
+What worked well and why ?
+What we need change and why ?
+How can I improve ?
+
+What is the first step in resolving a conflict?
+A: Acknowledge the conflict.
+
+When should collaborative expectations be set?
+A: when formulating the team charter
+
+Half of a team works remote and half works onsite, dispersed in three time zones. When they create a team charter, what is the least likely expectations element needed in their project charter?
+A: 
+personality expectations 
+Correct 
+This is not included in the charter, but the team can define their expectations and dive deeper into how they can work best together. 
+
+
+What action is MOST important when working with a virtual team?
+A: 
+Document everything using an agreed upon method that is easily accessible for everyone on the team. 
+Correct 
+Over Communication keeps everyone informed and prevents time being spent on checking different communication platforms to find necessary information. 
+
+
+What should you try to avoid?
+A: 
+always scheduling virtual meetings based on the majority of the team's availability 
+Correct 
+While it will be tempting to always schedule based on the majority's availability, try to keep everyone's needs in mind.  If you can alternate times so that meeting times don't always inconvenience the same people, that would be ideal. 
+
+
+What do you call the difference between what you say and what you actually do?
+A: the say-do gap
+
+
+Why is the LESCANT model important in international business settings?
+A: It helps you consider cultural issues that can arise in professional communication.
+
+A team is losing trust in their leader and questioning his credibility because he does not follow through. What would you tell the leader to do?
+A: Get rid of the say-do gap. 
+Correct 
+The leader should be following through on what he says and is committed to, versus ignoring the team's needs. 
+
+
+What is NOT an example of trust that can be seen in high functioning teams?
+A: trusting team members to compensate for your lack of productivity
+
+Which of these is NOT part of the LESCANT acronym?
+A: Trade offs
+
+
+To help build and maintain trust, leaders can reduce the say-do gap and try to _____ promise and _____ deliver.
+A: under; over
+
+What would you conduct AAR after a project's completion?
+A: Learning from success and failure helps the team grow and allows success to be replicated in the future.
+
+High-functioning teams often have three roles for meetings. What are they?
+A: Convener, Recorder, Monitor
+
+All of these statements about team accountability are true EXCEPT:
+A: Consequences should always be punitive.
+
+Cultural differences can affect how team members _____.
+A: all of these answers
+engage with authority
+prioritize individualism versus collectivism
+utilize non-verbal cues
+
+
+What should you do when a team member fails to meet an expectation?
+A: 
+Take group accountability. 
+Correct 
+You will want to have consensus on this matter, so it should be discussed at the start of your project. 
+
+
+What is the best time to share critical feedback?
+A: 
+privately, at a time that is convenient for both parties 
+Correct 
+You want to establish the conditions for a comfortable and productive conversation. 
+
+
+You are the team lead for Project Stream. Which action would you take first in setting expectations with your team?
+A: Set shared goals.
+
+What question should NOT be asked when addressing accountability?
+A: Who is to blame?
+
+What is NOT a benefit of the RACI matrix?
+A: 
+determining scope of the project 
+Correct 
+The purpose of the matrix is to keep each other informed and collectively hold each other accountable. The scope of the project should be determined before working on the RACI matrix. 
+
+
+Which example best follows the SBI framework?
+A: During this morning's project presentation, I noticed that your presentation slides had spelling and grammar mistakes. My supervisor was present and I am concerned that it will reflect poorly on us as a team.
+
+
+You need to give positive feedback to one team member, and constructive feedback to another team member. Which framework would you use to deliver both types of feedback?
+A: the SBI framework 
+Correct 
+This framework enables you to deliver either type of feedback, based on the situation, behavior, and the impact of the behavior. 
+
+
+In a RACI matrix, which role has the authority and resources to approve decisions?
+A: Accountable
+
+What is the most appropriate response to receiving feedback?
+A: Thank them for the feedback, and then ask clarifying questions.
+
+What is NOT a function of a team charter?
+A: identifying who will be on the team 
+Correct 
+This will already have been decided. 
+
+
+Social loafing
+
+
+
+
+
