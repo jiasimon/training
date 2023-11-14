@@ -1,0 +1,55 @@
+Tech Career Skills: Effective Technical Communication
+
+Tech communication
+
+Programmer, tech lead, tester
+
+M1 Establish standards
+=====
+
+High conflict ,  high reward
+
+Static review
+
+Open a pull request
+
+Automation
+
+Coding standards
+
+Leaving comments in a PR
+
+Include yourself
+
+Focus on the code ,  NOT the person
+
+Do not take it personally
+
+Nested for loops
+
+Business stake holder and development team
+
+
+Bug report
+
+People process: onboarding 
+
+Day0, day1, day2-5, 2nd week
+
+Mentoring 
+
+Agile:  iteration planning
+IPM
+
+Purpose
+Outcomes
+What's in it for them
+Engagement
+Roles and responsibilities
+
+Send spring tickets ahead of the meeting 
+
+Demo day, for other team members
+
+
+
