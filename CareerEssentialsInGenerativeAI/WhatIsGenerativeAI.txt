@@ -1,0 +1,121 @@
+Career Essentials in Generative AI by Microsoft and LinkedIn
+https://www.linkedin.com/learning/paths/career-essentials-in-generative-ai-by-microsoft-and-linkedin?u=2111049
+
+What Is Generative AI?
+https://www.linkedin.com/learning/what-is-generative-ai/generative-ai-is-a-tool-in-service-of-humanity?contextUrn=urn%3Ali%3AlyndaLearningPath%3A6477ad5c498e72fec31ca876&u=2111049
+
+What is generative AI?
+
+DALL E, ChatGPT, KuBrick, MidJourney
+
+Image generation,
+
+Language generation
+
+Reactive machine, 
+
+Different than other types of AI
+
+Hugging face
+
+Create your own content
+
+Stable-fussion
+
+
+Colab google
+
+
+What will be the most significant impact of generative AI on the future of jobs?
+A: We will focus on what makes us unique as a species: our consciousness and our vision.
+
+The invention of generative AI can be likened to what other monumental discovery?
+A: 
+
+What is an AI model?
+A: a model is a set of algorithms that have been trained on a specific dataset
+
+Do you need to have a technical AI background in order to start a generative AI venture?
+A: No. As a business leader with no technical background, you can either make partnerships with generative AI research institutions, or you can use open-source models in your next business endeavor. And as a hobbyist, a maker, or a creative, you can make use of a generative AI services that are free or are accessible with a modest fee.
+
+What is the primary function of generative AI?
+A: to generate new content such as text, picture, and video
+
+
+M2: Main models
+=====
+Food
+
+Natural language models
+
+
+Copilot
+
+Text to image applications
+
+Industrial 
+Cuebric ( film backgroud)
+
+Stitch fix
+
+GANs (artist, 评论家 ) 
+The generator and discriminator parts of the network work together in a competition to improve the generator's ability to create realistic data.
+
+Audi,
+
+Beko
+
+VAE
+
+Variational Autoencoders (VAE)
+Use anomaly detection
+
+
+What is the most notable functionality of Natural Language models like Chat GPT?
+A: its large scale capability to generative human-like text
+
+What are Midjourney, DALL-E, and Stable Diffusion, and which industries are their early adopters?
+A: They are primary text-to-image generation services and models. Art, filmmaking, fashion, and marketing are the first industries to widely adopt their use.
+
+Do Natural Language models like Chat GPT understand the text they write?
+A: No they do not. They synthetically mimic human language. "Understanding" is a function that is unique to consciousness-based biological organisms.
+
+How can VAEs can be used in anomaly detection?
+A: VAEs can be trained on a dataset of normal data, and later on be used to identify instances that deviate from the normal data.
+
+How does a GAN network improve its ability to generate better content?
+A: The generator and discriminator parts of the network work together in a competition to improve the generator's ability to create realistic data.
+
+
+M3: The future of AI
+
+In 3D modeling
+
+
+
+
+It is correct to say "AI is replacing humans"?
+A: false
+
+What will be the main benefit of generative AI in the next years?
+A: automate repetitive tasks and liberate humanity from dull, difficult, or robotic jobs
+
+
+M4: Ethics and responsibility
+=====
+
+Why is the presence of a board of ethical use of AI advised for every AI company?
+A: To make sure we overcome misinformation we have been subject to in media around "AI is there to harm or replace us". It is our moral responsibility as early adopters of AI to provide guidance and education around AI and inform our employees and colleagues on how to overcome their fears, challenges, and biases towards this new tool.
+
+What are the top moral and executive skill sets required when working with generative AI?
+A: Transparency, fairness, empathy and responsibility. Approach the production and all operations with caution, always ask "who is benefiting" from our generative AI solution.
+
+What should we be doing if we have doubts, anxieties, or fear over AI and our future?
+A: Seek to inform ourselves better to overcome these fears. The nature of a singular fear is often related to complex web of several different fears in our subconscious, we shall inquire to transcend these fears.
+
+What shall be in the center of all (generative) AI research and development?
+A: Human creativity and human decision-making
+
+
+
+
