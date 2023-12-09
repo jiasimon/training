@@ -1,0 +1,256 @@
+Introduction to Artificial Intelligence
+https://www.linkedin.com/learning/introduction-to-artificial-intelligence/why-you-need-to-know-about-artificial-intelligence?contextUrn=urn%3Ali%3AlyndaLearningPath%3A6477ad5c498e72fec31ca876&u=2111049
+
+M1: what is AI
+=====
+
+
+General problem solver
+
+Strong AI vs weak AI
+
+Why did some of the earliest artificial intelligence systems focus on board games such as checkers and chess?
+A: It's easiest to make a computer system seem intelligent when it's working with set rules and patterns.
+
+
+You're a product manager who's in charge of building a weak AI expert system that will give tax advice. You're working with dozens of accountants who go through thousands of different taxpayer scenarios. When a customer asks a question, then the expert system will ask a follow-up question. It will do this until it makes a recommendation. What's one of the biggest challenges with this system?
+A: There will be too many tax combinations for the experts to cover with one system.
+
+
+Luella seeks medical attention for chest pains. A nurse uses an artificial intelligence program to diagnose the cause. Why is this system likely not really intelligent?
+A: The program only matches her symptoms to steps in a system an expert created.
+
+
+M2: machine learning 
+=====
+Not much digital data in 1950s
+
+Neural networks
+
+Input layer, Hidden layer,  output layer
+
+
+How does an artificial neural network learn?
+A: It looks at the data and makes guesses, then it compares those guesses to the correct answer.
+
+
+M3: common AI systems
+=====
+Robotics
+
+Natural language processing
+
+The internet of things
+IoT
+
+
+The healthcare and medical insurance industries caution against using machine learning to search for patterns in data, and they do not want machines making decisions about a person's health. Why?
+A: They may be decisions that humans cannot understand.
+
+What type of impact does artificial intelligence have on robotics?
+A: AI systems can create robots that can more easily learn new tasks.
+
+What impact will the Internet of Things (IoT) have on artificial intelligence?
+A: These devices will be a great new source of “real world” data.
+
+M4: learn from data
+=====
+
+Labeled and unlabeled data
+
+Supervised learning 
+
+Training data set
+
+Larger Test set
+
+Binary classification
+
+
+A new online camping goods store wants to find connections between products customers buy and other products they might buy. Why would the company use unsupervised learning?
+A: It does not yet have enough customers to make supervised learning meaningful.
+
+
+You're a preschool worker and you want to teach your class the letters in the alphabet. So you draw the letter “B” on the board. Then you ask the two-year-old students to find a block with that same letter. Some of the students correctly find the blocks with the letter “B”, but some of the students confuse the letter “B” with the letter “D.” So the incorrect students compare their block to the letter “B” on the board, recognize the error and then decide to get another block. What type of learning is this?
+A: 
+supervised learning 
+Correct 
+Supervised learning relies on labeled data. In this case the two-year-old students would use the letter written on the board as labeled data. Then they would try to classify the unknown data (the blocks) by matching the label. If the student sees that they made a mistake, they adjust and take another guess. 
+
+
+M5: identify patterns
+=====
+Classify data:
+----
+Fraud, Spam, 
+
+
+Cluster data:
+----
+Mouse and keyboard
+
+Beer, diaper
+
+Candies in trick treat
+
+Reinforcement data:
+----
+Q-learning
+Apple music, Spotify, Tidal
+
+
+Why might you want to use reinforcement learning instead of unsupervised learning?
+A: 
+Reinforcement learning allows the machine to make predictions and create strategies instead of just clustering the data. 
+Correct 
+Reinforcement learning can create strategies to better find patterns in the data. Unsupervised learning just tries to create clusters based on what it already sees in the data. So if you were developing an AI system to buy related items, an unsupervised system would create a cluster of items frequently bought together by other customers. A reinforcement system might invent a strategy to encourage customers to purchase something new. 
+
+
+What is one of the greatest challenges with supervised learning binary classification?
+A: 
+You need a lot of pre-classified or labeled data for the training set. 
+Correct 
+Supervised machine learning relies on labeled data for the training set. That means if you wanted to create a system that looked for dogs in images you needed to have tens of thousands of images known to contain dogs. Sometimes it's difficult to find that much labeled data. 
+
+
+
+M6: Machine learning Algorithms
+=====
+K-nearest neighbor
+KNN
+Minimize distance
+
+
+K-means clustering:
+Unsupervised
+
+ 
+
+Regression
+Sports car,  suv
+
+
+Naïve Bayes:
+
+
+You work for a company that’s selling electric cars to consumers. The company wants to get the maximum amount of value from its advertising dollars. So it wants to ramp up advertising when it thinks that customers would be most interested in purchasing an electric car. Your data science team wants to create a regression analysis based on fuel prices. How might this look on an XY diagram?
+A: 
+Create a trendline with fuel prices along the X axis and electric car sales on the Y axis. 
+Correct 
+To do a regression analysis, data science teams will typically plot their data on an XY diagram. Then they will see if there are any trends in the data by creating a line in the center of the largest data point groupings. This is typically called a trendline. If the data has a clear trendline then it will be easier to predict relationships between the two variables. In this case, there might be a clear trend where when fuel prices rise, people are more likely to buy electric cars. 
+
+
+How is K Nearest Neighbor like the old saying, “birds of a feather flock together?”
+A: 
+Classify unknown data against the closest data that you do know. 
+Correct 
+This old saying is one of the best ways to remember the key strength of K Nearest Neighbor. This machine learning algorithm is a quick way to classify data that's similar and might “flock together.” 
+
+
+M7: fit the Algorithm
+=====
+Kitchen tools
+
+Ensemble modeling 
+
+Bagging : several version
+
+Stacking: several different algorithm
+
+Follow the data
+----
+
+High bias,  low variance
+
+Bias-variance trade off
+
+
+
+Overfitting and underfitting
+-----
+
+Pre-shool rules before sleep ; underfit
+
+
+Zillow:  overfitting
+
+What is ensemble modeling?
+A: 
+This is when you use a mix of different machine learning algorithms or data to improve the outcome. 
+Correct 
+Ensemble modeling is when you use several machine learning algorithms to make better predictions. Two of the most popular techniques are bagging and stacking. Bagging uses the same machine learning algorithm with different data sets to improve the prediction power. Stacking can use several different machine learning algorithms “stacked” on top of each other to improve the predictions. 
+
+
+You work for a credit card company that's trying to do a better job identifying fraudulent transactions. So your team uses unsupervised learning to create clusters of transactions that are likely to be fraudulent. The machine identified that when customers are buying electronics it's much more likely to be a fraudulent transaction. So you use this model for your new fraud detection system. Then customers started to complain that they couldn't use their credit cards to purchase any electronics. What is the challenge with your model?
+A: You underfit the model to the data, the simple rule made too many inaccurate predictions.
+When you create a model, you need to be careful not to underfit or overfit the data. Sometimes you can identify patterns that work with a small set of data but that doesn't fit when you start to look at larger datasets. This is called underfitting the data. Other times you can add more variables. This can create a lot of complexity and you might miss data outliers (data that is close but doesn't quite fit the model). This is called overfitting the data.
+
+
+How does the bias-variance trade-off affect machine learning?
+A: 
+If the machine makes a change to one, it must consider how the other is affected. 
+Correct 
+For example, correcting high bias could lead to higher variance, which would make the data less reliable. 
+
+
+M8: neural networks
+=====
+
+Feedforward network
+
+Weigh the connections
+
+
+Activation bias
+
+
+Kira is building a neural network to identify customer returns using binary classifications of defective or unsatisfied. In which layer of this neural network will Kira have a probability score?
+A: 
+the output layer 
+Correct 
+The output layer has probability scores for the two binary classifications that help determine whether the network properly tunes itself. 
+
+
+You work for a security firm that wants to use an artificial neural network to create a video facial recognition system. So you create a training set with hundreds of images of people that are found in your video footage. You initialize the artificial neural network with random weights assigned to all its connections. When you feed through the first few images the system does a terrible job identifying whether those people are included in the video. What would the artificial neural network now do to try and improve?
+A: 
+It will adjust the weights of the connections to see if it does a better job making a prediction. 
+Correct 
+A supervised learning artificial neural network is self-tuning. That means it makes a prediction and then checks that prediction against the labeled data. The network tunes itself by adjusting the weights of the connections and the bias on the neurons. Then it sees if these adjustments improve the outcome. 
+
+
+M9: improve accuracy
+=====
+Cost function
+
+Learn from mistakes
+
+Find dog in image
+
+
+With an artificial neural network what is the point of having a cost function?
+A: 
+It helps the network determine the cost of the error so they can make larger or smaller adjustments to its guesses. 
+Correct 
+Artificial neural networks need a measurement of “wrongness.” That way it knows how much to adjust its weights and biases. This is typically done through a calculation of the gradient descent which will increase or decrease the cost function. If it's very wrong, it will make big changes to the weights and biases. If it's slightly wrong, it will make much smaller changes. 
+
+
+How can you best describe the cost function as it applies to neural networks?
+A: 
+a number the system uses to measure its answer against the correct answer 
+Correct 
+Cost function is a measure of wrongness, which in turn determines how much adjustment to weights and biases is needed. 
+
+
+
+M10 where to go from here?
+=====
+
+Generative
+Pre-trained
+
+
+
+
+
+
+
