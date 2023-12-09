@@ -1,0 +1,38 @@
+Microsoft 365 Copilot First Look
+https://www.linkedin.com/learning/microsoft-365-copilot-first-look/use-your-ai-assistant-in-microsoft-365?contextUrn=urn%3Ali%3AlyndaLearningPath%3A6477ad5c498e72fec31ca876&u=2111049
+
+Microsoft 365  Copilot
+
+Work with Copilot
+
+In Word, Excel,  Outlook,  Teams
+
+Transcription
+
+
+Excel Copilot can only be used if
+A: the file you are working on is stored on OneDrive, SharePoint, or Teams
+Copilot can be used with files stored locally on your computer when working with Word or PowerPoint. But, when working with Excel, Copilot will only work for files stored on one of Microsoft's cloud storage tools.
+
+Excel Copilot can only analyze data in a spreadsheet if 
+A: the cells you want to analyze are formatted as a table.
+
+If you join a Teams meeting that's already in progress, you can ask Copilot to summarize the topics that were discussed that you may have missed. This will only work if
+A: somebody in the meeting clicks the Copilot option and turns on the transcript feature
+
+
+PowerPoint Copilot can create a new presentation based on your written prompts or
+A: information in an existing document.
+
+What is a common reason the summary option may not be available in Outlook?
+A: The message you have selected is very short and does not have enough information to summarize.
+
+
+If you want to ask Word Copilot to use information from a separate document, that referenced document must be
+A: 
+shared in Teams or stored on OneDrive, SharePoint 
+Correct 
+You can use Copilot with documents stored locally on your computer's storage drive. But, if you want to reference a separate file when making a Copilot request, that referenced file must be stored on one of Microsoft's cloud storage tools. 
+
+
+
