@@ -1,0 +1,59 @@
+Streamlining Your Work with Microsoft Bing Chat
+https://www.linkedin.com/learning/streamlining-your-work-with-microsoft-bing-chat/put-your-fingers-to-work-chatting-as-a-productivity-tool?contextUrn=urn%3Ali%3AlyndaLearningPath%3A6477ad5c498e72fec31ca876&u=2111049
+
+Existing context 
+
+Chat as a productivity tool
+
+Understand how 
+
+Chat with bing chat
+
+
+Bing.com/chat
+
+
+Create a social media post
+
+
+Create a work schedule
+
+Search Engine vs Reasoning Engine
+
+clear context
+
+indexing
+
+how search engine work?
+
+ranking
+
+pretraining phase
+
+
+prompt engineer
+
+
+be specific 
+context
+
+break things done
+
+
+
+Image search
+
+Marble Arch 
+
+C2PA
+
+Bing chat has composed a collection letter for you, but you aren't entirely happy with the results. Which is the best choice of action you should take?
+A : Use the letter as a starting point and edit it until it fits your needs.
+
+
+Which three sources of data can Bing chat summarize for you? 
+A: 
+
+
+
+
