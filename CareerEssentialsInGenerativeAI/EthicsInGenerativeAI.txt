@@ -1,0 +1,71 @@
+Ethics in the Age of Generative AI
+https://www.linkedin.com/learning/ethics-in-the-age-of-generative-ai/generative-ai-and-ethics-the-urgency-of-now?contextUrn=urn%3Ali%3AlyndaLearningPath%3A6477ad5c498e72fec31ca876&u=2111049
+
+AI and Ethics
+
+
+Tech from human behavior
+
+Deepfake
+
+Chatbots
+
+Responsible data practices
+
+Boundaries on safe and appropriate use
+
+
+Sarah , chatbot  case 
+
+
+What type of misused AI can give false advice, which is extremely dangerous in a situation such as providing medical advice?
+A: inaccurate chatbots
+
+ABC Corp's management uses AI to provide advice on selecting options for its marketing strategy. How can robust transparency help the company?
+A: It can assist in understanding the input-analysis-output process.
+
+
+Layla learns that her company's AI-driven chatbot has been giving inaccurate and sometimes rude responses to customers' questions. How should Layla deal with this issue?
+A: Limit the chatbot to customer service questions and no other purpose.
+
+
+
+Address Ethics in AI
+
+Privacy
+
+Bias audit
+
+
+Alice Wong, chatbot
+
+
+Prepare the board to manage risk and opportunity in AI
+
+L: listen
+I:  involve 
+S: share privacy practices
+A: Audit
+
+
+Ahmad is creating a technology team for a new project. When should the team get together to discuss ethical considerations?
+A: before starting the project
+
+
+Why is it a good practice for the C-suite to develop, and perhaps even mandate, an AI training and education program for all employees?
+A: It democratizes decision-making around AI tools.
+
+In which situation are ethical considerations the responsibility of a board of directors?
+A: when it involves compliance with a regulatory agency
+
+
+How can a company best build customer trust, which can translate to a loyal customer base?
+A: Share a transparent privacy policy.
+
+Why, more than any other reason, should a company perform a privacy audit?
+A: so it can develop a company-wide privacy policy
+
+
+
+
+
