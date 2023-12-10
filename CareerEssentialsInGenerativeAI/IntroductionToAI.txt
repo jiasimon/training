@@ -251,6 +251,75 @@ Pre-trained
 
 
 
+exam
+====
+Imagine that you work for a university that wants to use machine learning and Naive Bayes to predict which students might have difficulty graduating. So you create three predictors. These are financial hardship, grade point average and class attendance. In a meeting, a data scientist points out that you might not want to use class attendance and grade point average because they are strongly autocorrelated. If someone doesn't attend class, then they'll likely get a poor grade. How might you answer this question?
+A: Naive Bayes is naive because it can classify even when predictors are autocorrelated.
+
+
+Vera, the company CEO, is exploring the use of artificial intelligence (AI) for her company. What will determine whether or not her company is a good candidate for AI?
+A:  Her company's data has set rules and patterns.
+
+
+Why is important to understand different algorithm?
+A: They are tools to help you decide what reports you'd like to see or problems you'd like to solve.
+
+
+Imagine that you work for a health insurance company. Your company covers a lot of people who suffer from diabetes. The organization wants to research the characteristics of people with diabetes. That way the company can intervene and try to change the customers’ behavior to prevent future illness. How can your insurance company use K means clustering to help?
+A: Research the character traits of the cluster with the highest number of diabetics.
+
+
+
+With an artificial neural network, the weights are added to the connections, but the bias is added to the neuron. Why does the network need to be set up this way?
+A: Because the bias is a reaction to the adjustments in the weights of the connections.
+
+
+What is difference between training data and test data
+Training data is the data the machine uses to learn, test data is a sample of data to test what it learned.
+
+
+You're a product manager for a team that's using an artificial neural network to develop your product. One of the data scientists says that the back propagation of errors is correcting for guesses that have a steep gradient descent. What is that saying about the network?
+A: The network is making predictions that are turning out to be very wrong.
+Note: follow up
+
+What's the difference between classified and clustered data?
+A: Classified data works with human created classifications or labels.
+
+
+Your product manager is working for a website that sells clothing fabrics. You're working on an AI natural language processing product that allows customers to do natural language searches. What will be one of the biggest challenges with your new AI system?
+A: Humans tend to describe things as qualities such as “dark” and “soft” which are difficult to translate into search results.
+
+
+You're a preschool worker and you ask a class of two-year-olds to arrange toy blocks in a way that makes sense to them. One of the two-year-olds creates three groups of blocks based on the color. Another one of the two-year-olds creates five groups of blocks based on the letter painted on the block. What type of learning is this?
+A: unsupervised learning
+
+
+A business that uses robotics may also use artificial intelligence rather than machine learning. What is a financial reason for this decision
+A: There is a higher price to pay if the robotics makes a mistake.
+
+
+What is one of the key advantages to having several hidden layers in your artificial neural network?
+A: This deep learning artificial neural network can identify very complex patterns.
+
+Why has machine learning become the dominant form of artificial intelligence?
+A: Because these systems have benefited from access to massive amounts of digital data.
+
+
+You take a new job where you need to arrive by bus in 30 minutes. There are two buses available to you. The first is a bus that makes all the local stops. This local bus is quicker if there are just a few people. The second is an express bus that drops you off a few blocks from your job. You try both buses the first week of your job. With the local bus you get to work in 20 minutes, 30 minutes, and 45 minutes. The express bus always gets you to work in 35 minutes. What is the data challenge with these two buses?
+A:  The local bus has a high variance, and the express bus has a high bias.
+
+
+What was the core finding of the Chinese room experiment?
+A: Finding patterns in symbols is not the same as intelligence.
+
+
+What's the biggest difference between symbolic systems and machine learning?
+A: A symbolic system needs to be programmed to connect symbols to patterns, while machine learning discovers patterns by looking at the data.
+
+
+
+
+
 
 
 
