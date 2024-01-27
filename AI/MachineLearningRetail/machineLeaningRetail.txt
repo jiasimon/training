@@ -79,6 +79,62 @@ Deploy and forget
 
 
 
+M3: optimizing product prices
+=====
+Law of demand
+
+price elasticity of Demand
+
+
+supply and demand
+
+Myntra : leading Indian fashion e-commerce
+
+
+LSTM RNNs
+
+ARIMI model
+LSTM RNNs
+
+
+
+M4: optimizing supply planning
+=====
+VRP: Vehicle Routing Problem (VRP)
+
+setting up the VRP
+
+VRP virants:
+
+VRPP: Vehicle Routing Problem  with Profits
+
+VRPPD: Vehicle Routing Problem  with Pickup and Delievery
+
+
+VRPTW: Vehicle Routing Problem  with Time Windows
+
+CVRP: Capacitated Vehicle Routing Problem
+
+
+DVRP: Dynamic Vehicle Routing Problem 
+
+Industry 4.0
+
+
+
+three stages:
+cluster-first
+
+route-second
+
+route-improvement third
+
+
+three stage algorithm and results
+
+K-means clusering
+
+
 
 
 
