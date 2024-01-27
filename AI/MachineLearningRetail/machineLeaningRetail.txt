@@ -1,0 +1,88 @@
+Machine Learning for Retail
+by Janani Ravi
+
+https://app.pluralsight.com/library/courses/machine-learning-retail/exercise-files
+
+
+M2: Machine learning in reatail
+=====
+
+Gartner AI-specific Trends 2021
+
+Hyperautomation
+
+
+Use Case of ML in Retail:
+Predict customer behaviour
+
+Visual and voice search
+
+Chatbots
+
+Price and inventory predictions
+
+
+Clean and prepare data,
+
+Visual search,
+Customer provided image -> pre-trained CNN -> Feature Vector -> KNN Search -> Similar images
+
+
+Voice search
+
+Smart assistant
+
+Gift when you need by 1-800-Flowers.com
+
+Forecast: antidiabetic
+
+ holiday adjustment, seasonal adjustment 
+
+Theft prevention
+
+Image similarity search
+
+CNNs
+
+Viewing an image
+
+Two kinds of layers
+1) Convolution: local receptive field
+2) Pooling : Subsampling of inputs
+
+
+
+Typical CNN architecture
+
+
+Cos 90 =0
+
+0 means no similarity
+
+Vectors A and B are parallel
+
+Cos 0 = 1
+
+Opposite vectors
+
+180 degrees
+
+
+Challenges:
+Insufficient data
+
+Data bias
+
+Lack of expertise
+
+Deploy and forget
+
+
+
+
+
+
+
+
+
+
