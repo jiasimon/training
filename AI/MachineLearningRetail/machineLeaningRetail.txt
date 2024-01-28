@@ -137,6 +137,76 @@ K-means clusering
 
 
 
+M5: Apply machine learning to reatail data
+======
+association rules learning
+
+frequent itemset
+
+
+market basket analysis
+identify items sold together
+
+
+strong rules: rules with support and confidence that exceed threholds for minimum support and minimum confidence
+if X then Y
+
+recoomendations, cross sell, up-sell 
+
+support, confidence, lift , conviction
+
+itemsets
+
+frequent itemsets
+
+Rule A => C
+is different
+Rule C => A
+
+
+Apriori Algorithm to find frequent itemsets
+
+
+
+powerset
+
+use breadth first and hash tree,
+bottom up approach to generate candidate frequent sets
+
+retail_dataset.shape
+
+retail_dataset.info()
+
+
+retail_dataset.head(10)
+
+
+
+
+rules and strong rules
+
+if X then Y
+
+string rules supported by probability
+
+recommendation,
+cross-sell
+
+
+
+evaluation association rules
+
+
+
+rule :  A=> C
+
+{beer}  =>  {diapers} 
+
+
+
+
+
+
 
 
 
