@@ -21,4 +21,29 @@ Shopping patterns , brand preferences
 
 
 
+M3: recommendation systems
+=====
+
+
+
+
+M4: Customer Churn
+=====
+Expensive to acquire new customers
+
+Retain customer  vs.  Acquire new customers
+
+Why do customer leave ?
+
+Identify "red flag" metrics
+
+Change phone, Internet
+
+Deviating from regular buying 
+
+Telco customer churn dataset:
+Kaggle.com/blastchar/telco-customer-churn
+
+
+
 
