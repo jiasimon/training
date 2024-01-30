@@ -1,0 +1,24 @@
+Deep Learning Application for Retail
+https://app.pluralsight.com/library/courses/deep-learning-application-retail/table-of-contents
+
+
+Innovation is the only way to win
+
+Use cases for deep learning
+
+
+M2: deep learning in retail
+======
+
+Customer Segmentation
+
+Age, Gender, income
+
+
+Shopping patterns , brand preferences
+
+80%  20%  rule
+
+
+
+
