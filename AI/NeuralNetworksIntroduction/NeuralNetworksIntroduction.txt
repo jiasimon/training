@@ -51,3 +51,324 @@ Batch normalization
 
 
 
+
+Install keras and tensorflow issues
+======
+
+pip3 install keras
+
+Collecting keras
+  Downloading keras-2.15.0-py3-none-any.whl (1.7 MB)
+     |████████████████████████████████| 1.7 MB 3.3 MB/s 
+Installing collected packages: keras
+Successfully installed keras-2.15.0
+
+ModuleNotFoundError: No module named 'tensorflow'
+
+
+python3 -m pip install tensorflow
+Collecting tensorflow
+  Downloading tensorflow-2.13.1-cp38-cp38-macosx_10_15_x86_64.whl (216.2 MB)
+     |████████████████████████████████| 216.2 MB 15 kB/s 
+Collecting typing-extensions<4.6.0,>=3.6.6
+  Downloading typing_extensions-4.5.0-py3-none-any.whl (27 kB)
+Collecting opt-einsum>=2.3.2
+  Downloading opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+     |████████████████████████████████| 65 kB 10.1 MB/s 
+Requirement already satisfied: packaging in /usr/local/lib/python3.8/site-packages (from tensorflow) (20.4)
+Collecting absl-py>=1.0.0
+  Downloading absl_py-2.1.0-py3-none-any.whl (133 kB)
+     |████████████████████████████████| 133 kB 36.2 MB/s 
+Collecting gast<=0.4.0,>=0.2.1
+  Downloading gast-0.4.0-py3-none-any.whl (9.8 kB)
+Collecting termcolor>=1.1.0
+  Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
+Collecting tensorboard<2.14,>=2.13
+  Downloading tensorboard-2.13.0-py3-none-any.whl (5.6 MB)
+     |████████████████████████████████| 5.6 MB 15.8 MB/s 
+Collecting numpy<=1.24.3,>=1.22
+  Downloading numpy-1.24.3-cp38-cp38-macosx_10_9_x86_64.whl (19.8 MB)
+     |████████████████████████████████| 19.8 MB 53.9 MB/s 
+Collecting libclang>=13.0.0
+  Downloading libclang-16.0.6-py2.py3-none-macosx_10_9_x86_64.whl (24.5 MB)
+     |████████████████████████████████| 24.5 MB 26.1 MB/s 
+Collecting astunparse>=1.6.0
+  Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.20.3
+  Downloading protobuf-4.25.2-py3-none-any.whl (156 kB)
+     |████████████████████████████████| 156 kB 35.4 MB/s 
+Collecting wrapt>=1.11.0
+  Downloading wrapt-1.16.0-cp38-cp38-macosx_10_9_x86_64.whl (37 kB)
+Collecting google-pasta>=0.1.1
+  Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
+     |████████████████████████████████| 57 kB 13.5 MB/s 
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from tensorflow) (49.2.0)
+Requirement already satisfied: six>=1.12.0 in /usr/local/lib/python3.8/site-packages (from tensorflow) (1.15.0)
+Collecting keras<2.14,>=2.13.1
+  Downloading keras-2.13.1-py3-none-any.whl (1.7 MB)
+     |████████████████████████████████| 1.7 MB 50.6 MB/s 
+Collecting grpcio<2.0,>=1.24.3
+  Downloading grpcio-1.60.0.tar.gz (24.8 MB)
+     |████████████████████████████████| 24.8 MB 2.7 MB/s 
+    ERROR: Command errored out with exit status 1:
+     command: /usr/local/opt/python@3.8/bin/python3.8 -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/setup.py'"'"'; __file__='"'"'/private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' egg_info --egg-base /private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-pip-egg-info-ae1pihw0
+         cwd: /private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/
+    Complete output (9 lines):
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "/private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/setup.py", line 93, in <module>
+        import commands
+      File "/private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/src/python/grpcio/commands.py", line 31, in <module>
+        import support
+      File "/private/var/folders/0n/p9h2dpln4_l7gxgjpnxf7kn80000gp/T/pip-install-no0fr6yd/grpcio/src/python/grpcio/support.py", line 111, in <module>
+        errors.CompileError: diagnose_compile_error,
+    AttributeError: module 'setuptools.errors' has no attribute 'CompileError'
+    ----------------------------------------
+ERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.
+
+
+#solution
+
+pip3 install --upgrade pip
+Collecting pip
+  Downloading pip-23.3.2-py3-none-any.whl (2.1 MB)
+     |████████████████████████████████| 2.1 MB 9.1 MB/s 
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 20.1.1
+    Uninstalling pip-20.1.1:
+      Successfully uninstalled pip-20.1.1
+Successfully installed pip-23.3.2
+NisumUsersMBP4:clientssl sjia$ python3 -m pip install --upgrade setuptools
+DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (49.2.0)
+Collecting setuptools
+  Downloading setuptools-69.0.3-py3-none-any.whl.metadata (6.3 kB)
+Downloading setuptools-69.0.3-py3-none-any.whl (819 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 819.5/819.5 kB 6.4 MB/s eta 0:00:00
+Installing collected packages: setuptools
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 49.2.0
+    Uninstalling setuptools-49.2.0:
+      Successfully uninstalled setuptools-49.2.0
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+Successfully installed setuptools-69.0.3
+
+
+python3 -m pip install tensorflow
+DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+Collecting tensorflow
+  Downloading tensorflow-2.13.1-cp38-cp38-macosx_10_15_x86_64.whl.metadata (3.2 kB)
+Collecting absl-py>=1.0.0 (from tensorflow)
+  Downloading absl_py-2.1.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting astunparse>=1.6.0 (from tensorflow)
+  Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+Collecting flatbuffers>=23.1.21 (from tensorflow)
+  Downloading flatbuffers-23.5.26-py2.py3-none-any.whl.metadata (850 bytes)
+Collecting gast<=0.4.0,>=0.2.1 (from tensorflow)
+  Downloading gast-0.4.0-py3-none-any.whl (9.8 kB)
+Collecting google-pasta>=0.1.1 (from tensorflow)
+  Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.5/57.5 kB 3.6 MB/s eta 0:00:00
+Collecting h5py>=2.9.0 (from tensorflow)
+  Downloading h5py-3.10.0-cp38-cp38-macosx_10_9_x86_64.whl.metadata (2.5 kB)
+Collecting libclang>=13.0.0 (from tensorflow)
+  Downloading libclang-16.0.6-py2.py3-none-macosx_10_9_x86_64.whl.metadata (5.2 kB)
+Collecting numpy<=1.24.3,>=1.22 (from tensorflow)
+  Downloading numpy-1.24.3-cp38-cp38-macosx_10_9_x86_64.whl (19.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.8/19.8 MB 32.7 MB/s eta 0:00:00
+Collecting opt-einsum>=2.3.2 (from tensorflow)
+  Downloading opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.5/65.5 kB 5.9 MB/s eta 0:00:00
+Requirement already satisfied: packaging in /usr/local/lib/python3.8/site-packages (from tensorflow) (20.4)
+Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.20.3 (from tensorflow)
+  Downloading protobuf-4.25.2-cp37-abi3-macosx_10_9_universal2.whl.metadata (541 bytes)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from tensorflow) (69.0.3)
+Requirement already satisfied: six>=1.12.0 in /usr/local/lib/python3.8/site-packages (from tensorflow) (1.15.0)
+Collecting termcolor>=1.1.0 (from tensorflow)
+  Downloading termcolor-2.4.0-py3-none-any.whl.metadata (6.1 kB)
+Collecting typing-extensions<4.6.0,>=3.6.6 (from tensorflow)
+  Downloading typing_extensions-4.5.0-py3-none-any.whl (27 kB)
+Collecting wrapt>=1.11.0 (from tensorflow)
+  Downloading wrapt-1.16.0-cp38-cp38-macosx_10_9_x86_64.whl.metadata (6.6 kB)
+Collecting grpcio<2.0,>=1.24.3 (from tensorflow)
+  Downloading grpcio-1.60.0-cp38-cp38-macosx_10_10_universal2.whl.metadata (4.0 kB)
+Collecting tensorboard<2.14,>=2.13 (from tensorflow)
+  Downloading tensorboard-2.13.0-py3-none-any.whl (5.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 35.8 MB/s eta 0:00:00
+Collecting tensorflow-estimator<2.14,>=2.13.0 (from tensorflow)
+  Downloading tensorflow_estimator-2.13.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting keras<2.14,>=2.13.1 (from tensorflow)
+  Downloading keras-2.13.1-py3-none-any.whl.metadata (2.4 kB)
+Collecting tensorflow-io-gcs-filesystem>=0.23.1 (from tensorflow)
+  Downloading tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-macosx_10_14_x86_64.whl.metadata (14 kB)
+Requirement already satisfied: wheel<1.0,>=0.23.0 in /usr/local/lib/python3.8/site-packages (from astunparse>=1.6.0->tensorflow) (0.34.2)
+Collecting google-auth<3,>=1.6.3 (from tensorboard<2.14,>=2.13->tensorflow)
+  Downloading google_auth-2.27.0-py2.py3-none-any.whl.metadata (4.7 kB)
+Collecting google-auth-oauthlib<1.1,>=0.5 (from tensorboard<2.14,>=2.13->tensorflow)
+  Downloading google_auth_oauthlib-1.0.0-py2.py3-none-any.whl (18 kB)
+Collecting markdown>=2.6.8 (from tensorboard<2.14,>=2.13->tensorflow)
+  Downloading Markdown-3.5.2-py3-none-any.whl.metadata (7.0 kB)
+Requirement already satisfied: requests<3,>=2.21.0 in /usr/local/lib/python3.8/site-packages (from tensorboard<2.14,>=2.13->tensorflow) (2.24.0)
+Collecting tensorboard-data-server<0.8.0,>=0.7.0 (from tensorboard<2.14,>=2.13->tensorflow)
+  Downloading tensorboard_data_server-0.7.2-py3-none-macosx_10_9_x86_64.whl.metadata (1.1 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard<2.14,>=2.13->tensorflow)
+  Downloading werkzeug-3.0.1-py3-none-any.whl.metadata (4.1 kB)
+Requirement already satisfied: pyparsing>=2.0.2 in /usr/local/lib/python3.8/site-packages (from packaging->tensorflow) (2.4.7)
+Collecting cachetools<6.0,>=2.0.0 (from google-auth<3,>=1.6.3->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading cachetools-5.3.2-py3-none-any.whl.metadata (5.2 kB)
+Collecting pyasn1-modules>=0.2.1 (from google-auth<3,>=1.6.3->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl (181 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 15.7 MB/s eta 0:00:00
+Collecting rsa<5,>=3.1.4 (from google-auth<3,>=1.6.3->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading rsa-4.9-py3-none-any.whl (34 kB)
+Requirement already satisfied: requests-oauthlib>=0.7.0 in /usr/local/lib/python3.8/site-packages (from google-auth-oauthlib<1.1,>=0.5->tensorboard<2.14,>=2.13->tensorflow) (1.3.0)
+Collecting importlib-metadata>=4.4 (from markdown>=2.6.8->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading importlib_metadata-7.0.1-py3-none-any.whl.metadata (4.9 kB)
+Requirement already satisfied: chardet<4,>=3.0.2 in /usr/local/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard<2.14,>=2.13->tensorflow) (3.0.4)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard<2.14,>=2.13->tensorflow) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /usr/local/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard<2.14,>=2.13->tensorflow) (1.25.10)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard<2.14,>=2.13->tensorflow) (2020.6.20)
+Collecting MarkupSafe>=2.1.1 (from werkzeug>=1.0.1->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading MarkupSafe-2.1.4-cp38-cp38-macosx_10_9_x86_64.whl.metadata (3.0 kB)
+Collecting zipp>=0.5 (from importlib-metadata>=4.4->markdown>=2.6.8->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading zipp-3.17.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting pyasn1<0.6.0,>=0.4.6 (from pyasn1-modules>=0.2.1->google-auth<3,>=1.6.3->tensorboard<2.14,>=2.13->tensorflow)
+  Downloading pyasn1-0.5.1-py2.py3-none-any.whl.metadata (8.6 kB)
+Requirement already satisfied: oauthlib>=3.0.0 in /usr/local/lib/python3.8/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<1.1,>=0.5->tensorboard<2.14,>=2.13->tensorflow) (3.1.0)
+Downloading tensorflow-2.13.1-cp38-cp38-macosx_10_15_x86_64.whl (216.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.2/216.2 MB 4.5 MB/s eta 0:00:00
+Downloading absl_py-2.1.0-py3-none-any.whl (133 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.7/133.7 kB 3.3 MB/s eta 0:00:00
+Downloading flatbuffers-23.5.26-py2.py3-none-any.whl (26 kB)
+Downloading grpcio-1.60.0-cp38-cp38-macosx_10_10_universal2.whl (9.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.7/9.7 MB 28.5 MB/s eta 0:00:00
+Downloading h5py-3.10.0-cp38-cp38-macosx_10_9_x86_64.whl (3.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 23.3 MB/s eta 0:00:00
+Downloading keras-2.13.1-py3-none-any.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 25.9 MB/s eta 0:00:00
+Downloading libclang-16.0.6-py2.py3-none-macosx_10_9_x86_64.whl (24.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 24.5/24.5 MB 20.7 MB/s eta 0:00:00
+Downloading protobuf-4.25.2-cp37-abi3-macosx_10_9_universal2.whl (394 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 394.2/394.2 kB 11.1 MB/s eta 0:00:00
+Downloading tensorflow_estimator-2.13.0-py2.py3-none-any.whl (440 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 440.8/440.8 kB 21.2 MB/s eta 0:00:00
+Downloading tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-macosx_10_14_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 14.4 MB/s eta 0:00:00
+Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
+Downloading wrapt-1.16.0-cp38-cp38-macosx_10_9_x86_64.whl (37 kB)
+Downloading google_auth-2.27.0-py2.py3-none-any.whl (186 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 186.8/186.8 kB 12.4 MB/s eta 0:00:00
+Downloading Markdown-3.5.2-py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.9/103.9 kB 7.1 MB/s eta 0:00:00
+Downloading tensorboard_data_server-0.7.2-py3-none-macosx_10_9_x86_64.whl (4.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 26.3 MB/s eta 0:00:00
+Downloading werkzeug-3.0.1-py3-none-any.whl (226 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.7/226.7 kB 9.1 MB/s eta 0:00:00
+Downloading cachetools-5.3.2-py3-none-any.whl (9.3 kB)
+Downloading importlib_metadata-7.0.1-py3-none-any.whl (23 kB)
+Downloading MarkupSafe-2.1.4-cp38-cp38-macosx_10_9_x86_64.whl (13 kB)
+Downloading pyasn1-0.5.1-py2.py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.9/84.9 kB 6.3 MB/s eta 0:00:00
+Downloading zipp-3.17.0-py3-none-any.whl (7.4 kB)
+Installing collected packages: libclang, flatbuffers, zipp, wrapt, typing-extensions, termcolor, tensorflow-io-gcs-filesystem, tensorflow-estimator, tensorboard-data-server, pyasn1, protobuf, numpy, MarkupSafe, keras, grpcio, google-pasta, gast, cachetools, astunparse, absl-py, werkzeug, rsa, pyasn1-modules, opt-einsum, importlib-metadata, h5py, markdown, google-auth, google-auth-oauthlib, tensorboard, tensorflow
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  Attempting uninstall: numpy
+    Found existing installation: numpy 1.19.2
+    Uninstalling numpy-1.19.2:
+      Successfully uninstalled numpy-1.19.2
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  Attempting uninstall: MarkupSafe
+    Found existing installation: MarkupSafe 1.1.1
+    Uninstalling MarkupSafe-1.1.1:
+      Successfully uninstalled MarkupSafe-1.1.1
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  Attempting uninstall: keras
+    Found existing installation: keras 2.15.0
+    Uninstalling keras-2.15.0:
+      Successfully uninstalled keras-2.15.0
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+  DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+DEPRECATION: Configuring installation scheme with distutils config files is deprecated and will no longer work in the near future. If you are using a Homebrew or Linuxbrew Python, please see discussion at https://github.com/Homebrew/homebrew-core/issues/76621
+Successfully installed MarkupSafe-2.1.4 absl-py-2.1.0 astunparse-1.6.3 cachetools-5.3.2 flatbuffers-23.5.26 gast-0.4.0 google-auth-2.27.0 google-auth-oauthlib-1.0.0 google-pasta-0.2.0 grpcio-1.60.0 h5py-3.10.0 importlib-metadata-7.0.1 keras-2.13.1 libclang-16.0.6 markdown-3.5.2 numpy-1.24.3 opt-einsum-3.3.0 protobuf-4.25.2 pyasn1-0.5.1 pyasn1-modules-0.3.0 rsa-4.9 tensorboard-2.13.0 tensorboard-data-server-0.7.2 tensorflow-2.13.1 tensorflow-estimator-2.13.0 tensorflow-io-gcs-filesystem-0.34.0 termcolor-2.4.0 typing-extensions-4.5.0 werkzeug-3.0.1 wrapt-1.16.0 zipp-3.17.0
+
+
+
+
+
+#issue
+
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+RuntimeError: module compiled against API version 0xf but this version of numpy is 0xd
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+ImportError: numpy.core.multiarray failed to import
+The above exception was the direct cause of the following exception:
+SystemError                               Traceback (most recent call last)
+SystemError: <built-in method __contains__ of dict object at 0x147070480> returned a result with an error set
+The above exception was the direct cause of the following exception:
+
+
+
+#issue
+Cannot open jupyter notebook again
+
+jupyter notebook
+Traceback (most recent call last):
+  File "/usr/local/bin/jupyter-notebook", line 5, in <module>
+    from notebook.notebookapp import main
+  File "/usr/local/lib/python3.8/site-packages/notebook/notebookapp.py", line 45, in <module>
+    from jinja2 import Environment, FileSystemLoader
+  File "/usr/local/lib/python3.8/site-packages/jinja2/__init__.py", line 12, in <module>
+    from .environment import Environment
+  File "/usr/local/lib/python3.8/site-packages/jinja2/environment.py", line 25, in <module>
+    from .defaults import BLOCK_END_STRING
+  File "/usr/local/lib/python3.8/site-packages/jinja2/defaults.py", line 3, in <module>
+    from .filters import FILTERS as DEFAULT_FILTERS  # noqa: F401
+  File "/usr/local/lib/python3.8/site-packages/jinja2/filters.py", line 13, in <module>
+    from markupsafe import soft_unicode
+ImportError: cannot import name 'soft_unicode' from 'markupsafe' (/usr/local/lib/python3.8/site-packages/markupsafe/__init__.py)
+
+
+It turns out markupsafe removed soft_unicode which is causing this error! https://github.com/pallets/markupsafe/issues/304
+
+
+
+#solution
+
+python3 -m pip install --upgrade notebook
+
+Successfully installed anyio-4.2.0 arrow-1.3.0 async-lru-2.0.4 attrs-23.2.0 babel-2.14.0 beautifulsoup4-4.12.3 charset-normalizer-3.3.2 exceptiongroup-1.2.0 fastjsonschema-2.19.1 fqdn-1.5.1 importlib-resources-6.1.1 isoduration-20.11.0 jinja2-3.1.3 json5-0.9.14 jsonpointer-2.4 jsonschema-4.21.1 jsonschema-specifications-2023.12.1 jupyter-client-8.6.0 jupyter-core-5.7.1 jupyter-events-0.9.0 jupyter-lsp-2.2.2 jupyter-server-2.12.5 jupyter-server-terminals-0.5.2 jupyterlab-4.0.12 jupyterlab-pygments-0.3.0 jupyterlab-server-2.25.2 mistune-3.0.2 nbclient-0.9.0 nbconvert-7.14.2 nbformat-5.9.2 notebook-7.0.7 notebook-shim-0.2.3 overrides-7.7.0 packaging-23.2 pkgutil-resolve-name-1.3.10 platformdirs-4.2.0 python-dateutil-2.8.2 python-json-logger-2.0.7 pyyaml-6.0.1 pyzmq-25.1.2 referencing-0.33.0 requests-2.31.0 rfc3339-validator-0.1.4 rfc3986-validator-0.1.1 rpds-py-0.17.1 send2trash-1.8.2 sniffio-1.3.0 soupsieve-2.5 tinycss2-1.2.1 tomli-2.0.1 tornado-6.4 traitlets-5.14.1 types-python-dateutil-2.8.19.20240106 uri-template-1.3.0 webcolors-1.13 websocket-client-1.7.0
+
+
+
+
+
