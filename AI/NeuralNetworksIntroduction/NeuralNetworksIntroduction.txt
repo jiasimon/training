@@ -1,0 +1,53 @@
+Neural Networks Introduction
+https://app.pluralsight.com/library/courses/neural-networks-data-professionals-introduction/table-of-contents
+
+
+History of neural networks
+
+
+
+
+M3: deploy and optimize
+=====
+Forward pass
+
+Backward pass
+
+Training neural network
+
+Selection and tuning hyperparameters
+
+
+Learning rate
+Number of epochs
+Batch size
+
+Loss function
+Minimize the loss
+
+
+regression
+MSE: mean squared error
+
+MAE: mean absolute error
+
+
+
+Classification
+
+Binary 
+cross-entropy
+
+Categorical 
+Cross-entropy
+
+
+Overfitting
+
+Dropout
+
+Batch normalization
+
+
+
+
