@@ -371,4 +371,192 @@ Successfully installed anyio-4.2.0 arrow-1.3.0 async-lru-2.0.4 attrs-23.2.0 babe
 
 
 
+@HystrixCommand(fallbackMethod = "catalogFallback")
+
+
+
+
+notebook  demo
+======
+
+demos
+Last Checkpoint: 33 minutes ago
+from keras.datasets import cifar10
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+Downloading data from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+170498071/170498071 [==============================] - 8s 0us/step
+
+
+
+import keras
+x_train = x_train.astype('float32')/255
+x_test = x_test.astype('float32')/255
+y_train = keras.utils.to_categorical(y_train, 10)
+y_test = keras.utils.to_categorical(y_test, 10)
+
+
+
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+
+model = Sequential([
+    Conv2D(32, (3,3), activation='relu', input_shape=(32, 32, 3)),
+    MaxPooling2D((2,2)),
+    Conv2D(64, (3,3), activation='relu'),
+    MaxPooling2D((2,2)),
+    Flatten(),
+    Dense(64, activation='relu'),
+    Dense(10, activation='softmax')
+])
+
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(x_train, y_train, epochs=10, batch_size=32)
+Epoch 1/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 1.4571 - accuracy: 0.4783
+Epoch 2/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 1.1121 - accuracy: 0.6108
+Epoch 3/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.9821 - accuracy: 0.6590
+Epoch 4/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.8961 - accuracy: 0.6891
+Epoch 5/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.8298 - accuracy: 0.7111
+Epoch 6/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.7707 - accuracy: 0.7324
+Epoch 7/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.7263 - accuracy: 0.7464
+Epoch 8/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.6826 - accuracy: 0.7599
+Epoch 9/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.6438 - accuracy: 0.7745
+Epoch 10/10
+1563/1563 [==============================] - 8s 5ms/step - loss: 0.6106 - accuracy: 0.7854
+
+
+
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print('Test Accuracy', test_acc)
+print('Test Loss', test_loss)
+
+313/313 [==============================] - 1s 2ms/step - loss: 0.9350 - accuracy: 0.6929
+Test Accuracy 0.6929000020027161
+Test Loss 0.9350399374961853
+
+
+Improved Model
+
+# model_2 with Dropout and Batch Normalization
+from keras.layers import Dropout, BatchNormalization
+
+model_2 = Sequential()
+
+model_2.add(Conv2D(64,(4,4), input_shape=(32,32,3), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+
+model_2.add(Conv2D(64,(4,4), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+
+model_2.add(MaxPooling2D(pool_size=(2,2)))
+
+model_2.add(Dropout(0.2))
+
+model_2.add(Conv2D(128,(4,4), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+model_2.add(Conv2D(128,(4,4), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+model_2.add(MaxPooling2D(pool_size=(2,2)))
+model_2.add(Dropout(0.25))
+
+model_2.add(Conv2D(128,(4,4), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+
+model_2.add(Conv2D(128,(4,4), activation='relu', padding='same'))
+model_2.add(BatchNormalization())
+model_2.add(MaxPooling2D(pool_size=(2,2)))
+model_2.add(Dropout(0.35))
+
+model_2.add(Flatten())
+
+model_2.add(Dense(256, activation='relu'))
+model_2.add(BatchNormalization())
+model_2.add(Dropout(0.5))
+model_2.add(Dense(10, activation='softmax'))
+
+
+
+
+from keras.optimizers.legacy import Adam
+optimizer = Adam(learning_rate=0.0001)
+
+model_2.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+
+
+model_2.fit(x_train, y_train, epochs=25, batch_size=32)
+
+Epoch 1/25
+1563/1563 [==============================] - 201s 128ms/step - loss: 2.1606 - accuracy: 0.3395
+Epoch 2/25
+1563/1563 [==============================] - 202s 129ms/step - loss: 1.5334 - accuracy: 0.4815
+Epoch 3/25
+1563/1563 [==============================] - 202s 129ms/step - loss: 1.2324 - accuracy: 0.5729
+Epoch 4/25
+1563/1563 [==============================] - 204s 131ms/step - loss: 1.0399 - accuracy: 0.6397
+Epoch 5/25
+1563/1563 [==============================] - 209s 134ms/step - loss: 0.9078 - accuracy: 0.6836
+Epoch 6/25
+1563/1563 [==============================] - 210s 135ms/step - loss: 0.8002 - accuracy: 0.7220
+Epoch 7/25
+1563/1563 [==============================] - 209s 134ms/step - loss: 0.7122 - accuracy: 0.7516
+Epoch 8/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.6471 - accuracy: 0.7775
+Epoch 9/25
+1563/1563 [==============================] - 210s 134ms/step - loss: 0.5825 - accuracy: 0.7987
+Epoch 10/25
+1563/1563 [==============================] - 210s 134ms/step - loss: 0.5339 - accuracy: 0.8173
+Epoch 11/25
+1563/1563 [==============================] - 211s 135ms/step - loss: 0.4866 - accuracy: 0.8326
+Epoch 12/25
+1563/1563 [==============================] - 210s 134ms/step - loss: 0.4449 - accuracy: 0.8487
+Epoch 13/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.4100 - accuracy: 0.8609
+Epoch 14/25
+1563/1563 [==============================] - 210s 135ms/step - loss: 0.3798 - accuracy: 0.8683
+Epoch 15/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.3416 - accuracy: 0.8819
+Epoch 16/25
+1563/1563 [==============================] - 211s 135ms/step - loss: 0.3233 - accuracy: 0.8887
+Epoch 17/25
+1563/1563 [==============================] - 206s 132ms/step - loss: 0.2954 - accuracy: 0.8976
+Epoch 18/25
+1563/1563 [==============================] - 206s 132ms/step - loss: 0.2722 - accuracy: 0.9055
+Epoch 19/25
+1563/1563 [==============================] - 207s 132ms/step - loss: 0.2581 - accuracy: 0.9096
+Epoch 20/25
+1563/1563 [==============================] - 206s 132ms/step - loss: 0.2381 - accuracy: 0.9182
+Epoch 21/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.2210 - accuracy: 0.9235
+Epoch 22/25
+1563/1563 [==============================] - 207s 132ms/step - loss: 0.2099 - accuracy: 0.9274
+Epoch 23/25
+1563/1563 [==============================] - 209s 133ms/step - loss: 0.1903 - accuracy: 0.9340
+Epoch 24/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.1791 - accuracy: 0.9372
+Epoch 25/25
+1563/1563 [==============================] - 208s 133ms/step - loss: 0.1718 - accuracy: 0.9410
+
+
+test_loss, test_acc = model_2.evaluate(x_test, y_test)
+print('Test Accuracy:', test_acc)
+print('Test Loss:', test_loss)
+
+313/313 [==============================] - 12s 39ms/step - loss: 0.5636 - accuracy: 0.8450
+Test Accuracy: 0.8450000286102295
+Test Loss: 0.5635603666305542
+
+
+
+
+
+
 
