@@ -1,0 +1,50 @@
+Mastering Natural Language Processing
+https://app.pluralsight.com/library/courses/mastering-nlp-deep-learning/table-of-contents
+
+
+history
+
+
+
+
+
+
+M2:
+====
+
+Stemming
+
+Fishing 
+Fisher
+
+Stop word removal
+
+
+Embedding models
+
+Word2Vec
+
+Google team 2013
+Continuous bag of words
+Skip-gram
+
+
+GloVe
+Stanford 2014
+
+fastText
+Facebook AI research Lab, 2015
+
+
+ pip3 install gensim
+
+Limitations:
+Context ignorance
+Fixed vocabulary
+Bias
+
+
+
+
+
+
