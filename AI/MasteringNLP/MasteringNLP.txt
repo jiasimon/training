@@ -47,4 +47,21 @@ Bias
 
 
 
+M3:  NLP Architecture, Sequence Models, transformers
+=====
+
+Text classification models
+
+Sentiment analysis
+
+Spam detection
+
+Topic catogorization
+
+
+Labeled data ->  CNNs, RNNs, LSTMs
+
+
+
+
 
