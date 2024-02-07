@@ -1,0 +1,26 @@
+Recurrent Neural Networks (RNNs)
+https://app.pluralsight.com/library/courses/rnns-deep-learning-sequences-time-series/table-of-contents
+
+
+RNNs excel at processing sequences
+
+RNN is a type of model/architecture
+
+Time series is a type of data
+
+RNN solve problems related to time series
+
+Feed-forward neural network
+
+
+Activation functions in neural networks
+
+Introducing non-linearity to the system
+
+
+Short-term memory model
+
+
+
+
+
