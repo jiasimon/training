@@ -1,0 +1,44 @@
+Prompt Engineering: How to Talk to the AIs
+https://www.linkedin.com/learning/prompt-engineering-how-to-talk-to-the-ais/talking-to-the-ais?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1a73498e198799d43dda&u=2111049
+
+AI Prompt
+
+What is Prompt Engineering ?
+
+Identify, classify inputs
+
+Natural language input
+
+Large language models
+
+
+Transformer architecture
+
+RLHF
+
+Diffusion models
+
+GPT-4
+
+Instructions
+Questions
+Input data,
+Examples
+
+Question + instructions
+
+instructions + input data
+
+Question + examples
+
+Prompt engineering 
+
+"temperature"
+
+Chain of thought prompting
+
+
+
+
+
+
