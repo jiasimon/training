@@ -1,0 +1,178 @@
+Generative AI vs. Traditional AI
+https://www.linkedin.com/learning/generative-ai-vs-traditional-ai/machine-learning?autoSkip=true&contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1a73498e198799d43dda&resume=false&u=2111049
+
+M1:
+=====
+
+Onedrive, external hard drive
+
+Two ways to   stamps
+Classify  (supervised)
+
+Cluster ( unsupervised)
+
+2011, Google Brain
+
+Neural networks
+
+20000 patterns in youtube videos
+
+Machine learning model
+
+Data loss
+
+Unknown car, rent and drive
+
+
+	1. In the 1990s there was a rapid increase in the use and development of machine learning algorithms. What is one of the main reasons that you see this rise in innovation?
+A: Organizations wanted to get value from the massive amount of data they've collected.
+
+
+
+	2. What does the quote “all models are wrong, but some are useful” mean when looking at data models?
+A: Data models are abstractions of the data, and so they cannot be 100% accurate.
+
+
+	3. In 2011, the Google brain project produced ghostly images from patterns that I identified in YouTube videos. The deep learning network used unsupervised learning, so it didn't label these patterns. But when Google engineers went through and looked at what the network was seeing they were able to identify cats and people's faces. What impact did this discovery have on future systems?
+A: 
+It showed the potential for using this technology to generate new images from massive datasets.
+Correct 
+These deep learning systems created these ghostly images almost as a side effect of creating clusters from these YouTube videos. In many ways, this was the beginning of using videos from massive datasets to generate new images from existing content. 
+
+
+	4. What are one of the main advantages of using deep learning artificial neural networks?
+A: 
+These networks can help you find very complex patterns and massive datasets.
+Correct 
+Deep learning artificial neural networks have many more hidden layers. This allows them to find extremely complex patterns in massive datasets. 
+
+
+	5. Imagine that you work for a digital music service. Your company finds that people are more likely to listen to music when you make recommendations. So your data scientists want to create an artificial neural network that will cluster together songs that have similar characteristics. Your company has over 100 million songs that could be clustered together regardless of the genre. What type of machine learning would be the best fit?
+A: 
+unsupervised learning
+Correct 
+The music service doesn't use classifications for songs. Instead, it uses a machine learning algorithm to cluster songs based on patterns in the data. So this is a good example of unsupervised learning. 
+
+	6. Imagine that you work for a digital music service. Your company wants to create an artificial neural network that will classify all your digital music into 35 genres that your music engineers have identified. What type of machine learning would be the best fit?
+A: 
+supervised learning
+Correct 
+Here the digital music service wants to classify their songs into genres that they had already created. So this is a good example of using supervised machine learning to classify massive amounts of data. 
+
+
+
+M2: Generative AI models
+=====
+Foundation models
+
+Trained on broad data
+
+Foundation "model" data of transportation
+
+LLMs
+
+Image diffusion models
+
+
+Image diffusion models blur images so that they are unrecognizable and then tries to sharpen them to recover the original image. Why would you build a system that goes through this process of destruction and creation?
+A: Un-baking and then re-baking these images is a good way to understand the patterns when creating something new.
+
+Imagine that you work for an insurance company that wants to create a large language model to give people medical advice online. What would be one of the biggest challenges to creating a reliable system?
+A: These systems will just parrot back what it's found in large text datasets, so this data needs to be accurate.
+Correct
+Remember that these systems just parrot back what it sees in the data. If the data is filled with inaccuracies, then the system will just pair it back these inaccuracies and make it seem authoritative. So this large language model will want to make sure that it has access to accurate text on a wide variety of medical topics.
+
+
+What's a good definition for generative artificial intelligence?
+A: Generative AI looks at existing data patterns to create something completely new.
+Correct
+Generative AI systems typically create foundation models to look through massive datasets and identify patterns. Then these models can generate new data that are like some of the broad patterns it saw in these datasets. So it might see a pattern for a cat and a scarf. Then it can create a new image of a cat wearing a scarf.
+
+
+Imagine working for a company that sells royalty-free images online. The company plans to charge a monthly fee to offer a generative AI system that creates copyright-free images. When you meet with a team of engineers, they say that the system must use a foundation model. They said you can't use the standard data model to train a system on all the possible images customers might create. Are they correct?
+A: Yes, a foundation model will allow you to create images where the system has not been explicitly trained.
+Correct
+Allows the system to work with data where it has not had explicit training. This would be essential if you want to create new images. You couldn't train the system to go through all the possible requests. To generate a new image the system will have to generalize images to create something new.
+
+
+
+OpenAI uses a model called GPT, which stands for generative pre-trained transformer. This is the model they used for their ChatGPT large language model (LLM) chatbot. What does it mean that this model is “pre-trained?”
+A: It means that the LLM looks for patterns, so it can guess the next word in a sentence.
+Correct
+GPT can look through massive amounts of data to “pre-train” and identify patterns, so it can make predictions about how each word will fall in a sentence. So if it sees the sentence “do you think it will rain…” it can guess the likelihood of the next word being “today,” “yesterday,” or “tomorrow.”
+
+
+
+
+M3: generative AI architecture
+=====
+
+GANs
+
+Discriminator
+
+Diffusion model
+
+Self-supervised learning
+
+VAE
+
+Feature extraction
+
+3 components
+Data, architecture, training
+
+
+Imagine that you're looking at a picture of a male lion sitting peacefully in a grassy Savannah. If you used a variational auto encoder (VAE) to analyze this image, what might be some of the items that get captured by anomaly detection?
+A: Any of the items that are “non-lion,” this could include the grass, the trees, and the sky.
+Correct
+Variational auto encoder tries to capture the essence of the object in the image. In this case, it would try to identify everything that it means to be a lion. This could be the fur, the whiskers or the lion’s mane. Everything that is not part of the lion’s essence would be considered an anomaly.
+
+
+
+What is one of the main challenges that self-supervised learning is trying to solve?
+A: There's a lot more unlabeled data available, so these systems use unsupervised learning to label data for foundation models.
+Correct
+Self-supervised learning uses a combination of unsupervised and supervised learning to create labels for massive amounts of data. This helps generative AI systems create foundation models with huge amounts of labeled data that would be nearly impossible for humans to identify. So self-supervised learning might allow the system to create millions more labels for images of cats and other items seen online.
+
+
+You work for an organization that wants to generate images of customers wearing new outfits. The data scientists in your organization are trying to decide whether your system should use a diffusion model or a generative adversarial network (GAN). Some data scientists say not to use GANs because they focus more on creating different outfit compositions with the customer's image rather than generating a photorealistic image. Do you think they're right?
+A: Yes, a diffusion model would probably work better because the clarity isn't as important as the composition.
+Correct
+In this case, most data science teams would pick a diffusion model. If you need to put a customer in different outfits, it is better to prioritize composition over creating photorealistic images using GANs. That way you can put the customer in many different hats and outfits.
+
+
+
+Response with non-sense
+
+Telescope, female US president
+
+
+Fair use 
+
+
+Imagine that you work as a book lithographer. The illustrations that you create are heavily sought after by textbooks, and other artistic publishers that produce high quality books. Now a company that creates illustrations for books has trained their generative AI system to copy your technique. What used to take you months can now be produced by this system in seconds at a very low cost. You've had a noticeable drop in commissioned works, and you had to fire many young artists. What type of impact will this have on future artists?
+A: If work decreases, you cannot train upcoming artists to generate new art for training future GenAI systems.
+Correct
+One of the challenges with generative AI systems is this potential knowledge and skill death spiral. These systems could make it much more difficult for artists and content creators to earn a living. Future creators may choose other professions, which will prevent future GenAI systems from using their artwork and content for training.
+
+
+
+Imagine that you're a movie critic for a newspaper in the United States. You've written a column for decades. You've also written several books. In fact, many subscribers say that your column is one of the reasons that they subscribe. Recently you've been thinking about leaving the paper. The newspaper found out about this, and so they decided to use a generative AI system to model all your previous columns and books. They can create your movie column without you. Under current law, has the newspaper done anything illegal?
+A: No, under current law the newspaper could train a model on your columns and books under the fair use doctrine.
+Correct
+Currently, under US copyright law generative AI systems can train themselves on material that is normally protected by copyright. That means that all your books and newspaper columns could be used to train a foundation model to generate similar work.
+
+
+You work for an organization that’s creating a virtual guidance counselor for students who are graduating from high school. Your organization created a foundation model that went through huge amounts of data on travel, occupations, and colleges. In testing, you've found that your virtual guidance counselor will often give students misinformation. It will exaggerate salaries for careers and give inaccurate information about college admission requirements. How would you approach this challenge?
+A: Generative AI systems currently tend to produce hallucinations. You can try to limit this by making sure the model uses quality data.
+Correct
+All generative AI systems that use large language models LLMs will run into the problem of hallucinations. That's because these systems will have to use their foundation model to make many educated guesses. A lot of these guesses will be incorrect. A good way to avoid this is to make sure that the data the system uses for the foundation model is accurate and high quality.
+
+
+
+Imagine that you work for a health insurance company that wants to use a foundation model to approve medical procedures for your customers. One of the product managers mentions that if a customer questions a decision, how will customer service representatives answer these concerns? The data scientist mentions that the system will use 10s of thousands of variables that might be difficult to explain. How would you approach this ethical challenge?
+A: 
+
+
+
