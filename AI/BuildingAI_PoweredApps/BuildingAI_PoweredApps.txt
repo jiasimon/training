@@ -1,0 +1,65 @@
+GPT-4 Foundations: Building AI-Powered Apps
+https://www.linkedin.com/learning/gpt-4-foundations-building-ai-powered-apps/welcome-to-gpt-4-foundations?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1a73498e198799d43dda&u=2111049
+
+https://platform.openai.com/playground
+
+Use below to fix loading issue
+https://platform.openai.com/playground?mode=chat
+
+
+Large language Models
+
+How do you train a LLM ?
+
+
+M2: beginner prompting
+====
+
+https://bigstarcollectibles.com/
+
+Rex
+Mayor of Binaryville
+Rex is the Mayor of Binaryville and a well-loved personality in town. He rose to robotdom from a microprocessor plant on the south side of town, where many famous and influential robots before him were conceived.
+
+
+Create a backstory for Rex.   
+
+"Rex description from website"
+
+
+M3: intermediated prompting 
+=====
+
+Summarize
+
+
+Give GPT a persona
+
+Respond to the users as "Trump"
+
+
+"how much does a cheese burger cost?"
+
+
+Formatting your prompts
+
+"based on following text, extract"
+
+Key-value format
+
+Configure system prompt
+
+
+Prompt chaining 
+
+04_03 -> prompt2.txt
+
+
+
+M5: building a Chatbot
+====
+
+Voiceflow
+
+
+
