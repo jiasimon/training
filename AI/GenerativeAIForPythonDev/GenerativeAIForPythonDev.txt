@@ -341,5 +341,114 @@ Tokenization is a fundamental process in natural language processing (NLP) that 
 
 
 
+Q: what day is next Friday
+<Encoding 'cl100k_base'>: 31 tokens
+token integers: 31
+token bytes: ['\n\n', 'Next', ' Friday', ' is', ' the', ' Friday', ' after', ' the', ' upcoming', ' Friday', '.', ' It', ' is', ' not', ' a', ' specific', ' date', ',', ' but', ' it', ' is', ' the', ' Friday', ' that', ' follows', ' the', ' current', ' week', "'s", ' Friday', '.']
+A: 
+
+Next Friday is the Friday after the upcoming Friday. It is not a specific date, but it is the Friday that follows the current week's Friday.
+
+
+Q: 中国首都？
+<Encoding 'cl100k_base'>: 2 tokens
+token integers: 2
+token bytes: ['\n\n', '北京']
+A: 
+
+北京
+
+
+Q: 李白写的送友人的 诗 ？
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 76, in ask
+    get_tokens(response)
+  File "02_03/main.py", line 27, in get_tokens
+    tokenized_input = tokenized_input = list(
+  File "02_03/main.py", line 29, in <lambda>
+    lambda x: encoding.decode_single_token_bytes(x).decode("utf-8"),
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 0-1: unexpected end of data
+
+
+Q: 江苏的省会？
+<Encoding 'cl100k_base'>: 3 tokens
+token integers: 3
+token bytes: ['\n\n', '南', '京']
+A: 
+
+南京
+
+
+Q: 中国第一个奥运金牌得主？  
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 76, in ask
+    get_tokens(response)
+  File "02_03/main.py", line 27, in get_tokens
+    tokenized_input = tokenized_input = list(
+  File "02_03/main.py", line 29, in <lambda>
+    lambda x: encoding.decode_single_token_bytes(x).decode("utf-8"),
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 0-1: unexpected end of data
+
+
+From web ui？
+中国第一个奥运金牌得主
+ChatGPT
+中国第一个奥运金牌得主是女子射击运动员张怡宁。她在1992年巴塞罗那奥运会上获得了女子10米气步枪项目的金牌，成为中国历史上第一个奥运金牌得主。
+
+
+Q: 无锡有名的食物 ？
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 76, in ask
+    get_tokens(response)
+  File "02_03/main.py", line 27, in get_tokens
+    tokenized_input = tokenized_input = list(
+  File "02_03/main.py", line 29, in <lambda>
+    lambda x: encoding.decode_single_token_bytes(x).decode("utf-8"),
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe8 in position 1: unexpected end of data
+
+
+Type your question and press ENTER. Type 'x' to go back to the MAIN menu.
+
+Q: what are Wuxi's famous food?
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 76, in ask
+    get_tokens(response)
+  File "02_03/main.py", line 27, in get_tokens
+    tokenized_input = tokenized_input = list(
+  File "02_03/main.py", line 29, in <lambda>
+    lambda x: encoding.decode_single_token_bytes(x).decode("utf-8"),
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 0-1: unexpected end of data
+
+
+无锡有名的食物？
+ChatGPT
+无锡是中国江苏省的一个城市，以其丰富的美食文化而闻名。以下是一些无锡有名的食物：
+	1. 无锡酱排骨：无锡的特色菜之一，采用当地特产的无锡香醋和配料腌制后炸制而成，口感鲜嫩。
+	2. 肉夹馍：一种传统小吃，将酱料、葱花、肉丁等包裹在面饼内，香味浓郁。
+	3. 蠔油炒鳝丝：无锡的特色菜之一，以新鲜鳝鱼为原料，配以蠔油和其他调料，炒制出香气扑鼻的美味菜肴。
+	4. 无锡馄饨：无锡馄饨以薄皮、大馅、多汤而著称，馅料丰富多样，味道鲜美。
+	5. 龙头鲍鱼：无锡的一道传统名菜，选用上等鲍鱼，以葱、姜、酱油等为调料，烹制出鲜美可口的菜肴。
+	6. 无锡小笼包：无锡的小笼包以其细腻的皮和鲜美的馅料而著称，是当地人和游客的最爱。
+这些美食代表了无锡丰富的地方特色和美食文化，吸引了许多人前来品尝。
+
+
+
+
 
 
