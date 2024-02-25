@@ -1,0 +1,58 @@
+Generative AI for Python Developers
+https://www.linkedin.com/learning/generative-ai-for-python-developers/ai-integration-with-python?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1a73498e198799d43dda&u=2111049
+
+M1
+=====
+
+AI integration with python
+
+Write a thankyou letter
+
+"write a thankyou email to my son's soccer coach"
+
+Subject: Thank You for Your Dedication to the Team
+Dear [Coach's Name],
+I hope this email finds you well. I wanted to take a moment to express my sincere gratitude for your dedication and hard work as [son's name]'s soccer coach this season.
+Your commitment to the team has not gone unnoticed. Your passion for the sport and your ability to inspire and motivate the players have made a significant impact on [son's name] and the entire team. We have seen tremendous growth, both individually and as a team, under your guidance.
+Your coaching style, positivity, and encouragement have not only improved their soccer skills but have also instilled important values such as teamwork, sportsmanship, and perseverance.
+Thank you for investing your time, energy, and expertise in coaching the team. Your efforts have not only made a difference on the field but have also helped shape the character and development of the players.
+We appreciate all that you do and want you to know that your hard work does not go unnoticed. [Son's name] has thoroughly enjoyed playing on the team under your leadership, and we are grateful for the positive experience he has had.
+Once again, thank you for your dedication and commitment to the team. We look forward to the continued success and growth of the team under your guidance.
+Warm regards,
+[Your Name]
+
+
+How does generative AI work?
+Prompt
+Tokenization
+
+
+DL, ML,  AI, GenAI
+
+Deep learning
+
+IoT
+Siri,  Alexa
+
+
+Automate tasks
+
+All levels
+
+
+python3 --version
+Python 3.8.5
+NisumUsersMBP4:03 sjia$ python --version
+Python 2.7.16
+
+
+When was the ChatGPT application released?
+A: 
+in November 2022
+Correct 
+ChatGPT (Chat Generative Pre-trained Transformer) is a chatbot developed by OpenAI and launched on November 30, 2022. 
+
+
+
+
+
