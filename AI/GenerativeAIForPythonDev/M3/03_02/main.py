@@ -18,7 +18,9 @@ def generate_chat_completion(user_input=""):
       model="gpt-3.5-turbo",
       messages=messages,
     )
-    print(response)
+    mymessage = response.choices[0].message
+    # print(mymessage)
+    print(Fore.GREEN + "Bot: " + mymessage.content)
 
 
 def main():
