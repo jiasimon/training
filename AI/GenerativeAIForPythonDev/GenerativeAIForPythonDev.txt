@@ -55,4 +55,291 @@ ChatGPT (Chat Generative Pre-trained Transformer) is a chatbot developed by Open
 
 
 
+M2: key concepts and getting started
+=====
+
+Introduction -> Tokenizer
+
+https://platform.openai.com/tokenizer
+
+"I want to build projects with openAI"
+Tokens
+8
+Characters
+36
+
+
+Tokens
+12
+Characters
+47
+
+
+
+https://platform.openai.com/playground
+Temperature:  randomness
+
+quickStart
+https://platform.openai.com/docs/quickstart?context=python
+
+Create virtual env
+
+Install packages
+
+ Python-dotenv
+
+ tiktoken
+
+cd /Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2
+
+python3 -m venv env
+
+Created "env"  folder
+
+source env/bin/activate
+
+ pip3 install -r 02_03/requirements.txt
+
+pip3 install -r 02_03/requirements.txt
+Collecting colorama==0.4.6
+  Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting openai==1.3.5
+  Downloading openai-1.3.5-py3-none-any.whl (220 kB)
+     |████████████████████████████████| 220 kB 6.5 MB/s 
+Collecting python-dotenv==1.0.0
+  Downloading python_dotenv-1.0.0-py3-none-any.whl (19 kB)
+Collecting tiktoken==0.5.1
+  Downloading tiktoken-0.5.1-cp38-cp38-macosx_10_9_x86_64.whl (953 kB)
+     |████████████████████████████████| 953 kB 12.1 MB/s 
+Collecting httpx<1,>=0.23.0
+  Downloading httpx-0.27.0-py3-none-any.whl (75 kB)
+     |████████████████████████████████| 75 kB 9.5 MB/s 
+Collecting tqdm>4
+  Downloading tqdm-4.66.2-py3-none-any.whl (78 kB)
+     |████████████████████████████████| 78 kB 3.5 MB/s 
+Collecting distro<2,>=1.7.0
+  Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Collecting typing-extensions<5,>=4.5
+  Downloading typing_extensions-4.9.0-py3-none-any.whl (32 kB)
+Collecting anyio<4,>=3.5.0
+  Downloading anyio-3.7.1-py3-none-any.whl (80 kB)
+     |████████████████████████████████| 80 kB 18.1 MB/s 
+Collecting pydantic<3,>=1.9.0
+  Downloading pydantic-2.6.2-py3-none-any.whl (394 kB)
+     |████████████████████████████████| 394 kB 20.4 MB/s 
+Collecting regex>=2022.1.18
+  Downloading regex-2023.12.25-cp38-cp38-macosx_10_9_x86_64.whl (296 kB)
+     |████████████████████████████████| 296 kB 33.6 MB/s 
+Collecting requests>=2.26.0
+  Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+     |████████████████████████████████| 62 kB 3.7 MB/s 
+Collecting idna
+  Downloading idna-3.6-py3-none-any.whl (61 kB)
+     |████████████████████████████████| 61 kB 370 kB/s 
+Collecting certifi
+  Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+     |████████████████████████████████| 163 kB 29.6 MB/s 
+Collecting httpcore==1.*
+  Downloading httpcore-1.0.4-py3-none-any.whl (77 kB)
+     |████████████████████████████████| 77 kB 14.3 MB/s 
+Collecting sniffio
+  Downloading sniffio-1.3.0-py3-none-any.whl (10 kB)
+Collecting exceptiongroup; python_version < "3.11"
+  Downloading exceptiongroup-1.2.0-py3-none-any.whl (16 kB)
+Collecting pydantic-core==2.16.3
+  Downloading pydantic_core-2.16.3-cp38-cp38-macosx_10_12_x86_64.whl (1.9 MB)
+     |████████████████████████████████| 1.9 MB 43.5 MB/s 
+Collecting annotated-types>=0.4.0
+  Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+Collecting charset-normalizer<4,>=2
+  Downloading charset_normalizer-3.3.2-cp38-cp38-macosx_10_9_x86_64.whl (121 kB)
+     |████████████████████████████████| 121 kB 54.3 MB/s 
+Collecting urllib3<3,>=1.21.1
+  Downloading urllib3-2.2.1-py3-none-any.whl (121 kB)
+     |████████████████████████████████| 121 kB 46.3 MB/s 
+Collecting h11<0.15,>=0.13
+  Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+     |████████████████████████████████| 58 kB 10.8 MB/s 
+Installing collected packages: colorama, idna, certifi, exceptiongroup, sniffio, anyio, h11, httpcore, httpx, tqdm, distro, typing-extensions, pydantic-core, annotated-types, pydantic, openai, python-dotenv, regex, charset-normalizer, urllib3, requests, tiktoken
+Successfully installed annotated-types-0.6.0 anyio-3.7.1 certifi-2024.2.2 charset-normalizer-3.3.2 colorama-0.4.6 distro-1.9.0 exceptiongroup-1.2.0 h11-0.14.0 httpcore-1.0.4 httpx-0.27.0 idna-3.6 openai-1.3.5 pydantic-2.6.2 pydantic-core-2.16.3 python-dotenv-1.0.0 regex-2023.12.25 requests-2.31.0 sniffio-1.3.0 tiktoken-0.5.1 tqdm-4.66.2 typing-extensions-4.9.0 urllib3-2.2.1
+WARNING: You are using pip version 20.1.1; however, version 24.0 is available.
+You should consider upgrading via the '/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/bin/python3 -m pip install --upgrade pip' command.
+
+
+ python3 02_03/main.py
+
+python3 main.py
+/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/bin/python3: can't open file 'main.py': [Errno 2] No such file or directory
+(env) NisumUsersMBP4:M2 sjia$ python3 02_03/main.py
+MENU
+====
+[1]- Ask a question
+[2]- Exit
+Enter your choice: 
+
+
+git add AI/GenerativeAIForPythonDev/M2/
+git commit -m "LinkedIn,  GenerativeAIForPythonDev, M2:  quickstart, install packages"
+
+
+Set up an API key
+====
+
+Go to https://platform.openai.com/examples?category=generate
+
+Or https://platform.openai.com/docs/overview
+Click "Prompt examples"
+
+https://platform.openai.com/examples/default-product-name-gen
+
+Click "API Keys" in left panel
+
+pythonDemoKey
+
+sk-FZP
+
+export OPENAI_API_KEY='sk-FZP'
+
+ echo $OPENAI_API_KEY
+
+load_dotenv()
+
+
+LANGUAGE_MODEL = "gpt-3.5-turbo-instruct"
+
+git add AI/GenerativeAIForPythonDev/M2/02_03/main.py
+git commit -m "LinkedIn,  GenerativeAIForPythonDev, M2:  Set up openai API key"
+
+
+
+        else:
+            completion = client.completions.create(
+                model="gpt-3.5-turbo-instruct",
+                prompt=str(user_input),
+                max_tokens=100,
+                temperature=0,
+            )
+
+            response = completion.choices[0].text.replace
+            ("\n", "").replace("\r", "")
+
+            get_tokens(response)
+
+            print(Fore.BLUE + f"A: {response}" + Fore.RESET)
+            print(Fore.WHITE + "\n-------------------------------------------------") 
+
+
+Q: 1
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 66, in ask
+    completion = client.completions.create(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_utils/_utils.py", line 299, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/resources/completions.py", line 559, in create
+    return self._post(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 1063, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 842, in request
+    return self._request(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 873, in _request
+    return self._retry_request(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 933, in _retry_request
+    return self._request(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 873, in _request
+    return self._retry_request(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 933, in _retry_request
+    return self._request(
+  File "/Users/sjia/dev/workspaces/training/AI/GenerativeAIForPythonDev/M2/env/lib/python3.8/site-packages/openai/_base_client.py", line 885, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+
+
+sk-w1
+export OPENAI_API_KEY='sk-w1'
+
+
+
+Q: what is us capitol?
+Traceback (most recent call last):
+  File "02_03/main.py", line 83, in <module>
+    start()
+  File "02_03/main.py", line 45, in start
+    ask()
+  File "02_03/main.py", line 74, in ask
+    ("\n", "").replace("\r", "")
+AttributeError: 'tuple' object has no attribute 'replace'
+
+
+"what is the capital of japan"
+
+
+python3 02_03/main.py
+MENU
+====
+[1]- Ask a question
+[2]- Exit
+Enter your choice: 1
+
+Type your question and press ENTER. Type 'x' to go back to the MAIN menu.
+
+Q: what is the capital of japan
+<Encoding 'cl100k_base'>: 8 tokens
+token integers: 8
+token bytes: ['\n\n', 'The', ' capital', ' of', ' Japan', ' is', ' Tokyo', '.']
+A: 
+
+The capital of Japan is Tokyo.
+
+
+Q: how far is from SFO to PVG
+<Encoding 'cl100k_base'>: 55 tokens
+token integers: 55
+token bytes: ['\n\n', 'The', ' distance', ' between', ' San', ' Francisco', ' International', ' Airport', ' (', 'S', 'FO', ')', ' and', ' Shanghai', ' P', 'ud', 'ong', ' International', ' Airport', ' (', 'P', 'VG', ')', ' is', ' approximately', ' ', '6', ',', '500', ' miles', ' (', '10', ',', '460', ' kilometers', ')', ' when', ' flying', ' directly', '.', ' The', ' actual', ' distance', ' may', ' vary', ' depending', ' on', ' the', ' flight', ' path', ' and', ' any', ' lay', 'overs', '.']
+A: 
+
+The distance between San Francisco International Airport (SFO) and Shanghai Pudong International Airport (PVG) is approximately 6,500 miles (10,460 kilometers) when flying directly. The actual distance may vary depending on the flight path and any layovers.
+
+
+"when is olympics 2024"
+
+Q: when is olympics 2024
+<Encoding 'cl100k_base'>: 23 tokens
+token integers: 23
+token bytes: ['\n\n', 'The', ' ', '202', '4', ' Summer', ' Olympics', ' will', ' take', ' place', ' from', ' July', ' ', '26', ' to', ' August', ' ', '11', ',', ' ', '202', '4', '.']
+A: 
+
+The 2024 Summer Olympics will take place from July 26 to August 11, 2024.
+
+
+
+Q: 3 x 8
+<Encoding 'cl100k_base'>: 100 tokens
+token integers: 100
+token bytes: ['.', '5', ' x', ' ', '11', ' inches', '\n\n', 'Shipping', ' Weight', ':', ' ', '1', '.', '6', ' pounds', '\n\n', 'Average', ' Customer', ' Review', ':', ' ', '4', '.', '5', ' out', ' of', ' ', '5', ' stars', '\n\n', 'Amazon', ' Best', ' Sellers', ' Rank', ':', ' #', '1', ',', ' ', '000', ',', ' ', '000', ' in', ' Books', '\n\n', 'The', ' book', ' is', ' available', ' in', ' both', ' paperback', ' and', ' Kindle', ' editions', '.', ' The', ' paperback', ' edition', ' is', ' priced', ' at', ' $', '14', '.', '99', ' while', ' the', ' Kindle', ' edition', ' is', ' priced', ' at', ' $', '9', '.', '99', '.\n\n', 'The', ' book', ' is', ' also', ' available', ' in', ' other', ' languages', ' such', ' as', ' Spanish', ',', ' French', ',', ' German', ',', ' Italian', ',', ' and', ' Portuguese', '.\n\n']
+A: .5 x 11 inches
+
+Shipping Weight: 1.6 pounds
+
+Average Customer Review: 4.5 out of 5 stars
+
+Amazon Best Sellers Rank: #1, 000, 000 in Books
+
+The book is available in both paperback and Kindle editions. The paperback edition is priced at $14.99 while the Kindle edition is priced at $9.99.
+
+The book is also available in other languages such as Spanish, French, German, Italian, and Portuguese.
+
+
+
+What do you call the process of dividing a text input into smaller units?
+A: tokenization
+Correct 
+Tokenization is a fundamental process in natural language processing (NLP) that involves dividing a piece of text into smaller units called tokens. 
+
+
+
+
 
