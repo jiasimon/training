@@ -28,4 +28,13 @@ def print_messages(messages):
 
 
 def generate_chat_completion(user_input=""):
-    pass
+    # pass
+    messages.append({"role": "user", "content": user_input})
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+    )
+    message = completion.choices[0].message
+    messages.append(to_dict(message))
+    print_messages(messages)
+    return message.content
