@@ -1,0 +1,209 @@
+Jumpstart Your Skills with Large Language Models
+https://www.linkedin.com/learning/paths/jumpstart-your-skills-with-large-language-models?u=2111049
+
+Introduction to Large Language Models
+
+M1: transformers in NLP
+======
+
+What are LLM
+
+Chatbots, 
+
+Summarize
+
+LLaMA (Meta)
+
+Nvdia GPUs
+
+Gpt-3 did not do well one below request
+
+ write a shopping list
+
+
+Make LLM follow instructions
+
+Supervised fine-tuning
+RLHF
+
+Which AI model architecture was first proposed in 2017 in the paper "Attention Is All You Need"?
+A: transformers
+Correct
+All large language model architectures use components of transformers.
+
+
+How does a human labeler contribute to the reward model step of training a large language model as outlined in OpenAI's paper "Training Language Models to Follow Instructions with Human Feedback"?
+A: They rank the outputs from best to worst.
+Correct
+This ranking is then used to train the reward model.
+
+
+How is the process of pre-training a large language model accelerated?
+A: using NVIDIA GPUs
+Correct
+A training run can cost many millions of dollars.
+
+
+M2: LLM components
+=====
+Encoder, decoder
+
+BERT
+
+Decoder only
+
+Parameters in nerual network
+
+Tokens vs words
+
+Context window
+
+GPT3: 2048
+GPT4: 8192
+
+4K
+100K
+
+"black beaty"
+
+In general, how does a large language model such as GPT-4 tokenize a sentence?
+A: It breaks up the sentence into chunks or tokens where a token is about four characters.
+Correct
+OpenAI notes on its GPT-3 tokenizer demonstration that this translates to roughly three-quarters of a word per token.
+
+How are context lengths measured?
+A: The sum of the number of input prompt tokens and output (completion) tokens
+Correct
+GPT-3 has a context length of 2,048, while GPT-4 has a context length of 8,192.
+
+
+
+Miguel needs to determine the number of parameters for a neural network. Which calculation should he use?
+A: number of weights + biases
+
+
+Which task is best for an encoder-only model?
+A: sentence classification
+Correct
+For example, an encoder-only model can rate written movie reviews as positive or negative.
+
+
+M3: LLM
+=====
+
+"what is the main objective of dressage"
+
+BERT Google
+
+MLM (masked language model)
+
+NSP( next Sentence Prediction)
+
+Tokyo Olympic game were (postponed)   from 2020 to 2021
+
+Good English understanding
+
+Encoder model
+
+
+Size of parameter , dataset,  Compute
+
+Test loss
+
+175 billion parameters
+
+GPT-3
+
+Decoder portion
+
+Sentiment 
+
+Question-answer
+
+
+Zero-shot,
+
+One-shot
+
+Few-shot
+
+
+Chinchilla
+
+Google Mind
+
+
+PaLM
+
+BLOOM
+OPT (Meta )
+
+Hugging Face,  BLOOM model, 176 billion
+
+
+
+
+https://huggingface.co/
+
+HELM to evaluate models
+
+Limitations of HELM
+
+Nat.dev
+
+https://nat.dev/compare
+
+Need buy credits now
+
+
+If Jie is working with a large language model (LLM) such as GPT-3, why might she want to consider using few-shot learning instead of zero-shot or one-shot?
+A: This gives the LLM a view of what kind of output she is expecting and so is more likely to get a favourable completion.
+Correct
+Few-shot learning can be notably more accurate, especially compared to zero-shot, depending on the LLM.
+
+
+Why do large language models require so many parameters?
+A: Increased model size decreases test loss.
+Correct
+Additionally, it has been shown that the amount of data for training decreases test loss as well.
+
+What does the masked language model (MLM) training task require of BERT?
+A: to predict a masked out word
+Correct
+BERT was also trained on next sentence prediction (NSP).
+
+What is a weakness of GPT-4?
+A: It cannot be fine-tuned.
+Correct
+It also does not update knowledge in real-time, and it sometimes fabricates facts.
+
+
+How many parameters were required for Google's PaLM before it could perform arithmetic and question answering?
+A: 8 billion
+Correct
+In order to perform reading comprehension and joke explanations, the parameters had to increase to 540 billion.
+
+PaLM required 62 billion parameters to perform summarization and common-sense reasoning tasks.
+
+
+
+What was the Google DeepMind Team's hypothesis concerning most large language models at the time?
+A: They have been trained on not enough data.
+Correct
+DeepMind hypothesized that you could improve performance by training a smaller model for a longer period of time.
+
+
+Why is HELM useful for comparing large language models?
+A: It compares performance for an LLM across a number of different tasks and metrics.
+Correct
+HELM does, however, have limitations: it does not compare price, latency, or platform uptime.
+
+
+What is one of the main advantages of LLaMA compared to OPT and BLOOM?
+A: smaller models
+Correct
+You can run the smaller LLaMA models on single GPU setups.
+
+
+
+
