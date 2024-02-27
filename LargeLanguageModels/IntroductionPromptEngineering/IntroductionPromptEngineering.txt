@@ -1,0 +1,46 @@
+Introduction to Prompt Engineering for Generative AI
+https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai/joining-the-nlp-revolution?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64652610498e6f7f59ba5fb8&u=2111049
+
+What is prompt engineering ?
+Constructing input
+
+Token vs words
+
+Large language model
+
+Random idea,
+
+GPT-3 ,  170 billion 
+
+"example" section in openai website
+
+https://platform.openai.com/examples
+
+Few-shot learning
+
+
+Studio.ai21.com
+
+Stop sequence
+
+Prompts are larger
+
+"Grammar correction"
+
+"Summarize for a 2nd grader"
+
+
+M2: AI generated images
+====
+
+Dall-E
+
+MidJourney
+
+Embeddings
+
+ " a high quality photo of branded booth for an AI chip company, digital art" 
+
+
+
+ 
