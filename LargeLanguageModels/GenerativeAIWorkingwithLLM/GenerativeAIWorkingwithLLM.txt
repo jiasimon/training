@@ -1,0 +1,146 @@
+Generative AI: Working with Large Language Models
+
+Transforms in NLP
+
+BERT GPT-3
+
+Transforms in production
+
+Curling, winter Olympic
+
+
+Can you get medicine for someone CVS
+
+BERT , TPU
+
+
+RoBERTa. , meta
+
+Which transformer-based machine learning technique NLP model does Google Search currently use?
+A: BERT
+
+
+M2: training transformer
+======
+
+
+
+Self attention
+
+Multi-head attention
+
+Feed forward
+
+
+What is a benefit of transfer learning?
+A: There is less data required to fine-tune.
+Correct
+Less data is required for fine-tuning because of the knowledge and representations that the model has gained during pre-training.
+
+A self-attention mechanism works by comparing every word in the sentence to
+A: every other word in the sentence
+Correct
+It incorporates embeddings for all other words in the sentence and then uses a weighted average of the embeddings of other context words.
+
+
+If your task requires understanding of input text, which architecture model should you choose for your transformer?
+A: encoder-only
+Correct
+These models are good for tasks that require an understanding of input text, such as sentence classification and named entity recognition.
+
+
+Where are the relationships formed in a multi-head attention mechanism?
+A: They are learned from the data.
+
+
+M3: LLM
+=====
+
+Use cases
+
+Challenges and shortcomings
+
+Playgound
+
+Gopher
+
+BIG-bench (beyond limitation Game benchmark)
+
+Guess movie name from emoji
+Finding nemo 
+
+PaLM
+
+Pathway language model
+
+Chain of thought prompting
+
+OPT
+Open 
+Pre-Trained
+Transformer
+
+
+BLOOM decoder only model
+
+
+What is one of the special features of BLOOM?
+A: It's the first 100B+ parameter model in Spanish.
+Correct
+BLOOM will be the first language model ever created with over 100B parameters in such languages as Spanish, French, and Arabic.
+
+Which of these statements is true?
+A: GLaM has more parameters than GPT-3 but only a few of them are activated during training.
+Correct
+GLaM is seven times larger than GPT-3 and outperforms GPT-3 on a wide range of natural language tasks.
+
+
+How many parameters does the Chinchilla model have?
+A: 70B
+Correct
+Chinchilla is a 70B parameter model trained as a compute-optimal model with 1.4T tokens.
+
+
+What is the main takeaway from the scaling laws?
+A: Larger models will provide better performance.
+Correct
+The main takeaway is that increasing the model size can lead to significant performance improvements up to a certain point.
+
+
+Using BIG-bench, which model outperformed the best-performing human on any task?
+A: no model
+Correct
+Researchers found that no model, regardless of size, outperformed the best-performing human on any task.
+
+
+In general, which size Gopher model performs the best?
+A: 280B
+Correct
+In general, the 280B Gopher model has better accuracy scores compared to the smaller models.
+
+
+What is one of the main takeaways from the Megatron-Turing NLG model?
+A: There are more efficient ways to train large language models.
+Correct
+As the model's size increases, so does its capacity to understand and generate complex language.
+
+
+What recommendations does the Chinchilla paper have compared to the scaling laws?
+A: A smaller model trained on more data will be more performant.
+Correct
+Chinchilla performs better than other models, even though it was trained on the same amount of compute as all the larger models.
+
+Which of the following was the pre-training task for GPT-3?
+A: Next token prediction
+Correct
+Next token prediction involves training the model to predict the next token or word in a sequence of tokens given the preceding context.
+
+
+Who can download and run OPT's 125M to 66B parameter model?
+A: everyone
+Correct
+The OPT decoder-only pre-trained transformers, ranging from 125M to 66B parameters, can be downloaded and shared with everyone.
+
+
+
+
