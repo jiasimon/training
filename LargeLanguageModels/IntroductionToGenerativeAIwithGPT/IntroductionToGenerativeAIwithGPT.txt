@@ -1,0 +1,87 @@
+Introduction to Generative AI with GPT
+
+What is GPT?
+A: software that can generate text and images based on prompting from a user
+
+
+How does GPT generate text that appears to have been written by a human?
+A: by processing large amounts of data from the internet
+
+Given OpenAI's principles in its charter, how should it approach an AGI project emerging from a competitor that incentivizes speed over safety?
+A: It will assist the competitor.
+Correct
+Instead of competing, OpenAI would assist the former competitor to focus on safety.
+
+
+Why did OpenAI drop its designation as a nonprofit?
+A: in order to grow the organization by attracting further investment
+Correct
+Microsoft has since stepped forward and invested $1 billion into OpenAI.
+
+How does the approach described as "machine learning," or ML, work?
+A: Statistical techniques are applied to large sets of data.
+
+In a general sense, what is AI?
+A: machines imitating intelligent human behavior
+
+
+GPU
+
+GANs
+
+LLM3
+
+
+https://promptbase.com
+
+https://www.vellum.ai/
+
+
+
+How does natural language processing (NLP) generally begin pre-processing a text input?
+A: by tokenizing the sentences and breaking them into individual words
+
+GPT can generate software code based on a plain language input
+A: true
+
+What is a prompt engineering technique for producing higher quality output?
+A: providing specific context and guidance
+
+
+In GPT, in addition to algorithyms, humans also train the system to produce text output
+A: TRUE
+Correct
+Called Reinforcement Learning from Human Feedback or RLHF, GPT is provided with feedback by a person.
+
+
+A large language model (LLM)
+A: contains parameters
+Correct
+An LLM contains the parameters that identify the text that should be produced.
+
+What is the AI alignment problem?
+A: ensuring that AI goals are aligned with human goals to reduce a miscommunication that could have serious consequences
+
+A neural network is software designed to learn from
+A: finding patterns in data sets
+
+The risks of AI for an organization include
+A: not having the training and skills to take advantage of it
+
+What is generative modeling?
+A: predicting what the next word in a sentence should be based on previous words in the sentence
+
+
+What's one of the best ways to improve the quality of an output?
+A: Rephrase the input text
+
+
+If Sonia's company is considering creating in-house AI solutions, it may need to add several new roles. Why would her company hire some skilled software engineers?
+A: 
+to program the company's AI solutions using languages such as C++ and Python
+This was the correct answer
+
+
+
+
+
