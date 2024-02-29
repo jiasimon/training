@@ -144,3 +144,67 @@ The OPT decoder-only pre-trained transformers, ranging from 125M to 66B paramete
 
 
 
+Exam
+======
+
+How does Chinchilla recommend the model size and training dataset size be scaled?
+A: The model size and training dataset size should be scaled in equal proportions.
+
+
+What is not a pre-training task for BERT?
+A: Next token prediction
+
+How many training tokens was Chinchilla trained on?
+A: 1.4T
+
+
+Which of the following is not one of the vector spaces used for word embeddings?
+A:  
+Correct answer
+Word
+
+
+What is the main takeaway from the Chinchilla paper?
+A: Attempted correct option
+Large language models have been under-trained.
+
+If you need to summarize text, which transformer component do you not need?
+A: encoder-only
+
+
+What is the main difference between OPT and GPT-3?
+A: With OPT, you can download the model weights.
+
+
+GLaM architecture uses a Mixture-of-Experts layer that is derived from which type of model?
+A: sparse
+
+What did the Google research team find out about scaling model sizes?
+A: 
+Attempted correct option
+Smaller models could perform certain tasks. After increasing the model size over a certain size, additional tasks could be performed.
+
+
+How does GPT-3 provide the user a way to interact with models?
+A: pompts
+
+
+What is the main takeaway from Gopher?
+A: 
+Generally, larger models perform better than smaller models, except on logic-based tasks
+
+How is the Megatron-Turing NLG model different than the GPT-3 model?
+A: more layers and more attention heads
+
+
+In regard to scaling laws, what does having a larger dataset result in?
+A: a lower test loss
+
+In which year was GPT-3 released?
+A: 2020
+
+
+
+
+
+
