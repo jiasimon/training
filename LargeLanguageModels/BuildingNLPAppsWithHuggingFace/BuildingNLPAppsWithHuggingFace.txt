@@ -1,0 +1,139 @@
+Applied AI: Building NLP Apps with Hugging Face Transformers
+https://www.linkedin.com/learning/applied-ai-building-nlp-apps-with-hugging-face-transformers/building-nlp-apps-with-transformers?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64652610498e6f7f59ba5fb8&u=2111049
+
+Scope 
+
+Hugging face
+
+QA
+Text summarization
+Text generation
+
+Not coding transformer from scratch
+
+Anaconda
+
+
+M1: QA
+====
+Types of QA
+
+Two types:
+Open domain question
+
+Closed domain question, CDQA
+
+Build QA pipeline
+
+"how much of earth is land?"
+95%
+
+"how are mountain ranges created?"
+
+SQuAD metric
+
+F1 score
+Cumulative evaluation
+
+
+
+
+When performing question answering, tokenization and vectorization should be executed for
+A: context and question
+
+Closed domain question answering has higher resource requirements than open domain question answering.
+A: false
+
+The SQUAD metric uses which measure for determining the accuracy of question answering models?
+A: multiple measures
+
+
+
+
+M2: Text summarization
+=====
+
+Extractive summarization
+
+
+Abstractive summarization
+
+
+The BART model
+From facebook , use both encoder and decoder
+
+
+ROUGE score
+
+Which type of ROUGE metric uses the longest common subsequence based score to measure summarization effectiveness?
+A: ROUGE-L
+
+Which type of summarization produces a subset of sentences from the input text, verbatim?
+A: extractive summarization
+
+
+The BART Transformer architecture is similar to which other transformer architecture(s)?
+A: T5
+
+
+M3: Natural Language Generation
+====
+
+NLG
+
+Content genration
+
+Code_03_XX
+
+Conversation generation
+
+Translation
+
+
+One of the key challenges in building language models in machine learning is
+A: support for multiple languages
+
+Which transformer architectures can be used to build NLG tasks?
+A: GPT-3, BART, T5. all of  these
+
+A chatbot can be used for which task(s)?
+A: 
+Answer questions.
+Maintain context.
+Ask follow-up questions.
+
+
+M4: customizing models
+====
+
+Code_04_XX
+
+
+Loading dataset
+
+
+Which artifact in Hugging Face can be reused when building a custom model with transfer learning?
+A: all of these answers
+Tokenizer
+Dataset
+model
+
+
+
+When would you want to use customize a pretrained model?
+A: all of these answers
+when low use case and specific accuracy is needed
+when custom vocabulary is needed
+when a large model size is needed
+
+
+Which model compression technique will convert parameters to integer values?
+A: quantization
+
+Which key inference is a challenge with transformers?
+A: labeling
+
+You should be able to use multiple pre-trained models from Hugging Face in a single ML solution.
+A: TRUE
+
+
