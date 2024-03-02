@@ -1,0 +1,123 @@
+Large Language Models: Text Classification for NLP using BERT
+https://www.linkedin.com/learning/large-language-models-text-classification-for-nlp-using-bert/natural-language-processing-with-transformers?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64652610498e6f7f59ba5fb8&u=2111049
+
+BERT
+
+Git github repo
+
+NLP and transformers
+
+Google Colab
+
+Summarize into 3 sentenses
+
+How is EleutherAI's GPT-NeoX different than OpenAI's GPT-3?
+A: EleutherAI's GPT-NeoX and its datasets are open source, unlike OpenAI's GPT-3 release.
+
+Shea is using NLP to fill in the blank for the sentence, It is the national <mask> of Singapore. Of the following output he receives, which sentence is considered the least likely to be correct?
+It is the national anthem of Singapore. It is the national capital of Singapore. It is the national pride of Singapore.
+A: It is the national pride of Singapore.
+
+
+How does Google Search give responses to full sentence inquiries?
+A: It uses BERT to extract an answer from the context of the given search.
+
+
+M2: bias in BERT
+====
+Nurse. (. Female , male)
+
+Doctor ( male , female)
+
+Receptionist
+
+CEO
+
+Masked language model (MLM)
+
+Next sentence prediction (NSP)
+
+
+Transfer learning:
+Pretraining
+Fine tuning
+
+
+RoBERTa
+
+What does the Masked Language Modeling task require BERT to predict?
+A: a missing word in an otherwise complete sentence
+
+What do you use to train BERT for tasks such as text classification and question answering?
+A: labeled data
+Correct
+For sentiment analysis, for instance, you can supply text examples with associated labels.
+
+
+Why are Masked Language Modeling and Next Sentence Prediction required for BERT?
+A: They allow BERT to be trained with raw text.
+
+
+M3: transformer architecture
+=====
+
+Tokenizer
+
+Attention mask
+
+Self-attention
+
+Q
+K
+V
+
+Attention (Q, K, V)
+
+
+Why does BERT require segment embeddings?
+A: to distinguish between the first and second sentences in a text
+
+How does BERT turn words into subword tokens if the entire word of interest is not in BERT's vocabulary?
+A: It will remove characters from the end of the word until it recognizes a subword(s).
+
+
+What are the query, key, and value passed through for each attention head?
+A: linear layers
+Correct
+Linear layers are also known as dense layers.
+
+
+Why is using an encoder-only model beneficial?
+A: They are good at tasks that require understanding of input.
+Correct
+BERT is an example of an encoder-only model.
+
+
+Transformers calculate a weight for each using the dot product of the query and the key vectors. How does taking this dot product of two vectors reveal their similarity to each other?
+A: The larger the dot product, the more similar they are.
+Correct
+The score for each word is calculated using the dot product divided by the square root of the dimension of the vectors.
+
+
+Linear classifier
+
+IMDB dataset
+
+
+How should you list all the datasets available on the Hugging Face hub?
+A: from datasets import list_datasets list_datasets()
+
+How should you tokenize a dataset in BERT?
+A: Create a tokenize function and pass it as an argument to the dataset library's map method.
+
+Why should you train with a smaller subset of a dataset?
+A: to see whether you are getting the output you expected
+
+
+Batch size change from 8 to 16
+CUDA out of memories
+
+Full factory reset
+
+
+
