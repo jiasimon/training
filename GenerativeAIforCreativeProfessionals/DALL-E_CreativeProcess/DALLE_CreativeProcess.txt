@@ -188,6 +188,24 @@ Photo of a serious chess player
 
 
 
+M3: beyond DALL-E
+=====
+
+Midjourney
+
+Firefly
+
+"a happy felt cat sits in a colorful garden, daytime, macro photograph"
+
+
+How are these tolls trained?
+
+What outputs should be allowed?
+
+
+
+
+
 
 
 
