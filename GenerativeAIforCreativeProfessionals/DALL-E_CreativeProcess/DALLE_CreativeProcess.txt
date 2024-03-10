@@ -1,0 +1,133 @@
+DALL-E: the Creative Process and the Art of Prompting
+https://www.linkedin.com/learning/dall-e-the-creative-process-and-the-art-of-prompting/altering-images-with-in-painting-part-1?autoSkip=true&contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1cb6498ec198b2540ed7&resume=false&u=2111049
+
+DALL-E
+
+Ideation
+
+A sample of possibilities
+
+M1: DALL-E essentials
+====
+
+Google "an astronaut racoon on the moon"
+
+Type "an astronaut racoon on the moon" in DALL-E
+
+"a lonely robot holds a red balloon"
+
+"a lonely robot holds a red balloon, pen and ink drawing"
+
+"a lonely robot holds a red balloon, watercolor painting"
+
+"a lonely robot holds a red balloon, photograph"
+
+"a lonely robot holds a red balloon, macro photograph"
+
+"a lonely robot holds a red balloon, golden hour, macro photograph"
+
+"a black and white lonely robot holds a red balloon, golden hour, macro photograph"
+
+
+	1. Main subject, 
+	2. Secondary elements
+	3. Time of day, lighting, camera or other mood details
+	4. The overall style
+
+
+Push your aeshetic
+
+A vintage toy race car on a table, …
+Charcoal
+Oil painting
+Pen and ink
+Photographture
+
+
+In "oil painting"
+Cubism
+Dutch master
+Expressionism
+
+In photograph
+Polaroid
+Pinhole
+35 mm film
+
+Digital art
+Line art
+Pixel art
+Synthwave
+
+
+Camera
+Close-up
+Medium shot
+Wide angle
+Fisheye
+Dutch angle
+Motion blur
+
+Color
+Black and white
+Bright colors
+Cool/warm colors
+Sepia tone
+
+"A wicker basket of fruit on a table ,   ,   photograph"
+Daylight,
+Dusk
+Sepia
+Fisheye, high contract
+
+"full body view of a vintage robot running in a factory"
+
+"looking outside of a expansive patio and infinity pool"
+"exterior view of expansive patio and infinity pool"
+
+"a beautiful Chinese Girl in red dresses in a creek， daylight，photograph"
+
+"a beautiful Chinese Girl in red dresses in a creek， Dusk，photograph"
+
+"a beautiful Chinese Girl in red dresses in a creek, Sepia, photograph"
+
+"a beautiful Chinese Girl in red dresses in a creek, golden hour, photograph"
+
+"a beautiful Chinese Girl in red dresses in a creek, daylight, portrait photograph"
+
+
+
+Common miss steps and fixes
+
+	1. Poorly constructed prompts
+
+	2. Conflicting visual metaphors
+
+	3. AI knowledge gaps
+
+	4. Mutant hands
+
+
+Challenges:
+Presentation visuals
+
+"data travelling rapidly through the internet?"
+"computer data travelling though the internet digital art"
+"computer data travelling though the internet, 1s and 0s, digital art"
+
+"data travelling at global level?"
+"computer data travelling toward Earth, digital art"
+"computer data travelling around a 3D digital globe, digital art"
+
+
+Social media post
+
+" a woman walks in Paris towards the Eiffel Tower, daytime, 35mm,  travel photography"
+
+" a woman walks in Paris towards the Eiffel Tower, golden hour, 35mm,  travel photography"
+
+"close-up of a woman's happy face as she walks in Paris near the Eiffel Tower, golden hour, 35mm,  travel photography"
+
+
+
+
