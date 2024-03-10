@@ -131,3 +131,63 @@ Social media post
 
 
 
+M2: beyond the basics
+====
+Character design
+
+Inpainting 101
+
+
+"A cute fuzzy happy bee flying through a misty forest, Children's book illustration"
+
+Selecting the bee face
+Inpainting prompt:
+"a cute happy bee"
+
+Correcting errors:
+
+Double thumb 
+
+Correct the word in painting, "ROTOT"  to "ROBOT"
+
+
+Upload a image,
+
+People, portraits
+
+Realistic portraits
+
+"a happy grandmother, over a gray playground, photograph"
+
+"a balding older salesman in an old suit, over a gray background, photograph"
+
+"a punk rocker with a mohawk, over a gray background, photograph"
+
+"close-up of an old cowboy in a rugged hat, muted colors over a dark background, photograph"
+
+"a sad man wearing a bowling shirt sits alone at a diner, photograph"
+
+"close-up of a sad man wearing a bowling shirt sits alone at a diner,  narrow depth and field,  photograph"
+
+"wide shot of a punk rock man walking in London, photograph"
+
+"close-up of a punk rock man walking in London, depth and field, photograph"
+
+challenges
+"vintage route 66 signage ?"
+
+"a 1950s retro sign for  ( ) in the middle of the open desert, photograph"
+
+Photo of a serious chess player
+
+"a wise old man with a serious expression playing chess, the man is in focus and looks at the camera intently, depth of field, muted colors, 35mm film, movie scene"
+
+"a stylish woman from 1960s with a serious expression playing chess, the woman is in focus and looks at the camera intently, depth of field, muted colors, 35mm film, movie scene"
+
+
+
+
+
+
+
+
