@@ -1,0 +1,205 @@
+https://www.linkedin.com/learning/python-for-data-engineering-from-beginner-to-advanced/welcome-to-the-course?u=2111049
+
+
+M1: Python Basics
+=====
+Google Colab
+
+Google CoLab worksheet
+
+https://colab.research.google.com/
+
+https://colab.google/
+Click "New Notebook"
+
+Free Jupyter Notebook environment
+
+Create a new notebook
+
+Untitle.ipynb
+
+Hover over, Two options
+
+"+ Code"  , "+ Text"
+
+"save a copy in drive"
+
+Variables and data types
+
+Integer, float, string
+
+7 is an integer
+3.14 is a float
+
+ True is a boolean
+ bol_var = True
+
+
+Operators and expressions
+
+Arithmetic
+Comparision
+Logical
+
+Num1=7
+Num2= 10
+
+ sum = num1 + num2
+ print(sum)
+
+ ==
+!=
+< , >
+
+ var_equal = num1 == num2
+
+ var = num1 > num2
+
+ print ( True and False)
+
+ print ( True or False)
+
+ if num > 10:
+   print("Greater")
+ else:
+   print("Smaller")
+
+
+ for loop
+
+ for i in range (5):
+    print(i)
+0
+1
+2
+3
+4
+
+Range(5) is  0 to 4
+
+ while loop
+
+ number = 5
+ while number>0:
+      print(number)
+      number = number -1
+
+Functions
+
+Reusable code
+
+ def greet():
+    print("Hello World.")
+
+ greet()
+
+We will receive an error.
+
+#solution
+First try to run def greet()
+
+Then run 
+  greet()
+
+ def greet(name):
+     print("Hello   " + name)
+
+ greet("Kevin Jia")
+
+ def add_numbers(num1. num2):
+    return num1 + num2
+
+
+Modules and packages:
+ assemble a car,
+
+Pre-made parts
+
+
+String manipulation
+
+ replace method
+
+ greeting.replace('Hello', 'Hi')
+
+ sentence = '    Hello World.   "
+ print(sentence)
+
+ print(sentence.strip() )
+
+
+ index = greeting.find('Data')
+ 
+ format 
+ template = ' hello {}'
+
+ print(template.format('Kevin')  )
+
+ words = greeting.split()
+  print(words)
+
+Error handling 
+
+ print (10/0)
+ receive ZeroDivisionError
+
+ try:
+    print(10/0)
+ except ZeroDivisionError:
+    print("sorry you are dividing zero")
+
+
+ try:
+    print(10/0)
+ except:
+    print("sorry you are dividing zero")
+
+
+ try:
+    print(10/0)
+ except:
+    print("sorry you are dividing zero")
+  else:
+    print(" nothing wrong happened")
+  finally:
+    print("execute always")
+
+https://realpython.com/reverse-string-python/
+To slice a string, you can use the following syntax:
+Python
+a_string[start:stop:step]
+
+
+def reverse_string(text):
+# Your code goes here.
+return text[::-1]
+
+"".join(reversed("Hello, World!"))
+'!dlroW ,olleH'
+
+>>> def reversed_string(text):
+...     result = ""
+...     for char in text:
+...         result = char + result
+...     return result
+
+
+How can you create a variable called stored_variable that holds a float value of 7.0 in Python?
+A: stored_variable = 7.0
+
+How will you install the pandas package in Python?
+A: !pip install pandas
+
+In the following piece of Python script, how should you add to the code to have the message Smaller printed if the variable num is less than 10?
+A: else: 
+    print("Smaller")
+
+How can you connect to a new runtime environment in Google Colab?
+A: Select Connect.
+
+Which scenario best describes data engineering?
+A: collecting, validating, storing, and processing data to help make decisions
+
+
+
+
