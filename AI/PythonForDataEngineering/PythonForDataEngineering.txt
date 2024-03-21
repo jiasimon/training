@@ -344,6 +344,76 @@ Work with json file
 
 
 
+M4: pandas dataframe API
+====
+
+Multi types of data file handling
+
+Sort and filter data
+
+Math calc
+
+Read files as DataFrames
+
+
+Like a table
+
+ import pandas as pd
+ df = pd.read_csv('order.csv')
+
+
+Print all rows instead of limited row
+ print(df.to_string())
+
+
+import pandas as pd
+df = pd.read_json('anscombe.json')
+
+
+df = pd.read_excel('customer.xlsx')
+
+
+Data cleaning and pre-processing
+
+
+ new_df = df.dropna()
+
+
+ replace null with default
+
+ df.fillna(100, inplace=true)
+
+ df.fillna(100, inplace=True)
+
+ df["UnitsSold"].fillna(100, inplace=True)
+
+ df_new = df.drop_duplicates()
+
+
+
+Data manipulation and aggregation
+
+ new_df.aggregate('sum', 'min')
+
+
+
+ df.plot(x='Product', y='Sales', kind='bar')
+
+ plt.show()
+
+
+Write dataframes as files
+
+ merged_data.to_csv('Output.csv')
+
+
+ return df['price'].sum()
+
+
+
+
+
+
 
 
 
