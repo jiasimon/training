@@ -203,3 +203,107 @@ A: collecting, validating, storing, and processing data to help make decisions
 
 
 
+M2: Python Collections
+=====
+
+ collections: containers to hold multiple items, can be any type
+
+List
+
+Tuple: immutable. Records or structures
+Does not support data changes
+Represent a row in a table
+
+Set: support unique item
+
+Dictionary, support json
+
+Tuples
+Ordered, immutable, 
+
+ employee = (1, 'Kevin Jia', 'Indore', 98321 )
+
+ print(employee[1])
+Kevin Jia
+0-indexed
+
+ len(employee)
+
+print(employee[-1])
+98321
+
+ new_emp = list(employee)
+ new_emp[1] ='Dr. Kevin Jia' 
+
+
+ for x in employee
+    print(x)
+
+
+Lists:
+Ordered, allow duplicates
+
+ tasks = ['development', 'testing', 'monitoring']
+ print(tasks)
+
+ tasks.append('prod deployment')
+
+ tasks.insert(1, 'unit test')
+
+ tasks.pop(1)
+
+
+Sets
+ tasks = {'development', 'testing', 'monitoring' }
+ print(tasks)
+{ 'testing', 'monitoring',  'development'}
+
+Sets has no order
+
+tasks = {'development', 'testing', 'monitoring', 'testing' }
+
+ tasks.add('prod deployment') 
+
+ new_task = { 'unit testing' , 'release testing'}
+ tasks,update(new_task)
+
+ tasks.remove('testing')
+
+
+ dictionaries
+No duplicates
+
+ user = {'name' : 'Kevin', 'city':'SF', 'age':15   }
+ print(user)
+
+print(user['city'])
+
+ keys = user.keys()
+
+ values = user.values()
+
+ user.update('mobile':'4151234567')
+
+ new_user = user
+
+ new_user = user.copy()
+
+
+def find_smallest(numbers):
+    # Your code goes here.
+    res = 10000
+    for x in numbers:
+        if x < res:
+            res = x
+    return res
+
+
+ return min(numbers)
+
+
+
+
+
+
+
+
