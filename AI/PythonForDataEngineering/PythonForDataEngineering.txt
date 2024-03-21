@@ -302,6 +302,51 @@ def find_smallest(numbers):
 
 
 
+M3: Python file handling
+====
+File input/output, I/O
+
+CSV, JSON, XML
+
+Handling bad data in files
+
+
+ work with CSV file
+
+Like a table
+
+Separated by commas
+
+Use sample csv file in colab
+
+"california_housing_test.csv"
+
+ import csv
+  with open ('/content/sample_data/california_housing_test.csv', mode = 'r') as file:
+     csv_reader = csv.reader(file)
+     for row in csv_reader:
+        print(row) 
+
+
+
+
+Work with json file
+
+ import json
+ with open ('/content/sample_data/anscombe.json', mode = 'r') as file:
+ data = json.load(file)
+ print(data)
+
+
+
+ json.dump(data_file)
+
+
+
+
+
+
+
 
 
 
