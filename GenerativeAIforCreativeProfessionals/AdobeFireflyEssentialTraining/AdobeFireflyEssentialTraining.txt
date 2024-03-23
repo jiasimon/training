@@ -20,5 +20,57 @@ Free account,  monthly 25 credits
 
 
 
+M2: turning description into images
+====
+
+https://firefly.adobe.com/
+
+https://firefly.adobe.com/generate/images
+
+First text prompt
+
+"a wooden cabin"
+
+"interior of a wooden cabin"
+
+"interior of a wooden cabin, featuring a green couch, a library of books, and a winter landscape only visible through large windows"
+
+Firefly models
+
+
+Best practices
+	1. Descriptive
+	2. Detailed
+	3. Specific
+	4. Combined
+	5. Creative
+	
+Bad example:
+"A knight on a horse"
+
+" a hyper realistic, detailed image of a knight wearing armor and a blue shield, riding a white horse, on a sunny day, with a medieval castle visible in the background, wide shot, fantasy theme"
+
+
+Reference image upload
+
+"a detailed butterfly resting on a flower"
+
+"color and tone"
+
+"lighting"
+
+"composition"
+
+
+"modern tree hut, decorated with flowers, modern architecture"
+
+Adobe Express
+
+Pencil drawing
+
+"a colorful pencil "
+
+
+
 
 
