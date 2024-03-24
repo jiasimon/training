@@ -73,4 +73,37 @@ Pencil drawing
 
 
 
+M3: text effects
+=====
+
+FROZEN, 
+Prompt: ice crystal 
+
+Font: 
+
+Setting color, Fitting options
+
+"Match shape":  tight,  loose
+
+Change background color
+
+Select "transparent" background for  PS
+
+Use text effects in Adobe Express
+
+"light bulbs"
+
+Style function in adobe express
+
+"mint leaves" 
+
+Create design templates
+
+Milkshakes
+
+Copy image with "transparent background"
+
+
+
+
 
