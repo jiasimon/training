@@ -1,0 +1,46 @@
+Stable Diffusion: Tips, Tricks, and Techniques
+https://www.linkedin.com/learning/stable-diffusion-tips-tricks-and-techniques/what-is-stable-diffusion?contextUrn=urn%3Ali%3AlyndaLearningPath%3A64cc1cb6498ec198b2540ed7&u=2111049
+
+M1: Stable Diffusion basics
+=====
+
+What is the differences about stable Diffusion
+
+DALL-E, MidJourney
+
+Safe for work mode
+
+Open source,  can use Stable Diffusion for free
+
+Image to image
+
+Hugging face,  
+
+ mage.space
+
+Drawthings.ai  For iPad
+
+ diffusionbee.com for macOS
+
+https://allthingsai.com/
+
+Invokeai
+
+Edit the batch file, add "--listen"
+
+--xformers  --listen
+
+Then we can access instance from the network
+
+ ip :7860
+
+Google Colab
+
+Automatic1111
+
+https://www.mage.space/
+
+
+
+
+
