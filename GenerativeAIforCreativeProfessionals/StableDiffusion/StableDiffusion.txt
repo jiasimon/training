@@ -43,4 +43,54 @@ https://www.mage.space/
 
 
 
+M2:
+====
+Pompts
+
+Trained on LAION
+
+Convert text into numbers
+
+Tokenlization
+
+Automatic1111
+
+"oil painting of a dog"
+
+
+Stable diffusion seeds
+
+Random numeric pattern
+Noise pattern
+
+"Seed" field
+
+"-1". Random
+
+
+Batches and pixel counts
+
+Like fishing
+
+Increase batch counts from 1 to 4
+
+Batch count to 1, batch size to 4
+
+Suggestion:  batch count to 4, batch size to 1
+
+Txt2img tab
+
+Checkpoint(data model)
+
+1.4
+1.5 pruned
+
+Target image
+"Pocket Stonehenge"
+
+A photo of a person standing in front of Stonehenge
+
+
+
+
 
