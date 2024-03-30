@@ -92,5 +92,65 @@ A photo of a person standing in front of Stonehenge
 
 
 
+A photo of a person standing in front of Stonehenge, cloudy sky
+
+Questions to answer?
+
+The style of the image
+
+Camera angel or point of view
+
+What kind of lighting?
+
+Color treatment
+
+Not case sensitive
+
+Modifiers
+
+Octane render
+
+
+PNG information and save
+
+Tab "PNG info"
+Drop image
+
+Prompt, negative prompt
+
+"hands on hips"
+
+Folder:  "outputs -> txt2img -> 2023-03-14"
+
+Using "CFG scale"
+Guidance
+
+Select words to get more weights, command + upArrow
+(cloudy sky)
+((cloudy sky))
+
+
+1.x model
+
+2.x model
+
+Use artist's name
+
+Prompt engineering
+
+https://www.krea.ai/home
+
+https://openart.ai/presets
+
+
+A specific artist name in prompt
+
+Suggestion:  Not put A specific artist name in prompt
+
+
+
+
+
+
 
 
