@@ -1,0 +1,81 @@
+Apply storage concepts to Windows containers running on Azure Kubernetes Service (AKS) and AKS Hybrid
+https://learn.microsoft.com/en-us/training/modules/apply-storage-concepts-to-windows-containers/
+
+containers need to use external storage mechanisms that provide data persistence and sharing.
+
+These container orchestrators use persistent storage solutions like persistent volumes (PVs), persistent volume claims (PVCs), and Container Storage Interface (CSI) drivers.
+
+Storage concepts for containers
+
+Layer storage: can change where the files are stored using the docker-root(or equivalent with container) configuration, but you shouldn't modify any files in the layer directories
+
+
+Persistent storage
+give persistent storage to your Windows containers in a couple of ways:
+	• Bind mounts
+	• Named volumes
+
+if you want a container to run on multiple machines with access to the same files, then a named volume or SMB (Server Message Block) mount should be used instead. 
+
+docker run -v c:\ContainerData:c:\data
+
+Named Volumes
+docker volume create myvolume docker run -v myvolume:c:\data microsoft/windowsservercore
+
+
+A volume doesn't increase the size of the containers using it (just like bind mount), and the volume's contents exist outside the lifecycle of a given container.
+
+
+Storage concepts for Kubernetes
+
+Kubernetes architecture
+Control plane
+Nodes
+
+
+persistent storage
+volumes and bind mounts have some drawbacks when used in a distributed environment like Kubernetes.
+
+two abstractions: persistent volumes and persistent volume claims.
+
+PVs have a lifecycle independent of any individual Pod that uses the PV.
+
+A persistent volume claim (PVC) requests storage of a particular StorageClass, access mode, and size.
+
+Persistent volumes are a one-to-one mapping to a persistent volume claim.
+
+
+Windows container storage with Azure Kubernetes Service
+When you create an AKS cluster, a control plane is automatically created and configured. This control plane is provided at no cost 
+
+Container Storage Interface
+CSI is a standard for exposing arbitrary block and file storage systems to containerized workloads on Kubernetes.
+
+
+Azure Disks are mounted as ReadWriteOnce and are only available to one node in AKS. For storage volumes that can be accessed by multiple nodes simultaneously, use Azure Files.
+
+with version 1.26, AKS will no longer support volumes created using in-tree driver and storage provisioned for files and disk.
+
+
+A PersistentVolumeClaim requests storage of a particular StorageClass, access mode, and size. 
+
+
+Windows container storage with AKS Hybrid
+
+1. Which type of storage is used for file creation and file writes inside a Windows container?
+A: Scratch space
+
+2. What is a 'StorageClass'?
+A: An object that defines a set of parameters and policies for provisioning storage in the cluster.
+Correct. A 'StorageClass' is an object that defines the parameters of an Azure storage resource, including the storage tier, location and reclaim policy.
+
+3. What type of persistent storage volume in Azure Kubernetes Service (AKS) is available to multiple nodes at the same time?
+A: AKS Files
+
+Correct. AKS Files volumes backed by SMB or NFS file shares are mounted as ReadWriteMany and are available to multiple nodes concurrently.
+
+
+
+
+
+
