@@ -1,0 +1,82 @@
+Plan an Azure Kubernetes Service deployment
+https://learn.microsoft.com/en-us/training/modules/plan-azure-kubernetes-service-deployment/
+
+Azure Kubernetes Service
+Kubernetes provides a declarative approach to deployments, backed by a robust set of APIs for management operations.
+
+supports both stateless and stateful applications
+
+The Azure platform manages the AKS control plane, and you only pay for the AKS nodes that run your applications.
+
+Azure Container Registry. Use Container Registry to store private Docker images, which are deployed to the cluster. AKS can authenticate with Container Registry using its Azure AD identity. AKS doesn't require Azure Container Registry. You can use other container registries, such as Docker Hub.
+
+
+one master node connected to one or more worker nodes.
+
+• Control plane: provides the core Kubernetes services and orchestration of application workloads.
+• Nodes: run your application workloads.
+
+
+Developers and operators interact with the cluster primarily through the master node by using kubectl,
+
+The master node maintains the current state of the Kubernetes cluster and configuration in the etcd, a key value store database.
+
+
+Kubelet
+
+A pod represents a single instance of your application.
+
+Namespaces for Azure Kubernetes Service
+
+Namespace
+default
+kube-system
+kube-public
+
+
+Services
+ServiceTypes
+
+ClusterIP creates an internal IP address for use within the AKS cluster. This Service is good for internal-only applications that support other workloads within the cluster.
+
+NodePort creates a port mapping on the underlying node that allows the application to be accessed directly with the node IP address and port.
+
+LoadBalancer creates an Azure load balancer resource
+
+ExternalName
+Creates a specific DNS entry for easier application access.
+
+
+Azure virtual networks
+Kubenet networking
+Azure Container Networking Interface (CNI) networking
+
+
+The LoadBalancer only works at layer 4. At layer 4,
+Ingress controllers work at layer 7
+
+Azure Monitor stores metrics and logs in a central location called a Log Analytics workspace.
+
+
+Knowledge check
+1. What does Kubernetes provide for managing container-based applications?
+Kubernetes provides a declarative approach to deployments, backed by a robust set of APIs for management operations.
+
+2. What is the purpose of Pod Disruption Budgets in Kubernetes?
+To enable the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms.
+
+Correct. Pod Disruption Budgets enable the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms by defining restrictions on how many replicas in a deployment can be taken down during an update or node upgrade.
+
+
+3. What is the purpose of Kubernetes APIs such as kubectl or the Kubernetes dashboard?
+To interact with the control plane
+
+4. What is the purpose of defining resource requests and limits when creating a pod in Kubernetes?
+To request a certain amount of CPU or memory resources and prevent a pod from consuming too much compute resource from the underlying node
+
+
+You have earned an achievement!
+
+
+
+
