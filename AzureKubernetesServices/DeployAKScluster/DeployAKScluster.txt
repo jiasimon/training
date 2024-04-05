@@ -1,0 +1,67 @@
+Deploy an Azure Kubernetes Service cluster
+https://learn.microsoft.com/en-us/training/modules/deploy-azure-kubernetes-service-cluster/
+
+• Create an Azure Kubernetes Service cluster.
+• Configure Azure Kubernetes Service Components.
+• Connect to an Azure Kubernetes Service cluster.
+• Configure Microsoft Entra ID Integration.
+• Monitor an Azure Kubernetes Service cluster.
+
+
+Network topology
+
+the hub-spoke network topology
+
+Azure Bastion, and Azure Monitor for network observability.
+
+Azure Private Link connections are created for the Azure Container Registry and Azure Key Vault
+
+
+Plan the IP addresses
+
+In AKS, each node pool maps to a Virtual Machine Scale Set.
+
+
+Integrate Microsoft Entra ID for the cluster
+
+There are two ways to manage AKS to Azure access through Microsoft Entra ID: service principals or managed identities for Azure resources.
+
+
+By default, there are two primary identities used by the cluster, the cluster identity and the kubelet identity. 
+
+The first is using Microsoft Entra as an identity provider integrated with the native Kubernetes RBAC system. The other is using native Azure RBAC to control cluster access.
+
+Secure the network flow
+Ingress traffic
+Egress traffic
+Pod-to-pod traffic
+Management traffic:
+
+There are two approaches: autoscaling or manual scaling.
+
+The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that scales the number of pods.
+
+
+Try-This exercise - Create an Azure Kubernetes Service cluster
+
+
+
+1. What is the recommended approach for scaling Kubernetes clusters?
+A: Autoscaling
+Correct. Autoscaling is recommended because some of the manual mechanisms are built into the autoscaler, which can scale both pod replicas and the node count in the cluster.
+
+
+2. What does the kubectl command 'apply' do?
+A: Applies a configuration to a resource by filename or stdin
+
+
+3. Why is it important to consider the address space of the virtual network when setting up an AKS cluster?
+A: To ensure that all entities that receive traffic have an IP address allocated from the subnet address space
+
+
+4. What is the purpose of deploying Private Link endpoints in a dedicated subnet within the spoke virtual network?
+A: To enable granular security rules at the subnet level using network security groups.
+Correct. Deploying Private Link endpoints in a dedicated subnet within the spoke virtual network allows for granular security rules to be applied at the subnet level using network security groups, which can help improve security.
+
+
+
