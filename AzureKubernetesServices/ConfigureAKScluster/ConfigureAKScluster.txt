@@ -1,0 +1,52 @@
+Configure an Azure Kubernetes Service cluster
+https://learn.microsoft.com/en-us/training/modules/configure-azure-kubernetes-service-cluster/
+
+Enable and configure Azure Policy for Azure Kubernetes Service.
+Assign policy definitions to AKS
+Use namespaces to logically isolate workloads and resources.
+Enable host-based encryption for AKS agent nodes
+
+
+Azure Policy extends Gatekeeper v3, an admission controller webhook for Open Policy Agent (OPA)
+
+
+Try-This exercise - Enable Azure Policy add on for Azure Kubernetes Service
+
+
+
+Select Policies, and select Enable add-on. 
+
+
+Select Resource providers, and search for Microsoft.PolicyInsights.
+
+
+https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyMenuBlade/~/Definitions
+
+
+Host-based encryption on Azure Kubernetes Service
+By default, when using AKS, OS and data disks use server-side encryption with platform-managed keys. 
+
+Use host-based encryption on new clusters.
+az aks create --name myAKSCluster --resource-group myResourceGroup -s Standard_DS2_v2 -l westus2 --enable-encryption-at-host
+
+Use host-based encryption on existing clusters.
+az aks nodepool add --name hostencrypt --cluster-name myAKSCluster --resource-group myResourceGroup -s Standard_DS2_v2 --enable-encryption-at-host
+
+
+1. What is the purpose of Azure Policy in relation to Kubernetes clusters?
+A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms.
+
+2. What is host based encryption in Azure Kubernetes Service (AKS)?
+A: Enables encryption of data at rest on the VM host of AKS agent nodes using platform or customer managed keys, and encrypts data flows to the Storage service
+
+
+3. What are the two Azure built-in roles that have the appropriate Azure RBAC policy assignment operations to assign a policy definition to your Kubernetes cluster?
+A: Resource Policy Contributor and Owner
+Correct. Resource Policy Contributor and Owner have the appropriate Azure RBAC policy assignment operations to assign a policy definition to your Kubernetes cluster.
+
+4. What is the purpose of Azure Policy in relation to Kubernetes clusters?
+A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms.
+
+
+
+
