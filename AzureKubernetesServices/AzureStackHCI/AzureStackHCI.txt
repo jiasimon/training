@@ -1,0 +1,142 @@
+Manage Azure Kubernetes Service on Azure Stack HCI
+https://learn.microsoft.com/en-us/training/modules/manage-azure-kubernetes-service-azure-stack-hci/
+
+
+• Describe Kubernetes and Azure Kubernetes Service (AKS).
+• Describe Azure Kubernetes Service on Azure Stack HCI.
+• Deploy AKS and Kubernetes clusters.
+
+
+
+1. 
+While you were evaluating the suitability of using Kubernetes for containerized workloads you intend to deploy to Contoso's Azure Stack HCI environment, you realized that you will need to restrict users who use the same Kubernetes cluster from creating, viewing, or using containerized resources. Which Kubernetes feature should you use to restrict users?
+A: Namespaces
+Correct. Kubernetes offers the ability to isolate pods, services, deployments, and many other cluster components into namespaces. Namespaces form logical boundaries, which allow you to restrict access to create, view, or use cluster resources.
+
+
+1. You are preparing for deployment of containerized workloads by using Kubernetes on your existing Azure Stack HCI cluster that you set up for Contoso. You need to minimize the overhead associated with maintaining operating system images for the Kubernetes cluster nodes. What should you do first?
+A: Deploy the AKS cluster.
+Correct. AKS provides automated upgrades of cluster nodes to the latest available Kubernetes version.
+
+
+You're documenting the AKS installation procedure for Contoso's IT operational team that will be performing similar installations on many Azure Stack HCI clusters. You must list the prerequisites for installing the AKS extension for Windows Admin Center. Which step should you include in your list?
+A: Modifying Windows Admin Center feed manager settings.
+Correct. To install the extension, add the location of the downloaded package to the list of extension feeds within the extension manager of Windows Admin Center.
+
+
+You are documenting the procedure of creating a Kubernetes cluster for Contoso's IT operation team that will be performing similar installations on many Azure Stack HCI clusters. You need to describe the step to configure the size of the VMs used to host the control plane components of the Kubernetes cluster. Which of the following is that step?
+A: Basics
+Correct. During this step, specify the size of the VMs used to host the control plane components.
+
+
+Connect Azure Kubernetes Service on Azure Stack HCI to Azure Arc for Kubernetes
+
+Azure Arc consists of a set of technologies that simplify the administration of complex, distributed, hybrid environments
+
+
+For onboarding to succeed, the AKS on Azure Stack HCI cluster must contain at least one operational node in a Linux worker node pool.
+
+
+To promote operational excellence in Contoso, you decide to script the process of connecting Kubernetes clusters on Azure Stack HCI to Azure Arc for Kubernetes. You've a newly created subscription and want to ensure that the onboarding will complete successfully. What should you do after you successfully authenticate and access the target subscription?
+A: Register Azure Resource providers.
+Correct. You need to register the Microsoft.Kubernetes and Microsoft.KubernetesConfiguration Azure Resource Manager resource providers, necessary to implement Azure Arc enabled Kubernetes. This is a one-time only setup for a given subscription.
+
+
+Manage pods on multi-pool Kubernetes clusters
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeSelector:
+    kubernetes.io/os = Linux
+
+kubectl taint node <node_name> node.kubernetes.io/os=Windows:NoSchedule
+
+
+Contoso is planning to deploy Windows and Linux containerized workloads into AKS on Azure Stack HCI. You need to document the procedure that would ensure that Windows-based pods are deployed to the Kubernetes cluster nodes running Windows. You decided to use taints and tolerations for this purpose. To which cluster component should you apply the taint?
+A: Node
+Taints are part of node configuration.  Not Pod
+
+
+Manage pod storage on Kubernetes clusters
+
+Implement persistent volumes for AKS on Azure Stack HCI
+
+AKS on Azure Stack HCI offers the default storage class, which implements VHDX-based disks.
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvc-akshci
+spec:
+ accessModes:
+ - ReadWriteOnce
+ resources:
+  requests:
+   storage: 100Gi
+
+kubectl create -f pvc_definition.yaml
+
+
+To define a corresponding persistent volume for a pod
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: win-appserver
+spec:
+  containers:
+    - name: win-appserver
+      image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019 
+      volumeMounts:
+      - name: akshciscsi
+        mountPath: "/mnt/akshciscsi"
+  volumes:
+    - name: akshciscsi
+      persistentVolumeClaim:
+        claimName: pvc-akshci
+  nodeSelector:
+     kubernetes.io/os: windows
+
+kubectl create -f pv_definition.yaml
+
+
+Because Contoso developers are working on containerizing stateful workloads, you want to test the implementation of persistent pod storage by using your deployment of AKS on Azure Stack HCI. What do you have to define first?
+A: Persistent volume claim
+To implement a volume in a Kubernetes cluster, you need to first define a persistent volume claim.
+
+
+Implement containerized Windows workloads
+
+
+Contoso's Information Security team requests you to investigate the options for implementing AD DS-based authentication of Windows-based containerized workloads hosted by AKS on Azure Stack HCI. You start by deploying a Kubernetes cluster containing Windows Server nodes into your Azure Stack HCI cluster. What should you do next?
+A: Join the Kubernetes cluster Windows Server nodes to the AD DS domain.
+
+Correct. To provide the ability for pods to use gMSA for authentication, you must first join to an AD DS domain all of the Windows Server-based Kubernetes worker nodes that will host these pods.
+
+
+Troubleshoot Azure Kubernetes Service on Azure Stack HCI
+
+Troubleshoot Windows and Linux worker nodes
+kubectl get nodes -o wide
+
+By default, the private key is stored in the C:\ClusterStorage\AKS\AksHCI\.ssh\akshci_rsa file of the Azure Stack HCI cluster nodes.
+
+To reset the SSH keys and change their locations, run the Set-AksHciConfig PowerShell cmdlet.
+
+As part of evaluating AKS on Azure Stack HCI for Contoso, you are documenting the steps to connect to the newly deployed Windows Server nodes of a Kubernetes cluster. What authentication method should you use during such connections?
+A: Asymmetric key pair
+Correct. When establishing an SSH connection to a Windows node of a Kubernetes cluster, you need to provide the location of the private key of the asymmetric key pair generated during cluster provisioning.
+
+
+
+
+
+
