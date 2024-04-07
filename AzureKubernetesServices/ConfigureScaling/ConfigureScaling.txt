@@ -1,0 +1,77 @@
+Configure scaling in Azure Kubernetes Service
+https://learn.microsoft.com/en-us/training/modules/configure-scaling-azure-kubernetes-service/
+
+• Manually scaling pods or nodes
+• Using the Horizontal pod autoscaler
+• Using the Cluster autoscaler
+• Integrating with Azure Container Instances (ACI)
+
+
+manually scaling pods or nodes and integrating with Azure Container Instances (ACI).
+
+Scaling options in Azure Kubernetes Services
+
+
+Kubernetes uses the horizontal pod autoscaler (HPA) 
+
+HPA is updated every 60 seconds.
+
+The cluster autoscaler is typically used alongside the horizontal pod autoscaler. 
+
+Scale out events
+
+Scale in events
+
+Burst to Azure Container Instances
+To rapidly scale your AKS cluster, you can integrate with Azure Container Instances (ACI).
+
+
+Try-This exercise - Scale the node count in an Azure Kubernetes Service cluster
+
+
+From Overview, select Node pools. 
+
+Select the node pool.
+
+Select Scale node pool.
+
+Select Autoscale - Recommended and set the minimum and maximum node count.
+
+Select Apply to enable node scaling.
+
+
+Enable the cluster autoscaler on a new cluster
+
+	1. Create a resource group using the az group create command.
+az group create --name myResourceGroup --location eastus
+
+
+	2. Create an AKS cluster using the az aks create command 
+az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 1 --vm-set-type VirtualMachineScaleSets --load-balancer-sku standard --enable-cluster-autoscaler --min-count 1 --max-count 3
+
+
+
+Enable the cluster autoscaler on an existing cluster
+
+az aks update --resource-group myResourceGroup --name myAKSCluster --enable-cluster-autoscaler --min-count 1 --max-count 3
+
+
+Disable the cluster autoscaler
+az aks update --resource-group myResourceGroup --name myAKSCluster --disable-cluster-autoscaler
+
+
+1. What is the purpose of the Horizontal Pod Autoscaler in Azure Kubernetes Service?
+A: To monitor resource demand and automatically scale the number of pods based on defined metrics such as CPU usage
+
+2. What is the purpose of the Kubernetes cluster autoscaler?
+A: To adjust the number of nodes based on the requested compute resources in the node pool
+Correct. The cluster autoscaler adjusts the number of nodes in the AKS cluster based on the requested compute resources in the node pool to ensure that there are enough resources to run the pods.
+
+3. What is the purpose of the cluster autoscaler component in AKS?
+A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms.
+
+
+
+
+
+
