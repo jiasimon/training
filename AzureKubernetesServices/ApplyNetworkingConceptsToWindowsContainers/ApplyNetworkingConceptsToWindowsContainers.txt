@@ -1,0 +1,76 @@
+Apply Networking concepts to Windows containers running on Azure Kubernetes Service (AKS)
+https://learn.microsoft.com/en-us/training/modules/apply-networking-concepts-to-windows-containers/
+
+
+• Describe networking concepts for Windows containers.
+• Describe networking concepts for Kubernetes containers.
+
+
+Container runtime: Docker
+
+An internal virtual switch isn't directly connected to a physical NIC on the container host, only an external virtual switch is directly connected.
+
+
+Container network interface (CNI) plugins
+
+The processor in a standard Windows computer has a kernel mode and a user mode.
+
+Windows containers support two types of runtime isolation: Process and Hyper-V. 
+
+Network management with Host Network Service (HNS)
+
+port ACLs are enforced by a combination of the Windows Firewall and Azure Virtual Filtering Platform (VFP). 
+
+Windows supports five different networking drivers or modes for Docker containers: NAT, Transparent, Overlay, L2Bridge, and L2Tunnel.
+
+
+Networking concepts for Kubernetes containers
+
+Pods can communicate with one another across nodes without Network Address Translation (NAT).
+
+Nodes and pods can communicate with each other without NAT.
+
+two networking options: Services and Ingress controllers.
+
+
+ClusterIP creates an internal IP address for use within the cluster. This service is good for internal-only applications that support other workloads within the cluster. This is the default that's used
+
+
+NodePort creates a port mapping on the underlying node that allows the application to be accessed directly with the node IP address and port.
+
+
+LoadBalancer creates a load balancer resource, configures an external IP address, and connects the requested pods to the load balancer backend pool.
+
+
+Network policies offer a cloud-native approach that’s ideal for controlling traffic across Kubernetes pods.
+
+
+To deploy Windows Server containers on AKS, your configuration must satisfy the following requirements:
+	• Use the Azure CNI network plugin for your Kubernetes cluster.
+	• Use Windows Server 2019 or later for your Windows nodes. Earlier versions of Windows Server don’t support overlay networks, which are required by Azure CNI.
+	• Use Kubernetes version 1.14 or later. Earlier versions of Kubernetes don’t support Windows nodes or pods.
+
+
+Azure Kubernetes Service (AKS) Hybrid is a feature that enables you to extend your AKS cluster to run on-premises or on other clouds.
+
+AKS Hybrid with Azure Arc
+
+In AKS Hybrid, you can deploy a cluster by using the Flannel Overlay or Project Calico networking model. Both implementations use an overlay network configuration model. 
+
+
+1. Which types of virtual switches are used in container networking?
+A: NAT, Transparent, Overlay
+Correct. Windows containers on Kubernetes require Azure container network interface (CNI) plugins. The Azure CNI plugin is an overlay virtual switch network solution. Two examples include Flannel Overlay and Project Calico.
+
+
+What two types of runtime network isolation are supported for Windows containers?
+A: Process, Hyper-V
+Correct. Windows containers support Process and Hyper-V network isolation. Under process isolation, containers on the same host support isolation through the namespace, resource control settings, and other process functions. Under Hyper-V isolation, each container runs in an optimized virtual machine that provides hardware-level isolation between the container and the host.
+
+
+What's the purpose of an ingress controller in a Kubernetes networking configuration?
+A: Configure traffic routing for Kubernetes services
+Correct. When you use ingress rules with an ingress controller, you can configure a single IP address to route network traffic to multiple services in a Kubernetes cluster.
+
+
+
