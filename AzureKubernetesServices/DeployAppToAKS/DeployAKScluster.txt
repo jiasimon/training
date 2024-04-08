@@ -1,0 +1,305 @@
+Deploy applications to Azure Kubernetes Service
+https://learn.microsoft.com/en-us/training/modules/deploy-applications-azure-kubernetes-service/
+
+• Provision an AKS cluster.
+• Install the Azure Policy add-on for Azure Kubernetes Service.
+• Assign an Azure Policy initiative to an Azure Kubernetes Service cluster
+
+Configure Azure Kubernetes pods using Azure Policy
+
+first install the Azure Policy add-on for AKS.
+
+Kubernetes cluster pod security baseline standards for Linux-based workloads.
+Kubernetes cluster pod security restricted standards
+
+
+• From your computer, open a web browser window and navigate to the Azure portal at https://portal.azure.com.
+• In the Azure portal, select the Azure Cloud Shell icon.
+• If prompted to select either Bash or PowerShell, select Bash.
+• Ensure that Bash appears in the drop-down menu in the upper-left corner of the Cloud Shell pane.
+• To create a resource group to host the AKS cluster, in the Bash session in the Azure Cloud Shell, run the following commands. You can replace eastus with the name of another Azure region where you can create AKS clusters:
+
+AKSRG='aks-01-RG'
+LOCATION='eastus'
+az group create --name $AKSRG --location $LOCATION
+
+
+To create an AKS cluster, run the following commands:
+AKSNAME='aks-01'
+az aks create --resource-group $AKSRG --name $AKSNAME --enable-managed-identity --node-count 1 --generate-ssh-keys
+
+to connect to the AKS cluster, run the following command:
+az aks get-credentials --resource-group $AKSRG --name $AKSNAME
+
+
+To verify that the connection was successful, run the following command:
+kubectl get nodes
+
+
+
+install the Azure Policy add-on for AKS.
+
+To install the Azure Policy add-on, you need to ensure that the Microsoft.PolicyInsights resource provider is registered in your subscription. From the Bash session in the Azure Cloud Shell in the Azure portal, run the following commands to verify:
+
+az provider register --namespace Microsoft.PolicyInsights
+az provider show --namespace Microsoft.PolicyInsights --output table
+
+
+To install the add-on, run the following commands:
+AKSRG='aks-01-RG'
+AKSNAME='aks-01'
+az aks enable-addons --addons azure-policy --name $AKSNAME --resource-group $AKSRG
+
+
+kubectl get pods --namespace kube-system
+kubectl get pods --namespace gatekeeper-system
+
+
+To verify that, at this point, no Azure Policy constraints are applied to the target cluster, run the following command:
+kubectl get constrainttemplates
+
+
+
+In the Azure portal, in the Bash session of Azure Cloud Shell, use the built-in editor to create a file named nginx-privileged.yaml and copy it into the YAML manifest.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-privileged
+spec:
+  containers:
+    - name: nginx-privileged
+      image: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+      securityContext:
+        privileged: true
+
+
+Save the changes to the file and close it to return to the Bash prompt.
+
+Attempt deploying a pod based on the YAML manifest by running the following command:
+kubectl apply -f nginx-privileged.yaml
+
+
+Verify that the deployment fails with an error message that resembles the following one.
+Error from server (Forbidden): error when creating "nginx-privileged.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [azurepolicy-k8sazurev2noprivilege-a759592cb6adc510dcfa] Privileged container isn't allowed: nginx-privileged, securityContext: {"privileged": true}
+
+
+Configure storage for applications running on AKS
+
+Application-level access to structured or semi-structured data For structured or semi-structured data, use a platform managed database, such as Azure SQL, Azure Database by MySQL, Azure Database for PostgreSQL, and Cosmos DB.
+
+File-level access to data.
+use either Azure NetApp Files or the premium tier of Azure Files
+
+Block-level access to data
+Use disks for storage
+
+AKS volume types include:
+	• emptyDir is used as temporary space for pods. 
+	• secret is used to inject into pods sensitive data, such as passwords.
+	• configMap is used to inject into pods key-value pair properties
+	• PersistentVolume (PV) is a block or file storage resource created and managed by the Kubernetes API that has the ability to persist beyond the lifetime of a pod.
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium-retain
+  resources:
+    requests:
+      storage: 5Gi
+
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: myfrontend
+      image: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+      volumeMounts:
+      - mountPath: "/mnt/azure"
+        name: volume
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: azure-managed-disk
+
+
+
+Deploy AKS workloads with Helm
+
+Helm is a package manager for Kubernetes.
+
+
+When you create an AKS cluster, the following namespaces are available:
+default
+
+kube-system
+
+kube-public
+
+Configure storage for applications that run on Azure Kubernetes Service
+
+Create a custom storage class in an AKS cluster
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-premium-retain
+provisioner: disk.csi.azure.com
+parameters:
+  skuName: Premium_LRS
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion:
+
+
+kubectl apply -f premium-storage-class.yaml
+
+
+Create a persistent volume claim in an AKS cluster
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium-retain
+  resources:
+    requests:
+      storage: 5Gi
+
+
+kubectl apply -f persistent-volume-claim-5g.yaml
+
+
+Deploy a pod with a persistent volume mount in an AKS cluster
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: myfrontend
+      image: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+      volumeMounts:
+      - mountPath: "/mnt/azure"
+        name: volume
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: azure-managed-disk
+
+
+kubectl apply -f pod-with-storage-mount.yaml
+
+
+Validate the effect of the volume mount
+kubectl get pods
+
+kubectl exec -i nginx -- sh -c "ls /mnt/azure"
+
+kubectl delete pod nginx
+
+kubectl apply -f pod-with-storage-mount.yaml
+
+kubectl exec -i nginx -- sh -c "ls /mnt/azure"
+
+
+Delete the resources provisioned in the exercise
+kubectl get pvc
+kubectl delete pvc azure-managed-disk
+
+To list and delete the storage class, run the following commands:
+kubectl get sc
+kubectl delete sc managed-premium-retain
+
+
+
+Try-This exercise - Deploy an application to Azure Kubernetes Service cluster
+
+From the Azure portal, open a Bash session in the Azure Cloud Shell and run the following commands.
+kubectl create namespace demo-deployment
+kubectl get namespaces
+
+
+Run the following command to add a node to the AKS cluster.
+az aks show --resource-group $AKSRG --name $AKSNAME --query agentPoolProfiles
+az aks scale --resource-group $AKSRG --name $AKSNAME --node-count 2 --nodepool-name nodepool1
+
+Create a deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: mcr.microsoft.com/oss/nginx/nginx:1.15.2-alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+
+
+kubectl apply -f nginx-deployment.yaml --namespace demo-deployment
+
+
+kubectl get deployments --namespace demo-deployment
+kubectl get pods --namespace demo-deployment
+kubectl get rs --namespace demo-deployment
+
+
+Update the deployment
+kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --namespace demo-deployment
+
+kubectl get deployments --namespace demo-deployment
+kubectl get pods --namespace demo-deployment
+kubectl get rs --namespace demo-deployment
+
+
+1. What is the benefit of using Kubernetes Deployments instead of scheduling individual pods?
+A: Deployments enable automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms
+Correct. Deployments enable automation and validation of the creation and teardown of environments, which helps deliver secure and stable application hosting platforms by ensuring high availability and redundancy.
+
+2. What is the purpose of a StorageClass in AKS?
+A: To define storage characteristics and the reclaim policy for underlying Azure storage resources
+
+
+
+3. What is the purpose of creating a custom storage class in an AKS cluster?
+A: To define the properties of a persistent volume that will be used by a persistent volume claim
+
+
+4. What are the storage options available for AKS containerized workloads?
+A: Choose from platform managed databases, disks, and file and blob storage.
+Correct. AKS supports both stateless and stateful workloads. To accommodate this requirement, you can apply a range of native Azure services, including managed databases, disks, and file and blob storage. Each of these options offers different SKUs, sizes, and performance characteristics.
+
+
+
+
+
+
