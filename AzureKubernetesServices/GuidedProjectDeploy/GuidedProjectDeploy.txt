@@ -1,0 +1,222 @@
+Guided Project - Deploy applications to Azure Kubernetes Service
+https://learn.microsoft.com/en-us/training/modules/project-deploy-applications-azure-kubernetes-service/
+
+• Provisioning Azure Container Registry (ACR) and Azure Kubernetes Service (AKS).
+• Building a Linux and Windows container images and store them in Azure Container Registry.
+• Deploying container images to Azure Kubernetes Service
+
+
+Exercise - Provision Azure Container Registry and Azure Kubernetes Service
+
+Task 1: Create an Azure Container registry
+https://portal.azure.com.
+In the Azure portal, in the Search text box, search for and select Container registries
+
+On the Container registries page, select + Create and specify the following settings:
+
+Resource Group  The name of a new resource group acr-01-RG
+Availability zones  None
+SKU Basic
+
+On the Container registries page, select Review + create and, on the Review + create tab, select Create.
+
+
+Task 2: Create an Azure virtual network and an AKS cluster
+In the Azure portal, in the Search text box, search for and select Virtual networks
+On the Virtual networks page, select + Create and then, on the Basics tab of the Create virtual network page, specify the following settings:
+
+Resource Group  The name of a new resource group aks-01-RG
+Virtual network name  vnet-01
+
+On the Basics tab of the Create virtual network page, select Next.
+On the Security tab of the Create virtual network page, accept the default settings and select Next.
+
+On the IP addresses tab of the Create virtual network page, ensure that the IP address space is set to 10.0.0.0/16, delete the default subnet, select Review + create and, on the Review + create tab, select Create.
+
+In the Azure portal, in the Search text box, search for and select Kubernetes services.
+On the Kubernetes services page, select + Create, in the dropdown list, select Create a Kubernetes cluster, and then, on the Basics tab of the Create Kubernetes cluster page, specify the following settings and then select Next:
+
+Resource Group  aks-01-RG
+Cluster preset configuration  Dev/Test
+Availability zones  None
+AKS pricing tier  Free
+Node security channel type  None
+Authentication and Authorization  Local accounts with Kubernetes RBAC
+
+On the Node pools tab of the Create Kubernetes cluster page, perform the following tasks:
+  • In the Node pools section, select the agentpool link.
+  • On the Update node pool page, in the Node size section, select the Choose a size link.
+  • On the Select a VM size page, in the list of VM sizes, select B4ms and then click Select.
+  • Back on the Update node pool page, set Scale method to Manual and Node count to 2.
+  • On the Update node pool page, select Update.
+
+
+1. Back on the Node pools tab of the Create Kubernetes cluster page, select Next.
+2. On the Networking tab of the Create Kubernetes cluster page, select the Azure CNI option,, select the Bring your own virtual network checkbox, in the Virtual network dropdown list, select vnet-01, and below the Cluster subnet textbox, select Manage subnet configuration.
+3. On the vnet-01 | Subnets page, select + Subnet.
+4. On the Add subnets page, specify the following settings and select Save:
+Name  aks-subnet
+Subnet address range  10.0.0.0/20
+
+5. Back on the vnet-01 | Subnets page, in the breadcrumb trail in the top-left part of the page, select Create Kubernetes cluster.
+6. Back on the Networking tab of the Create Kubernetes cluster page, specify the following settings:
+Setting Value
+Virtual network vnet-01
+Cluster subnet  aks-subnet (10.0.0.0/20)
+
+7. On the Networking tab of the Create Kubernetes cluster page, select Previous.
+8. Back on the Node pools tab of the Create Kubernetes cluster page, select + Add node pool.
+9. On the Add node pool page, specify the following settings:
+Setting Value
+Node pool name  w1pool
+Mode  User
+OS type Windows 2022
+Availability zone None
+Enable Azure spot instances Disabled
+Node size B4ms
+Scale method  Manual
+Node count  2
+Max pods per node 30
+Enable public IP per node Disabled
+
+10. On the Add node pool page, select Add.
+11. Back on the Node pools tab of the Create Kubernetes cluster page, select Next.
+12. On the Networking tab of the Create Kubernetes cluster page, select Next.
+13. On the Integration tab of the Create Kubernetes cluster page, in the Container registry dropdown list, select the entry representing the Azure Container registry you created in the previous exercise, disable the Enable recommended alert rules checkbox, ensure that Azure Policy option is disabled, and select Next.
+14. On the Monitoring tab of the Create Kubernetes cluster page, de-select the Enable Prometheus metrics checkbox and then select Review + create.
+15. On the Review + create tab of the Create Kubernetes cluster page, select Create.
+
+
+
+Exercise 2: Build a Linux and Windows container images and store them in ACR
+In this task, you will use a ACR task to build a Linux container image and automatically push it into the ACR.
+  1. In the Azure portal, select the Cloud Shell icon.
+  2. If prompted to select either Bash or PowerShell, select Bash.
+  3. If prompted, select Create storage, and wait until the Azure Cloud Shell pane is displayed.
+  4. Ensure that Bash appears in the drop-down menu in the upper-left corner of the Cloud Shell pane.
+  5. From the Bash session within Cloud Shell, create a directory that will host the Dockerfile for the Linux image and change to it from the current directory by running the following commands:
+mkdir ~/image-l01 
+cd ~/image-l01
+
+In the Bash session of Azure Cloud Shell, use the built-in editor to create a file named server.js in the image-l01 directory and copy into it the following content:
+const http = require('http')
+const port = 80
+const server = http.createServer((request, response) => {
+  response.writeHead(200, {'Content-Type': 'text/plain'})
+  response.write('Hello World from Node\n')
+  response.end('Version: ' + process.env.NODE_VERSION + '\n')
+})
+server.listen(port)
+console.log(`Server running at http://localhost: ${port}`)
+
+In the Bash session of Azure Cloud Shell, use the built-in editor again to create a file named package.json in the image-l01 directory and copy into it the following content:
+{
+  "name": "helloworld",
+  "version": "1.0.0",
+  "description": "Sample app for ACR Build",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "license": "MIT"
+}
+
+
+16. Save the changes to the file and close it to return to the Bash prompt.
+17. In the Bash session of Azure Cloud Shell, use the built-in editor again to create a file named Dockerfile in the image-l01 directory and copy into it the following content:
+FROM node:20.2-alpine
+COPY . /src
+RUN cd /src && npm install
+EXPOSE 80
+CMD ["node", "/src/server.js"]
+
+18. Save the changes to the file and close it to return to the Bash prompt.
+19. From the Bash session of Azure Cloud Shell, identify the name of your Azure Container registry you created earlier in this exercise and store it in a variable named $ACRNAME by running the following commands:
+ACR_RGNAME='acr-01-RG'
+ACR_NAME=$(az acr list --resource-group $ACR_RGNAME --query "[].name" --output tsv)
+
+From the Bash session of Azure Cloud Shell, create a Docker image based on the Dockerfile stored in the current directory and push it automatically to the Azure Container registry which name is stored in the $ACRNAME variable by running the following command (make sure to include the trailing period):
+
+az acr build --registry $ACR_NAME --image hellofromnode:v1.0 .
+
+
+1. From the Bash session within Cloud Shell, create a directory that will host the Dockerfile for the Windows image and change to it from the current directory by running the following commands:
+CodeCopy
+mkdir ~/image-w01
+cd ~/image-w01
+2. From the Bash session of Azure Cloud Shell, clone a public GitHub repo hosting the files you’ll use to build the Windows image and switch the current directory to the cloned repo by running the following commands:
+CodeCopy
+git clone https://github.com/Azure-Samples/dotnetcore-docs-hello-world.git
+cd ~/image-w01/dotnetcore-docs-hello-world
+
+Note: The repo contains the source code for a .NET 7 web app which displays the message Hello World from .NET 7.
+3. From the Bash session of Azure Cloud Shell, create a Docker image based on the Dockerfile stored in the current directory and push it automatically to the Azure Container registry which name is stored in the $ACRNAME variable by running the following command (make sure to include the trailing period):
+CodeCopy
+az acr build --registry $ACR_NAME --image hellofromdotnet:v1.0 --platform windows --file Dockerfile.windows .
+
+Note: The name of the Dockerfile defining the Windows image build is Dockerfile.windows.
+Note: Track the progress of the build and make sure it completes successfully. This should take less than 3 minutes.
+4. Close the Azure Cloud Shell pane.
+5. In the Azure portal, navigate to the Container registries page and select the entry representing the Container registry to which you pushed both images.
+6. On the Container registry page, in the vertical hub menu, select Repositories and verify that hellofromnode and hellofromdotnet appear in the list of repositories.
+
+
+https://microsoftlearning.github.io/deploy-and-manage-containers-with-azure-kubernetes-service/Instructions/Labs/Exercise_03_deploy_container_images_azure_kubernetes_service.html
+
+Task 1: Create custom AKS namespaces
+In this task, you will create two namespaces on the AKS cluster you created earlier in this lab.
+  1. In the Azure portal, in the Search text box, search for and select Kubernetes services.
+  2. On the Kubernetes services page, select aks-01.
+  3. On the aks-01 page, in the vertical hub menu, select Namespaces.
+  4. On the aks-01 | Namespaces page, select + Create and, in the dropdown menu, select Namespace.
+  5. On the Create a namespace pane, in the Name textbox, enter dev-node and select Create.
+  6. On the aks-01 | Namespaces page, select + Create and, in the dropdown menu, select Namespace.
+  7. On the Create a namespace pane, in the Name textbox, enter dev-dotnet and select Create.
+
+
+
+https://microsoftlearning.github.io/deploy-and-manage-containers-with-azure-kubernetes-service/Instructions/Labs/Exercise_04_review_deployment_deprovision.html
+Task 1: Review the AKS deployments and services
+In this task, you will review results of both deployments, including the deployments and services objects.
+  1. From the Bash session of Azure Cloud Shell, display the status of both deployments by running the following commands:
+
+kubectl get deployments -n=dev-node
+kubectl get deployments -n=dev-dotnet
+
+From the Bash session of Azure Cloud Shell, display the status of the two services which were included in the manifest files by running the following commands:
+
+kubectl get services -n=dev-node
+kubectl get services -n=dev-dotnet
+
+Verify that the listing for each service includes a value in the EXTERNAL-IP column.
+
+Use a web browser to navigate to the IP addresses you identified in the previous step and verify that the resulting web pages display the Hello World from Node and Hello World from .Net 7 messages, respectively.
+
+az resource list --resource-group 'acr-01-RG' --query "[].name" --output tsv
+az resource list --resource-group 'aks-01-RG' --query "[].name" --output tsv
+
+az group delete --name 'acr-01-RG' --no-wait --yes
+az group delete --name 'aks-01-RG' --no-wait --yes
+
+
+1. What is the purpose of the service included in the YAML manifest file?
+A: To provide load balanced access to the pods in the deployment via a public IP address on port 80
+Correct. The service is used to provide load balanced access to the pods in the deployment via a public IP address on port 80.
+
+
+2. What is the purpose of enabling DevOps practices in creating and tearing down environments?
+A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms
+
+
+3. What is the purpose of creating an Azure Container Registry and an AKS cluster?
+A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms
+Correct. By creating an Azure Container Registry and an AKS cluster, you can automate and validate the creation and teardown of environments, which helps deliver secure and stable application hosting platforms
+
+
+What does Azure CNI enable in AKS?
+ A: Enables the automation and validation of the creation and teardown of environments to help deliver secure and stable application hosting platforms
+
+
+
+
