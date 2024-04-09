@@ -1,0 +1,29 @@
+Configure Azure CNI networking in Azure Kubernetes Service (AKS)
+https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni?tabs=configure-networking-portal
+
+1. Sign in to the Azure portal.
+2. In the search box at the top of the portal enter Kubernetes services, select Kubernetes services from the search results.
+3. Select + Create then Create a Kubernetes cluster.
+4. In Create Kubernetes cluster enter or select the following information:
+
+Setting	Value
+Project details	
+Subscription	Select your subscription.
+Resource group	Select test-rg.
+Cluster details	
+Cluster preset configuration	Leave the default of Production Standard.
+Kubernetes cluster name	Enter aks-cluster.
+Region	Select (US) East US 2.
+Availability zones	Leave the default of Zones 1,2,3.
+AKS pricing tier	Leave the default of Standard.
+Kubernetes version	Leave the default of 1.26.6.
+Automatic upgrade	Leave the default of Enabled with patch (recommended).
+Authentication and Authorization	Leave the default of Local accounts with Kubernetes RBAC.
+
+5. Select Next: Node pools >, then Next: Networking >.
+6. In Container networking in the Networking tab, verify that Azure CNI is selected.
+7. Select Review + create.
+8. Select Create.
+
+
+
