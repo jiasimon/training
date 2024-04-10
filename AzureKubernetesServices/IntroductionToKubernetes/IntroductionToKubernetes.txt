@@ -1,0 +1,183 @@
+Introduction to Kubernetes
+https://learn.microsoft.com/en-us/training/modules/intro-to-kubernetes/
+
+• Describe how Kubernetes supports container orchestration.
+• Describe the difference between control planes and nodes.
+• Evaluate whether Kubernetes is an appropriate orchestration platform for a given workload.
+
+
+Containers are an excellent choice when developing software based on microservice architectures.
+
+container management and orchestrators.
+
+Kubernetes is a portable, extensible open-source platform for your management and orchestration of containerized workloads
+
+Kubernetes doesn't limit the types of apps that can run on the platform. If your app can run in a container, it can run on Kubernetes. 
+
+
+Kubernetes is sometimes abbreviated to K8s. The 8 represents the eight characters between the K and the s of the word K[ubernete]s.
+
+
+Kubernetes control plane
+
+A node in a Kubernetes cluster is where your compute workloads run
+
+The following services make up a Kubernetes cluster's control plane:
+  • API server
+  • Backing store
+  • Scheduler
+  • Controller manager
+  • Cloud controller manager
+
+
+You can think of the API server as the front end to your Kubernetes cluster's control plane
+
+The backing store is a persistent storage in which your Kubernetes cluster saves its completed configuration
+
+Kubernetes uses a high-availability, distributed, and reliable key-value store called etcd
+
+etcd isn't responsible for data backup. It's your responsibility to ensure that an effective backup plan is in place to back up the etcd data.
+
+
+The scheduler is the component that's responsible for the assignment of workloads across all nodes.
+
+The controller manager launches and monitors the controllers configured for a cluster through the API server.
+
+The cloud controller manager integrates with the underlying cloud technologies in your cluster when the cluster is running in a cloud environment. These services can be load balancers, queues, and storage
+
+
+Services that run on a node
+The following services run on the Kubernetes node:
+  • Kubelet
+  • Kube-proxy
+  • Container runtime
+
+The kubelet is the agent that runs on each node in the cluster and monitors work requests from the API server.
+
+The kube-proxy component is responsible for local cluster networking, and runs on each node.
+
+The container runtime is the underlying software that runs containers on a Kubernetes cluster.
+
+Kubernetes supports several container runtimes, including but not limited to Docker, containerd, rkt, CRI-O, and frakti. 
+
+Container Runtime Interface (CRI)
+
+Kubernetes provides a command-line tool called kubectl to manage your cluster.
+
+A pod represents a single instance of an app running in Kubernetes. 
+
+
+
+How Kubernetes deployments work
+
+The options are:
+  • Pod templates
+  • Replication controllers
+  • Replica sets
+  • Deployments
+
+Templates are defined by using YAML in the same way as when you create Docker files.
+
+A replication controller uses pod templates and defines a specified number of pods that must run.
+
+A replica set replaces the replication controller as the preferred way to deploy replicas.
+
+A deployment creates a management object one level higher than a replica set, and allows you to deploy and manage updates for pods in a cluster.
+
+three types of services
+ClusterIP
+NodePort
+LoadBalancer
+
+
+A service object allows you to target and manage specific pods in your cluster by using selector labels
+
+
+What is MicroK8s?
+
+Install MicroK8s on macOS
+brew install --cask multipass
+
+multipass launch --name microk8s-vm --memory 4G --disk 40G
+
+multipass shell microk8s-vm
+
+sudo snap install microk8s --classic
+
+To check the status of the installation
+sudo microk8s.status --wait-ready
+
+
+Explore the Kubernetes cluster
+sudo snap alias microk8s.kubectl kubectl
+
+The following output appears when the command finishes successfully:
+Added:
+  - microk8s.kubectl as kubectl
+
+sudo kubectl get nodes
+
+sudo kubectl get nodes -o wide
+
+sudo kubectl get services -o wide
+
+sudo kubectl get services -o wide --all-namespaces
+
+sudo kubectl create deployment nginx --image=nginx
+
+sudo kubectl get deployments
+
+sudo kubectl get pods
+
+
+Test the NGINX installation by connecting to the web server through the pod's IP address.
+sudo kubectl get pods -o wide
+
+wget <POD_IP>
+
+sudo kubectl scale --replicas=3 deployments/nginx
+
+deployment.apps/nginx scaled
+
+sudo kubectl get pods -o wide
+
+
+When to use Kubernetes
+
+
+
+
+You want to use Kubernetes when your company:
+  • Develops apps as microservices.
+  • Develops apps as cloud-native applications.
+  • Deploys microservices by using containers.
+  • Updates containers at scale.
+  • Requires centralized container networking and storage management.
+
+
+When not to use Kubernetes
+
+For example, the effort in containerization and deployment of a monolithic app might be more than the benefits of running the app in Kubernetes
+
+
+Uninstall MicroK8s
+sudo microk8s.disable dashboard dns registry
+
+sudo snap remove microk8s
+
+To exit the VM, run the exit command:
+Bash 
+• exit
+• To stop the VM, run the multipass stop command and specify the VM's name:
+Bash 
+• multipass stop microk8s-vm
+• To delete and purge the VM instance, run multipass delete, then run multipass purge:
+Console 
+multipass delete microk8s-vm
+multipass purge
+
+
+
+
+
+
