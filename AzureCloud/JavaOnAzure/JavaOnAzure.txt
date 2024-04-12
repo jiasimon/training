@@ -1,0 +1,88 @@
+Get started with Java on Azure
+https://learn.microsoft.com/en-us/training/paths/get-started-java-azure/
+
+Install on Big Sur, version 11.7.10
+
+brew update && brew install azure-cli
+
+Started From 10:25 am
+
+
+/usr/local/Cellar/llvm/17.0.6_1: 7,207 files, 1.5GB, built in 194 minutes 2 seconds
+
+…
+
+
+Completed at 6:30 pm
+
+• Differentiate between types of Java applications.
+• Explain the opportunities for Java developers on Azure.
+
+Microsoft is an official contributor to OpenJDK
+
+Microsoft uses Java in many of its products, like LinkedIn, Yammer, Minecraft, and Surface Duo.
+
+A monolithic application is an all in one solution that still fits for many projects.
+
+Microservices
+
+Some applications are intended to run briefly. They execute a particular workload, then exit rather than wait for requests or user input. Batch jobs are a solution for this use case.
+
+Serverless architectures
+
+
+The Spring Framework is an application framework and inversion of control (IoC) container
+• Dependency injection
+• Aspect-oriented programming
+• Business abstraction
+
+
+Spring Boot
+
+Spring Data
+
+Spring Security is the de facto standard for securing Spring-based applications
+
+Spring Cloud
+
+Spring Batch
+
+MicroProfile and Jakarta Enterprise Edition (EE) can be seen as the open-source follow-up of the Java EE specifications.
+
+You can package Jakarta EE applications as either EAR files or WAR files.
+
+
+Java EE applications must be deployed onto Java EE-compliant application servers (WebLogic, WebSphere, WildFly, GlassFish, Payara, and others).
+
+Apache Tomcat is an HTTP server and a Java Servlet container.
+
+Oracle WebLogic Server 
+
+Red Hat JBoss Enterprise Application Platform
+
+WildFly is the open-source upstream for JBoss EAP
+
+IBM WebSphere Application Server (WAS) 
+
+Oracle GlassFish is the reference implementation of many Java EE web standards (including Servlet and JSP).
+
+
+Netty is a nonblocking I/O (NIO) client/server framework.
+
+Quarkus is a Kubernetes-native Java stack that's tailored for OpenJDK HotSpot and GraalVM
+more performance-focused frameworks like this, such as Vert.x, Helidon, Payara Micro, and KumuluzEE.
+
+Micronaut is a modern, JVM-based, full-stack framework for building modular, easily testable microservice and serverless applications.
+
+
+VMs are usually the starting point for lift and shift, which is the process to migrate existing machines into Azure. You'll have to take care of OS updates, Java runtime, network settings, port forwarding, and security.
+
+
+Kubernetes is the de facto standard to orchestrate your containerized applications. It's perfect for microservices 
+
+Azure App Service
+
+Azure Spring Apps
+
+
+
