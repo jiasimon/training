@@ -1,0 +1,188 @@
+Build and deploy applications to Azure by using GitHub Actions
+https://learn.microsoft.com/en-us/training/modules/github-actions-cd/
+
+• Discover options for triggering a continuous delivery GitHub Workflow
+• Understand steps to remove workflow artifacts
+• Identify important environment protections
+• Control workflow execution with job conditionals
+• Deploying to Microsoft Azure with a GitHub deploy action
+• Store credentials with GitHub Secrets
+• Create and destroy Azure resources with GitHub Actions workflows
+
+
+working on the company's product support website
+
+How do I use GitHub Actions to deploy to Azure?
+
+There are several options for starting a CD workflow. 
+
+One option is to trigger the workflow with ChatOps. ChatOps uses chat clients, chatbots, and real-time communication tools to run tasks. For example, you might leave a specific comment in a pull request that can kick off a bot.
+
+Another option, and the one we use in our example, is to use labels in your pull request. Different labels can start different workflows.
+
+
+Control execution with a job conditional
+if: contains(github.event.pull_request.labels.*.name, 'stage')
+
+
+Store credentials with GitHub Secrets
+you can store your credentials in GitHub Secrets.
+To store information in GitHub Secrets, create a secret on the portal.
+
+Then, use the name of the secret you created in your workflow wherever you need that information. For example, use the Azure credential that was stored in GitHub Secrets in the creds: attribute of an Azure login action.
+
+steps:
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+
+Deploy to Microsoft Azure using GitHub Actions
+
+To find an Action:
+	1. In your repository, browse to the workflow file that you want to edit.
+	2. Select the Edit icon in the upper right corner of the file view.
+	3. Use the GitHub Marketplace sidebar to the right of the editor to browse Actions.
+
+• azure/webapps-container-deploy@v1
+• azure/login@v1 that we saw previously
+• azure/docker-login@v1
+
+
+Deploy-to-Azure:
+    runs-on: ubuntu-latest
+    needs: Build-Docker-Image
+    name: Deploy app container to Azure
+    steps:
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{env.IMAGE_REGISTRY_URL}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy web app container
+        uses: azure/webapps-container-deploy@v1
+        with:
+          app-name: ${{env.AZURE_WEBAPP_NAME}}
+          images: ${{env.IMAGE_REGISTRY_URL}}/${{ github.repository }}/${{env.DOCKER_IMAGE_NAME}}:${{ github.sha }}
+
+      - name: Azure logout
+        run: |
+          az logout
+
+
+
+Create and delete Azure resources by using GitHub Actions
+Note: Remember that it's important to tear down resources that you're no longer using as soon as possible to avoid unnecessary charges.
+
+One option is to create a new workflow with two jobs, one that spins up resources and one that deletes them.
+
+jobs:
+  set-up-azure-resources:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'spin up environment')
+
+    ...
+
+  destroy-azure-resources:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'destroy environment')
+
+    ...
+
+
+example of the steps in the set-up-azure-resources job:
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v2
+
+  - name: Azure login
+    uses: azure/login@v1
+    with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+  - name: Create Azure resource group
+    if: success()
+    run: |
+      az group create --location ${{env.AZURE_LOCATION}} --name ${{env.AZURE_RESOURCE_GROUP}} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  - name: Create Azure app service plan
+    if: success()
+    run: |
+      az appservice plan create --resource-group ${{env.AZURE_RESOURCE_GROUP}} --name ${{env.AZURE_APP_PLAN}} --is-linux --sku F1 --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  - name: Create webapp resource
+    if: success()
+    run: |
+      az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  --deployment-container-image-name nginx --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  - name: Configure webapp to use GitHub Packages
+    if: success()
+    run: |
+      az webapp config container set --docker-custom-image-name nginx --docker-registry-server-password ${{secrets.GITHUB_TOKEN}} --docker-registry-server-url https://docker.pkg.github.com --docker-registry-server-user ${{github.actor}} --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+
+
+
+
+
+Remove artifacts, create status badges, and configure environment protections
+
+By default, GitHub stores any build logs and uploaded artifacts for 90 days before it deletes them
+
+Note:
+Keep in mind that once you delete an artifact, it can't be restored.
+
+Manually delete artifacts from your repository
+To manually delete an artifact on GitHub, navigate to the Actions tab, select the workflow from the left sidebar, and then select the run you want to see.
+
+
+Under Artifacts, delete the artifact you want to remove.
+
+You can change the default artifact and log retention period for your repository
+
+- name: 'Upload Artifact'
+  uses: actions/upload-artifact@v2
+  with:
+    name: my-artifact
+    path: my_file.txt
+    retention-days: 10
+
+
+
+Here's an example of what you need to add to a file to see a workflow status badge:
+![example branch parameter.](https://github.com/mona/special-octo-eureka/actions/workflows/grading.yml/badge.svg?branch=my-workflow)
+
+
+Add workflow environment protections
+There are two environment protection rules that you can apply to workflows within public repositories, required reviewers and wait timer.
+
+
+
+Exercise - Create a workflow that deploys a web app to Azure
+
+#followup
+https://github.com/skills/deploy-to-azure
+
+
+1. How do you grant your GitHub repository access to Azure?
+A: Manage credentials using GitHub Secrets and use that secret name in the workflow
+Storing your credentials in GitHub Secrets keeps them safe and assures they will not be exposed in plain text.
+
+2. What can trigger a workflow for deploying to Microsoft Azure?
+ A: Any event, just like any other Action
+Any webhook event or event within GitHub can trigger a workflow
+
+
+3. How do you make sure that your Azure credentials are not stored in plain text in your repository?
+A: Use GitHub Secrets to securely store your Azure credentials.
+Storing your credentials in GitHub secrets allows you to use the credential in a workflow without exposing the credential in plain text.
+
+
+
+
+
