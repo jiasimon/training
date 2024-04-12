@@ -86,3 +86,56 @@ Azure Spring Apps
 
 
 
+
+
+Sample Java app deployment
+
+cd /Users/sjia/dev/training/azure
+
+git clone https://github.com/spring-projects/spring-petclinic.git
+
+cd spring-petclinic
+
+./mvnw package
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:22 min
+[INFO] Finished at: 2024-04-11T19:19:43-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-enforcer-plugin:3.4.1:enforce (enforce-java) on project spring-petclinic: 
+[ERROR] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion failed with message:
+[ERROR] This build requires at least Java 17, update your JVM, and run the build again
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+
+
+If change pom.xml from "17" to 11 for java version
+
+[WARNING] Error injecting: org.springframework.boot.maven.BuildInfoMojo
+java.lang.TypeNotPresentException: Type org.springframework.boot.maven.BuildInfoMojo not present
+    at org.eclipse.sisu.space.URLClassSpace.loadClass (URLClassSpace.java:147)
+
+Caused by: java.lang.UnsupportedClassVersionError: org/springframework/boot/maven/BuildInfoMojo has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.1:build-info (default) on project spring-petclinic: Execution default of goal org.springframework.boot:spring-boot-maven-plugin:3.2.1:build-info failed: Unable to load the mojo 'build-info' in the plugin 'org.springframework.boot:spring-boot-maven-plugin:3.2.1' due to an API incompatibility: org.codehaus.plexus.component.repository.exception.ComponentLookupException: org/springframework/boot/maven/BuildInfoMojo has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+
+
+
+java -version
+java version "11.0.7" 2020-04-14 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.7+8-LTS)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.7+8-LTS, mixed mode)
+
+
+
+
+
+
+
