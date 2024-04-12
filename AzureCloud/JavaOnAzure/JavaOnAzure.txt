@@ -237,6 +237,72 @@ Setting maven 3.9.6 as default.
 
 
 
+ mvn com.microsoft.azure:azure-webapp-maven-plugin:2.11.1:config
+[INFO] Scanning for projects...
+Downloading from spring-snapshots: https://repo.spring.io/snapshot/com/microsoft/azure/azure-webapp-maven-plugin/2.11.1/azure-webapp-maven-plugin-2.11.1.pom
+...
+Downloaded from central: https://repo.maven.apache.org/maven2/com/microsoft/azure/azure-webapp-maven-plugin/2.11.1/azure-webapp-maven-plugin-2.11.1.jar (110 kB at 1.1 MB/s)
+[INFO] 
+[INFO] ------------< org.springframework.samples:spring-petclinic >------------
+[INFO] Building petclinic 3.2.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- azure-webapp:2.11.1:config (default-cli) @ spring-petclinic ---
+
+
+
+Enter your choice: 1
+Please confirm webapp properties
+AppName : spring-petclinic-1712893690524
+ResourceGroup : spring-petclinic-1712893690524-rg
+Region : centralus
+PricingTier : B1
+OS : Linux
+Java Version: Java 17
+Web server stack: Java SE
+Deploy to slot : false
+Confirm (Y/N) [Y]: y
+[INFO] Saving configuration to pom.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:38 min
+[INFO] Finished at: 2024-04-11T20:50:40-07:00
+[INFO] ------------------------------------------------------------------------
+
+
+
+mvn package com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:deploy
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:04 min
+[INFO] Finished at: 2024-04-11T20:54:43-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:deploy (default-cli) on project spring-petclinic: Execution default-cli of goal com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:deploy failed: An API incompatibility was encountered while executing com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:deploy: java.lang.ExceptionInInitializerError: null
+[ERROR] -----------------------------------------------------
+[ERROR] realm =    plugin>com.microsoft.azure:azure-webapp-maven-plugin:1.12.0
+[ERROR] strategy = org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy
+[ERROR] urls[0] = file:/Users/sjia/.m2/repository/com/microsoft/azure/azure-webapp-maven-plugin/1.12.0/azure-webapp-maven-plugin-1.12.0.jar
+
+
+1. Where can I deploy my Maven-packaged Spring Boot application?
+A: all of them: App Service, VM, Azure Spring Apps
+
+
+2. True or false: Maven helps to automatically deploy the application to Azure App Service.
+A: True. Maven can not only package the application, but also add the required plug-in and run the deployment to Azure App Service.
+ 
+
+3. What types of Java applications can be deployed on Azure?
+A: Desktop applications, Microservices, Monolithic applications
+
+
+
+
+
 
 
 
