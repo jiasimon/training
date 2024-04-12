@@ -136,6 +136,109 @@ Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.7+8-LTS, mixed mode)
 
 
 
+Java 17 installation steps for Mac:
+• curl -s "https://get.sdkman.io" | bash && source ~/.bash_profile
+• sdk install java 17.0.6-tem
+
+java -version
+openjdk version "17.0.6" 2023-01-17
+OpenJDK Runtime Environment Temurin-17.0.6+10 (build 17.0.6+10)
+OpenJDK 64-Bit Server VM Temurin-17.0.6+10 (build 17.0.6+10, mixed mode, sharing)
+
+
+./mvnw package
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------< org.springframework.samples:spring-petclinic >------------
+[INFO] Building petclinic 3.2.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.4.1:enforce (enforce-java) @ spring-petclinic ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.580 s
+[INFO] Finished at: 2024-04-11T19:46:38-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-enforcer-plugin:3.4.1:enforce (enforce-java) on project spring-petclinic: 
+[ERROR] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion failed with message:
+[ERROR] This build requires at least Java 17, update your JVM, and run the build again
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+sjia@USA-MAC-NIS1200 spring-petclinic % 
+sjia@USA-MAC-NIS1200 spring-petclinic % java -version                                     
+openjdk version "17.0.6" 2023-01-17
+OpenJDK Runtime Environment Temurin-17.0.6+10 (build 17.0.6+10)
+OpenJDK 64-Bit Server VM Temurin-17.0.6+10 (build 17.0.6+10, mixed mode, sharing)
+
+
+echo $JAVA_HOME
+
+sjia@USA-MAC-NIS1200 spring-petclinic % 
+
+sdk list java
+
+sdk current java
+
+Using java version 17.0.6-tem
+
+https://sdkman.io/usage
+
+sdk version
+
+SDKMAN!
+script: 5.18.2
+native: 0.4.6
+
+
+export JAVA_HOME=`/usr/libexec/java_home -v 17`
+
+export JAVA_HOME=`/usr/libexec/java_home -v 17`
+sjia@USA-MAC-NIS1200 spring-petclinic % echo $JAVA_HOME                                
+/Library/Java/JavaVirtualMachines/jdk-11.0.7.jdk/Contents/Home
+
+
+sdk use java 17.0.6-tem
+
+sdk use java 17.0.6-tem
+
+Using java version 17.0.6-tem in this shell.
+
+echo $JAVA_HOME
+/Users/sjia/.sdkman/candidates/java/17.0.6-tem
+
+
+http://localhost:8080/
+
+
+mvn com.microsoft.azure:azure-webapp-maven-plugin:2.11.1:config        
+zsh: command not found: mvn
+
+
+sdk install maven
+
+Downloading: maven 3.9.6
+
+In progress...
+
+#################################################################################################################################################################################################### 100.0%
+
+Installing: maven 3.9.6
+Done installing!
+
+
+Setting maven 3.9.6 as default.
+
+
+
+
+
 
 
 
