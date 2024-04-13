@@ -1,0 +1,45 @@
+Choose the right Azure service for deploying your Java application
+https://learn.microsoft.com/en-us/training/modules/java-target-destinations/
+
+Describe and differentiate the Azure deployment options that are available for Java applications.
+Choose the best Azure service for deploying a Java application.
+
+
+Virtual machines, containers, or platform as a service?
+
+
+Deployment options
+Source-code deployment: You commit your source code to a Git repository and the cloud provider runs a process that compiles, builds, and packages the application.
+
+JAR, WAR, or EAR file deployment: 
+
+Serverless functions, or more specifically Azure Functions
+
+
+Azure Container Apps is a managed service that runs Docker containers.
+
+Azure App Service is a platform as a service (PaaS) solution provided by Azure.
+
+Azure Spring Apps is a unique Azure service that provides a platform as a service solution for running Spring Boot microservices. 
+
+Azure Kubernetes Service (AKS) is a managed and secured Kubernetes solution provided by Azure.
+
+Choose the right destination
+
+
+1. Why would you use a platform as a service (PaaS) solution? 
+A: You want to go to production as fast as possible, with a limited ops team.
+You have high availability, security, or compliance requirements.
+Your team doesn't have the resources or the willingness to maintain a production-grade infrastructure.
+
+
+
+2. Which Azure service is designed to run serverless workloads? 
+A: Azure Functions
+
+
+3. With a platform as a service offer such as Azure App Service or Azure Spring Apps, who manages your Java Virtual Machine (JVM)? 
+A: Microsoft is responsible for updating and patching your JVM.
+
+
+ 
