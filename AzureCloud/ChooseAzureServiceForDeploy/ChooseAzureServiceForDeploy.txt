@@ -43,3 +43,89 @@ A: Microsoft is responsible for updating and patching your JVM.
 
 
  
+
+Deploy a Spring Boot app to Azure App Service
+https://learn.microsoft.com/en-us/training/modules/deploy-java-spring-boot-app-service-mysql/
+
+Develop a Spring Boot web application.
+Connect your application to a MySQL database.
+Deploy the web application to Azure App Service.
+
+
+az group create \
+    --name $AZ_RESOURCE_GROUP \
+    --location $AZ_LOCATION \
+    | jq
+
+
+
+Create an instance of Azure Database for MySQL
+
+az mysql server create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name $AZ_DATABASE_NAME \
+    --location $AZ_LOCATION \
+    --sku-name B_Gen5_1 \
+    --storage-size 5120 \
+    --admin-user $AZ_MYSQL_USERNAME \
+    --admin-password $AZ_MYSQL_PASSWORD \
+    | jq
+
+
+Run the following command to open the server's firewall:
+
+az mysql server firewall-rule create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name $AZ_DATABASE_NAME-database-allow-local-ip \
+    --server-name $AZ_DATABASE_NAME \
+    --start-ip-address $AZ_LOCAL_IP_ADDRESS \
+    --end-ip-address $AZ_LOCAL_IP_ADDRESS \
+    | jq
+
+
+Run the following command to allow firewall access from Azure resources:
+az mysql server firewall-rule create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name allAzureIPs \
+    --server-name $AZ_DATABASE_NAME \
+    --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0 \
+    | jq
+
+
+
+
+az mysql db create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name demo \
+    --server-name $AZ_DATABASE_NAME \
+    | jq
+
+
+curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=web,data-jpa,mysql -d baseDir=azure-spring-workshop -d bootVersion=3.1.5.RELEASE -d javaVersion=17 | tar -xzvf -
+
+./mvnw spring-boot:run
+
+
+
+
+
+
+
+1. Which service allows developers to scaffold the structure of a Spring Boot application? 
+
+
+2. Which of the following Java class types provides generic CRUD methods to manage JPA objects? 
+
+
+3. Which Maven command creates your Azure App Service instance in Azure? 
+A: 
+
+
+
+Clean up resources
+az group delete --name <your resource group name> --yes
+
+
+
+
+
