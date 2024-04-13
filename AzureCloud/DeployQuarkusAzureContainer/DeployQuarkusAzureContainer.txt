@@ -1,0 +1,230 @@
+Deploy a Quarkus application to Azure Container Apps
+https://learn.microsoft.com/en-us/training/modules/deploy-java-quarkus-azure-container-app-postgres/
+
+• Develop a Quarkus application.
+• Connect your application to Azure Database for PostgreSQL.
+• Deploy the application to Container Apps.
+• Configure the database firewall so that only internal IP addresses can access it.
+
+
+Prerequisites
+
+• An Azure subscription
+• Local installations of Java JDK (17 or later), Maven (3.1), and the Azure CLI (2.57 or later)
+• Docker and Docker Desktop
+
+
+Azure Container Apps
+
+Azure Database for PostgreSQL
+
+
+Quarkus is a Kubernetes Native Java stack that's tailored for OpenJDK HotSpot and GraalVM
+
+You just add certain Quarkus extensions and the runtime does everything for you.
+
+Create your resources by using the Azure CLI and Maven
+az account show
+
+
+Exercise - Create a Quarkus application
+several ways to generate a Quarkus project structure. You can use the Quarkus web interface, an IDE plugin, or the Quarkus Maven plugin
+
+mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create \
+    -DplatformVersion=3.7.3 \
+    -DprojectGroupId=com.example.demo \
+    -DprojectArtifactId=todo \
+    -DclassName="com.example.demo.TodoResource" \
+    -Dpath="/api/todos" \
+    -DjavaVersion=17 \
+    -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"
+
+Note:
+All the dependencies in the pom.xml file are defined in the Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
+
+cd todo
+./mvnw quarkus:dev    # On Mac or Linux
+mvnw.cmd quarkus:dev  # On Windows
+
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' \
+    http://127.0.0.1:8080/api/todos
+
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' \
+    http://127.0.0.1:8080/api/todos
+
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' \
+    http://127.0.0.1:8080/api/todos
+
+
+curl http://127.0.0.1:8080/api/todos
+
+./mvnw clean test    # On Mac or Linux
+mvnw.cmd clean test  # On Windows
+
+
+
+Set up Azure Container Apps
+
+export AZ_PROJECT_<your initials>="azure-deploy-quarkus"
+export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_<your initials>}"
+export AZ_LOCATION="eastus"
+export AZ_CONTAINERAPP="ca${AZ_PROJECT_<your initials>}"
+export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_<your initials>}"
+export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_<your initials>}"
+export AZ_POSTGRES_USERNAME="<user-name>"
+export AZ_POSTGRES_PASSWORD="<secure-password>"
+export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_<your initials>}"
+
+
+az group create \
+    --name $AZ_RESOURCE_GROUP \
+    --location $AZ_LOCATION
+
+
+create a managed PostgreSQL server
+az postgres flexible-server create \
+    --resource-group "$AZ_RESOURCE_GROUP" \
+    --location "$AZ_LOCATION" \
+    --name "$AZ_POSTGRES_SERVER_NAME" \
+    --database-name "$AZ_POSTGRES_DB_NAME" \
+    --admin-user "$AZ_POSTGRES_USERNAME" \
+    --admin-password "$AZ_POSTGRES_PASSWORD" \
+    --public-access "All" \
+    --tier "Burstable" \
+    --sku-name "Standard_B1ms" \
+    --storage-size 32 \
+    --version "16"
+
+
+connect the Quarkus application to the PostgreSQL database
+
+export POSTGRES_CONNECTION_STRING=$(
+    az postgres flexible-server show-connection-string \
+    --server-name "$AZ_POSTGRES_SERVER_NAME" \
+    --database-name "$AZ_POSTGRES_DB_NAME" \
+    --admin-user "$AZ_POSTGRES_USERNAME" \
+    --admin-password "$AZ_POSTGRES_PASSWORD" \
+    --query "connectionStrings.jdbc" \
+    --output tsv
+)
+
+export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"
+
+echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"
+
+
+Use this command to rename one of these Dockerfiles, Dockerfile.jvm, to Dockerfile and move it to the root folder:
+mv src/main/docker/Dockerfile.jvm ./Dockerfile
+
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
+
+ENV LANGUAGE='en_US:en'
+
+
+# We make four distinct layers so if there are application changes the library layers can be re-used
+COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=185 target/quarkus-app/*.jar /deployments/
+COPY --chown=185 target/quarkus-app/app/ /deployments/app/
+COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+
+EXPOSE 8080
+USER 185
+ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+
+ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
+
+
+Create the Container Apps environment and deploy the container
+az containerapp up \
+    --name "$AZ_CONTAINERAPP" \
+    --environment "$AZ_CONTAINERAPP_ENV" \
+    --location "$AZ_LOCATION" \
+    --resource-group "$AZ_RESOURCE_GROUP" \
+    --ingress external \
+    --target-port 8080 \
+    --source .
+
+
+First, you need to get the URL of the application
+export AZ_APP_URL=$(
+    az containerapp show \
+        --name "$AZ_CONTAINERAPP" \
+        --resource-group "$AZ_RESOURCE_GROUP" \
+        --query "properties.configuration.ingress.fqdn" \
+        --output tsv \
+)
+
+echo "AZ_APP_URL=$AZ_APP_URL"
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' \
+    https://$AZ_APP_URL/api/todos
+
+
+make sure you can access the PostgreSQL server by using the Azure CLI
+
+az postgres flexible-server execute \
+    --name "$AZ_POSTGRES_SERVER_NAME" \
+    --database-name "$AZ_POSTGRES_DB_NAME" \
+    --admin-user "$AZ_POSTGRES_USERNAME" \
+    --admin-password "$AZ_POSTGRES_PASSWORD" \
+    --querytext "select * from Todo" \
+    --output table
+
+az postgres flexible-server firewall-rule list \
+    --name "$AZ_POSTGRES_SERVER_NAME" \
+    --resource-group "$AZ_RESOURCE_GROUP" \
+    --output table
+
+
+az postgres flexible-server firewall-rule delete \
+    --name "$AZ_POSTGRES_SERVER_NAME" \
+    --resource-group "$AZ_RESOURCE_GROUP" \
+    --rule-name <name of the AllowAll firewall rule> \
+    --yes
+
+
+add a new firewall rule
+az postgres flexible-server firewall-rule create \
+    --name "$AZ_POSTGRES_SERVER_NAME" \
+    --resource-group "$AZ_RESOURCE_GROUP" \
+    --rule-name "Allow_Azure-internal-IP-addresses" \
+    --start-ip-address "0.0.0.0" \
+    --end-ip-address "0.0.0.0"
+
+
+1. Which of the following Java classes provides generic CRUD methods for managing Java Persistence API (JPA) objects?
+A: Correct. If you extend PanacheEntity, you get generic CRUD methods that enable you to manage JPA objects.
+
+
+2. Which Azure CLI command creates an Azure Container Apps environment and an Azure registry, builds a Docker image, and deploys the image to Azure?
+A: az containerapp up
+
+
+
+3. 
+Which range of IP addresses does a firewall need to specify to allow only Azure internal-IP addresses?
+A: From 0.0.0.0 to 0.0.0.0 
+
+From 0.0.0.0 to 255.255.255.255, This range allows all external and internal IP addresses.
+
+
+Clean up
+az group delete \
+    --name $AZ_RESOURCE_GROUP \
+    --yes
+
+
+
+
