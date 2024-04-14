@@ -1,0 +1,172 @@
+Deploy a Java web app to Azure App Service 
+https://learn.microsoft.com/en-us/training/modules/create-java-webapp-to-app-service-linux/
+
+• Create a PrimeFaces Java web application.
+• Configure your Java project to deploy to Azure App Service.
+• Deploy your Java web application to Azure App Service.
+
+
+use JavaServer Faces (JSF) as a "View" technology to learn the basic concept of JSF
+
+Initially, JSF used Java Server Pages (JSP) to render HTML pages. Since version 2.0, Facelets, which is closer to ordinary HTML, has been used.
+
+
+JSF applications are roughly divided into the following two functions:
+	• Facelets: An XHTML-based template engine that describes screen layouts
+	• BackingBean: A Java class that binds to Facelets and sets and processes values
+
+
+PrimeFaces is a third-party JSF implementation that makes it easy to create JSF web components
+
+lightweight library with one jar, zero configuration, and no required dependencies.
+
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>Input Value Counter Sample</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:outputLabel value="Basic"/><br/>
+            <p:inputText value="#{indexcontroller.inputValue}"/><br/>
+            <p:commandButton value="Submit" action="#{indexcontroller.submitButtonAction()}"/><br/>
+        </h:form>
+    </h:body>
+</html>
+
+
+This command will create a Maven project for your Java web application.
+
+mvn archetype:generate \
+-DgroupId=com.microsoft.azure.samples \
+-DartifactId=azure-javaweb-app \
+-DarchetypeArtifactId=maven-archetype-webapp \
+-Dversion=1.0-SNAPSHOT \
+-DinteractiveMode=false
+
+
+[INFO] Parameter: package, Value: com.microsoft.azure.samples
+[INFO] Parameter: groupId, Value: com.microsoft.azure.samples
+[INFO] Parameter: artifactId, Value: azure-javaweb-app
+[INFO] Parameter: packageName, Value: com.microsoft.azure.samples
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] project created from Old (1.x) Archetype in dir: /private/tmp/TMP/azure-javaweb-app
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.416 s
+[INFO] Finished at: 2020-11-02T11:12:58+09:00
+[INFO] ------------------------------------------------------------------------
+
+
+Enable Contexts and Dependency Injection
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+bean-discovery-mode="all">
+</beans>
+
+
+to recognize all files with the xhtml extension as JSF Facelets, make the following changes to web.xml under the WEB-INF directory.
+
+mkdir src/main/java
+mkdir src/main/java/com
+mkdir src/main/java/com/microsoft
+mkdir src/main/java/com/microsoft/azure
+mkdir src/main/java/com/microsoft/azure/samples
+
+
+mvn clean package
+
+
+cp target/azure-javaweb-app.war /$INSTALL_DIR/apache-tomcat-9.0.39/webapps/
+
+$INSTALL_DIR/apache-tomcat-9.0.39/bin/startup.sh
+
+
+git clone https://github.com/yoshioterada/Deploy-PrimeFaces-JSF-Web-App-on-Tomcat-9.0
+
+Configure the Maven Plugin for Azure App Service
+mvn com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:config
+
+
+To access the log stream
+
+az webapp log tail -g azure-javaweb-app -n azure-javaweb-app-1601463451101
+
+
+1. Which file format do you use for Facelets?
+ A: Extensible Hypertext Markup Language (XHTML)
+Because JavaServer Faces 2.0, Facelets has been used as the default view declaration language.
+
+2. Which methods allow you to access the application logs in Azure App Service?
+A: SSH in Advanced Tools in the Azure portal
+Access the log stream in Advanced Tools in the Azure portal
+The Azure CLI command-line tool
+All of the above
+
+3. Which tasks can you do with the Maven Plugin for Azure App Service?
+A: Both configure and deploy to your Azure App Service instance
+
+
+Clean up resources
+az group delete --name <name of your resource group>
+
+
+test_sj
+
+Create a new resource group
+https://portal.azure.com/#@nisum0.onmicrosoft.com/resource/subscriptions/63dfb9ff-f0ae-457e-b369-d1e602f0c472/resourceGroups/test_sj/overview
+
+
+
+
+
+az group delete --name test_sj
+
+az group delete --name test_sj
+Are you sure you want to perform this operation? (y/n): y
+sjia@USA-MAC-NIS1200 spring-petclinic % 
+
+
+export AZ_PROJECT_SJ="azure-deploy-quarkus"
+export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_SJ}"
+export AZ_LOCATION="eastus"
+
+export AZ_CONTAINERAPP="ca${AZ_PROJECT_<your initials>}"
+export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_<your initials>}"
+export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_<your initials>}"
+export AZ_POSTGRES_USERNAME="<user-name>"
+export AZ_POSTGRES_PASSWORD="<secure-password>"
+export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_<your initials>}"
+
+
+az group create \
+    --name $AZ_RESOURCE_GROUP \
+    --location $AZ_LOCATION
+
+{
+  "id": "/subscriptions/63dfb9ff-f0ae-457e-b369-d1e602f0c472/resourceGroups/rgazure-deploy-quarkus",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "rgazure-deploy-quarkus",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+
+
+
+
+
+az group delete --name rgazure-deploy-quarkus
+
+
+
+
