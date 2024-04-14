@@ -1,0 +1,258 @@
+Deploy Spring microservices to Azure
+https://learn.microsoft.com/en-us/training/modules/azure-spring-cloud-workshop/
+
+
+• Create a new Azure Spring Apps cluster.
+• Configure a Spring Cloud Config Server.
+• Build and deploy a Spring Boot microservice.
+• Create a Spring Cloud Gateway to access your microservice.
+• Use Spring Cloud service registry to discover your microservice.
+• Configure distributed tracing to debug
+
+
+Azure Spring Apps (ASA)
+ASA is jointly supported by Microsoft and VMware.
+
+az --version
+azure-cli                         2.59.0
+
+core                              2.59.0
+telemetry                          1.1.0
+
+Dependencies:
+msal                              1.27.0
+azure-mgmt-resource             23.1.0b2
+
+Python location '/usr/local/Cellar/azure-cli/2.59.0/libexec/bin/python'
+Extensions directory '/Users/sjia/.azure/cliextensions'
+
+Python (Darwin) 3.11.9 (main, Apr 11 2024, 22:59:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+
+Legal docs and information: aka.ms/AzureCliLegal
+
+
+Your CLI is up-to-date.
+
+
+az login # Sign into an azure account
+az account show # See the currently signed-in account.
+
+
+az account set --subscription <SUBSCRIPTION_ID>
+
+
+Install the spring extension for Azure CLI, by running:
+
+az extension add -n spring -y
+
+Default enabled including preview versions for extension installation now. Disabled in May 2024. Use '--allow-preview true' to enable it specifically if needed. Use '--allow-preview false' to install stable version only. 
+
+
+RESOURCE_GROUP_NAME=spring-cloud-workshop
+SPRING_CLOUD_NAME=azure-spring-cloud-workshop
+
+az group create \
+    -g "$RESOURCE_GROUP_NAME" \
+    -l eastus
+
+
+create the Azure Spring Apps instance:
+
+az spring create \
+    -g "$RESOURCE_GROUP_NAME" \
+    -n "$SPRING_CLOUD_NAME" \
+    --sku standard
+
+
+az configure --defaults group=${RESOURCE_GROUP_NAME}
+az configure --defaults spring=${SPRING_CLOUD_NAME}
+
+
+1. True or false: You need to use the Azure CLI to create an Azure Spring Apps cluster.
+ false
+An Azure Spring Apps cluster can also be created using the Azure portal.
+
+
+2. True or false: The name of an Azure Spring Apps cluster should be unique across all of Azure.
+A: True
+
+
+Configure a Spring Cloud Config Server
+
+Create a Git repository for storing the application configuration
+
+On your GitHub account, create a new private repository where the Spring Boot configurations will be stored.
+
+application:
+    message: Configured by Azure Spring Apps
+
+
+git add application.yml
+git commit -m 'Add new Spring Boot configuration file'
+git push
+
+Create a GitHub personal token
+
+
+Configure Azure Spring Apps to access the Git repository
+
+1. Go to the Azure portal and search for Azure Spring Apps.
+2. Go to the overview page of your Azure Spring Apps server and select Config Server in the menu.
+3. Configure the repository you previously created:
+4. Add the repository URL, for example https://github.com/<YOUR_USERNAME>/azure-spring-cloud-config or git@github.com:<YOUR_USERNAME>/azure-spring-cloud-config.git.
+
+https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.AppPlatform%2FSpring
+
+Add your branch in Label. It defaults to main on GitHub, but older repositories or alternate Git providers might still use master.
+Select Authentication and select HTTP Basic.
+The username is your GitHub login name.
+The password is the personal token we created in the previous section.
+
+
+1. On Azure Spring Apps, which security mechanisms do Spring Cloud Config Server support?
+A: Public, secured by SSH or secured using HTTP basic authentication.
+Spring Cloud Config Server can access Git repositories that are public, secured by SSH or secured using HTTP basic authentication
+
+2. Using Spring Cloud Config is a great solution because:
+A: It uses Git, so your configuration data can be tagged or rolled back.
+Configuration is stored in a specific Git repository, which can be secured separately.
+It provides a centralized place to store all your configuration data,
+It allows storing sensitive parameters
+
+
+Build a Spring Boot microservice
+It uses a Spring Cloud service registry and a Spring Cloud Config Server, which are both managed and supported by Azure Spring Apps.
+
+az spring app create --name todo-service --resource-group "$RESOURCE_GROUP_NAME" --service "$SPRING_CLOUD_NAME" --runtime-version Java_17
+
+create an Azure database for MySQL:
+az mysql server create \
+    --name ${SPRING_CLOUD_NAME}-mysql \
+    --resource-group "$RESOURCE_GROUP_NAME" \
+    --sku-name B_Gen5_1 \
+    --storage-size 5120 \
+    --admin-user "spring"
+
+
+az mysql db create \
+    --name "todos" \
+    --server-name ${SPRING_CLOUD_NAME}-mysql
+
+
+open up its firewall so that Azure Spring Apps can access it:
+az mysql server firewall-rule create \
+    --name ${SPRING_CLOUD_NAME}-mysql-allow-azure-ip \
+    --resource-group "$RESOURCE_GROUP_NAME" \
+    --server ${SPRING_CLOUD_NAME}-mysql \
+    --start-ip-address "0.0.0.0" \
+    --end-ip-address "0.0.0.0"
+
+
+
+Bind the MySQL database to the application
+Azure Spring Apps can automatically bind the MySQL database we created to our microservice.
+	1. Navigate to your Azure Spring Apps instance.
+	2. Select Apps.
+	3. Select the todo-service application.
+	4. Select Service Connector and then choose + Create.
+	5. For Service type, select DB for MySQL single server.
+	6. Specify a connection name, for example mysql_todos.
+	7. Verify that the correct subscription is shown.
+	8. Choose the MySQL server created in the preceding steps.
+	9. Select the MySQL database created earlier.
+	10. Select SpringBoot as the Client type.
+	11. Select the Next: Authentication button.
+	12. On the Authentication page, verify that Connection string is selected.
+	13. Select Continue with...Database credentials and fill in the username and password fields. The username is "spring" and the password is the password attribute that we copied earlier.
+
+
+Create a Spring Boot microservice
+curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=web,mysql,data-jpa,cloud-eureka,cloud-config-client -d baseDir=todo-service -d bootVersion=3.1.5.RELEASE -d javaVersion=17 | tar -xzvf -
+
+
+In order to automatically generate the database tables when the application is deployed, add this line to your src/main/resources/application.properties configuration file:
+
+spring.jpa.hibernate.ddl-auto=create-drop
+
+Just for test/dev env
+
+
+Deploy the application
+
+cd todo-service
+./mvnw clean package -DskipTests
+az spring app deploy --name todo-service --service "$SPRING_CLOUD_NAME" --resource-group "$RESOURCE_GROUP_NAME" --artifact-path target/demo-0.0.1-SNAPSHOT.jar
+cd ..
+
+
+az spring app logs --name todo-service --service "$SPRING_CLOUD_NAME" --resource-group "$RESOURCE_GROUP_NAME" -f
+
+
+curl https://primary:XXXXXXXXXXXXXXXXXXXXXXXXXXXXX@azure-spring-cloud-workshop.test.azuremicroservices.io/todo-service/default/
+
+1. To deploy a Spring Boot microservice to Azure Spring Apps, what do you need to change in your application?
+A: Migrate your Spring Cloud apps to Azure Spring Apps is seamless without vendor lock-in.
+
+Not require
+Code a specific Spring bean.
+Add a specific Maven dependency.
+Set up some specific environment variables.
+
+
+2. By default, how can you access your microservice once it's deployed?
+A: By default, a secured endpoint is set up. You can configure your cluster not to expose it, for increased security.
+
+It's possible to assign a public address to the microservice endpoint, but it's not enabled by default for security reasons.
+
+
+To create our gateway
+curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=cloud-gateway,cloud-eureka,cloud-config-client -d baseDir=todo-gateway -d bootVersion=3.1.5.RELEASE -d javaVersion=17 | tar -xzvf -
+
+
+Note:
+We use the Cloud Gateway, Eureka Discovery Client, and the Config Client components.
+
+In the src/main/resources/application.properties configuration file, add the following property:
+spring.main.allow-bean-definition-overriding=true
+spring.cloud.gateway.discovery.locator.enabled=true
+
+
+az spring app create --name todo-gateway --service "$SPRING_CLOUD_NAME" --resource-group "$RESOURCE_GROUP_NAME" --runtime-version Java_17 --assign-endpoint
+
+Deploy the application
+cd todo-gateway
+./mvnw clean package -DskipTests
+az spring app deploy --name todo-gateway --service "$SPRING_CLOUD_NAME" --resource-group "$RESOURCE_GROUP_NAME" --artifact-path target/demo-0.0.1-SNAPSHOT.jar
+cd ..
+
+
+
+Learn how to monitor performance issues by using distributed tracing.
+1. Go to the Azure portal.
+2. Go to the overview page of your Azure Spring Apps cluster and select Application Insights in the menu.
+3. This setting should already be on Enable.
+4. You'll have access to an application map, storing your tracing data
+
+
+
+Learn how to scale Spring Boot microservices
+
+1. Go to the Azure portal.
+2. Go to the overview page of your Azure Spring Apps cluster and select Apps in the menu.
+3. Select the todo-service application.
+4. Select Scale up in the left hand-side menu. You can now scale your service vertically, for example you can give it 2 CPUs and 4 GB of RAM.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
