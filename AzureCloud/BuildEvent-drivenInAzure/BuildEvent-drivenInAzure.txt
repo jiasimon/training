@@ -1,0 +1,212 @@
+Build a real-time event-driven Java solution in Azure
+https://learn.microsoft.com/en-us/training/modules/deploy-real-time-event-driven-app/1-introduction
+
+Explain event-driven and real-time workloads by example.
+Create a scenario with simulated telemetric data.
+Send the telemetric data with an Azure function to an event hub.
+Connect another function with this event hub to trigger the storage in Azure Cosmos DB.
+Have a look at the metrics in Application Insights to measure the performance and identify potential bottlenecks.
+
+
+What is event driven, and how fast is real time?
+
+Event-driven applications use the fire and forget principle
+
+
+Event carried state transfer
+With event carried state transfer, all the needed information is stored in a single event. 
+
+
+Event Sourcing 
+Prepare env
+RESOURCE_GROUP=<value>
+EVENT_HUB_NAMESPACE=<value>
+EVENT_HUB_NAME=<value>
+EVENT_HUB_AUTHORIZATION_RULE=<value>
+COSMOS_DB_ACCOUNT=<value>
+STORAGE_ACCOUNT=<value>
+FUNCTION_APP=<value>
+LOCATION=<value>
+
+
+Crate a resource group
+az group create \
+    --name $RESOURCE_GROUP \
+    --location $LOCATION
+
+
+Create and configure an event hub
+az eventhubs namespace create \
+    --resource-group $RESOURCE_GROUP \
+    --name $EVENT_HUB_NAMESPACE
+az eventhubs eventhub create \
+    --resource-group $RESOURCE_GROUP \
+    --name $EVENT_HUB_NAME \
+    --namespace-name $EVENT_HUB_NAMESPACE \
+az eventhubs eventhub authorization-rule create \
+    --resource-group $RESOURCE_GROUP \
+    --name $EVENT_HUB_AUTHORIZATION_RULE \
+    --eventhub-name $EVENT_HUB_NAME \
+    --namespace-name $EVENT_HUB_NAMESPACE \
+    --rights Listen Send
+
+
+
+Build and deploy azure functions
+
+az storage account create \
+    --resource-group $RESOURCE_GROUP \
+    --name $STORAGE_ACCOUNT"p" \
+    --sku Standard_LRS
+az functionapp create \
+    --resource-group $RESOURCE_GROUP \
+    --name $FUNCTION_APP"-p"\
+    --storage-account $STORAGE_ACCOUNT"p" \
+    --consumption-plan-location $LOCATION \
+    --runtime java \
+    --functions-version 4
+
+
+AZURE_WEB_JOBS_STORAGE=$( \
+    az storage account show-connection-string \
+        --resource-group $RESOURCE_GROUP \
+        --name $STORAGE_ACCOUNT"p" \
+        --query connectionString \
+        --output tsv)
+echo $AZURE_WEB_JOBS_STORAGE
+EVENT_HUB_CONNECTION_STRING=$( \
+    az eventhubs eventhub authorization-rule keys list \
+        --resource-group $RESOURCE_GROUP \
+        --name $EVENT_HUB_AUTHORIZATION_RULE \
+        --eventhub-name $EVENT_HUB_NAME \
+        --namespace-name $EVENT_HUB_NAMESPACE \
+        --query primaryConnectionString \
+        --output tsv)
+echo $EVENT_HUB_CONNECTION_STRING
+
+
+az functionapp config appsettings set \
+    --resource-group $RESOURCE_GROUP \
+    --name $FUNCTION_APP"-p" \
+    --settings \
+        AzureWebJobsStorage=$AZURE_WEB_JOBS_STORAGE \
+        EventHubConnectionString=$EVENT_HUB_CONNECTION_STRING
+
+
+mvn archetype:generate --batch-mode \
+    -DarchetypeGroupId=com.microsoft.azure \
+    -DarchetypeArtifactId=azure-functions-archetype \
+    -DappName=$FUNCTION_APP"-p" \
+    -DresourceGroup=$RESOURCE_GROUP \
+    -DappRegion=$LOCATION \
+    -DappServicePlanName=$LOCATION"plan" \
+    -DgroupId=com.learn \
+    -DartifactId=telemetry-functions-producer
+
+
+Run locally
+mvn clean package
+mvn azure-functions:run
+
+
+mvn azure-functions:deploy
+
+
+Azure Cosmos DB is a fully managed NoSQL database 
+
+
+Create a cosmosDB
+
+az cosmosdb create \
+    --resource-group $RESOURCE_GROUP \
+    --name $COSMOS_DB_ACCOUNT
+az cosmosdb sql database create \
+    --resource-group $RESOURCE_GROUP \
+    --account-name $COSMOS_DB_ACCOUNT \
+    --name TelemetryDb
+az cosmosdb sql container create \
+    --resource-group $RESOURCE_GROUP \
+    --account-name $COSMOS_DB_ACCOUNT \
+    --database-name TelemetryDb \
+    --name TelemetryInfo \
+    --partition-key-path '/temperatureStatus'
+
+
+az storage account create \
+    --resource-group $RESOURCE_GROUP \
+    --name $STORAGE_ACCOUNT"c" \
+    --sku Standard_LRS
+az functionapp create \
+    --resource-group $RESOURCE_GROUP \
+    --name $FUNCTION_APP"-c"\
+    --storage-account $STORAGE_ACCOUNT"c" \
+    --consumption-plan-location $LOCATION \
+    --runtime java \
+    --functions-version 4
+
+
+The consumer function needs to be aware of its storage account and the event hub. It also needs to be aware of the database that it writes the processed events into.
+
+AZURE_WEB_JOBS_STORAGE=$( \
+    az storage account show-connection-string \
+        --resource-group $RESOURCE_GROUP \
+        --name $STORAGE_ACCOUNT"c" \
+        --query connectionString \
+        --output tsv)
+echo $AZURE_WEB_JOBS_STORAGE
+COSMOS_DB_CONNECTION_STRING=$( \
+    az cosmosdb keys list \
+        --resource-group $RESOURCE_GROUP \
+        --name $COSMOS_DB_ACCOUNT \
+        --type connection-strings \
+        --query 'connectionStrings[0].connectionString' \
+        --output tsv)
+echo $COSMOS_DB_CONNECTION_STRING
+
+
+EVENT_HUB_CONNECTION_STRING=$( \
+    az eventhubs eventhub authorization-rule keys list \
+        --resource-group $RESOURCE_GROUP \
+        --name $EVENT_HUB_AUTHORIZATION_RULE \
+        --eventhub-name $EVENT_HUB_NAME \
+        --namespace-name $EVENT_HUB_NAMESPACE \
+        --query primaryConnectionString \
+        --output tsv)
+echo $EVENT_HUB_CONNECTION_STRING
+
+
+cd ..
+mvn archetype:generate --batch-mode \
+    -DarchetypeGroupId=com.microsoft.azure \
+    -DarchetypeArtifactId=azure-functions-archetype \
+    -DappName=$FUNCTION_APP"-c" \
+    -DresourceGroup=$RESOURCE_GROUP \
+    -DappRegion=$LOCATION \
+    -DappServicePlanName=$LOCATION"plan" \
+    -DgroupId=com.learn \
+    -DartifactId=telemetry-functions-consumer
+
+
+
+Monitoring and logging
+
+1. How fast is real time?
+ An instant, more properly defined by your specific use case.
+
+
+2. Which of the following databases perform best with event-driven workloads?
+A: all of three
+Azure Cosmos DB
+Azure Database for MySQL
+Azure Database for PostgreSQL
+
+
+
+3. How should events be built?
+ Events should be precise and lightweight.
+
+
+az group delete --name <your resource group name> --yes
+
+
+
