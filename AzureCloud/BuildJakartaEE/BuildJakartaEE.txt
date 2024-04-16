@@ -1,0 +1,146 @@
+Deploy a Java EE (Jakarta EE) application to Azure
+https://learn.microsoft.com/en-us/training/modules/deploy-java-ee-app-to-jboss-app-service/
+
+• Create and manage an Azure Database for MySQL instance.
+• Deploy a Java EE application to JBoss EAP on App Service.
+• Create a data source and bind the Java EE application to MySQL.
+• Access and manage the Java EE application on JBoss.
+
+
+Deploy Azure Database for MySQL
+To host a MySQL database in Azure, you can use either the Single Server or Flexible Server deployment option
+
+az login
+
+Create an Azure resource group.
+az group create --name $MYSQL_RES_GRP_NAME --location $MYSQL_LOCATION
+
+
+Create a Flexible Server instance of Azure Database for MySQL.
+az mysql flexible-server create --location $MYSQL_LOCATION --resource-group $MYSQL_RES_GRP_NAME --name $MYSQL_SERVER_NAME --admin-user $MYSQL_USER --admin-password $MYSQL_PASSWORD --sku-name Standard_B1ms --public-access $PUBLIC_IP --storage-size 32 --version 5.7
+
+
+az mysql flexible-server firewall-rule create -g $MYSQL_RES_GRP_NAME -n $MYSQL_SERVER_NAME -r AllowAllAzureIPs --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+
+
+Exercise - Deploy Azure Database for MySQL
+
+git clone https://github.com/MicrosoftDocs/mslearn-jakarta-ee-azure.git
+
+az login
+
+az configure --defaults location=<desired location>
+
+Note: 
+Run the following command in an IPv4 environment. If your environment has a IPv6 address, this command will fail because the firewall configuration for it doesn't support IPv6 addresses yet.
+
+./setup_mysql.sh flexible
+
+
+curl -o world-db.zip https://downloads.mysql.com/docs/world-db.zip
+
+unzip world-db.zip
+
+cd world-db
+ls -l world.sql
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| world              |
++--------------------+
+5 rows in set (0.02 sec)
+
+
+mysql> use world;
+Database changed
+
+
+
+
+Deploy a Java EE (Jakarta EE) application to JBoss EAP on Azure App Service
+
+uses the following technologies:
+	• Java EE 8 (Jakarta EE 8)
+	• JAX-RS 2.1
+	• JSON-B 1.0
+	• CDI 2.0
+	• JPA 2.2
+
+
+use the ./mvnw package command to build a Web Application Archive (WAR) package.
+
+
+Exercise - Deploy a Java EE (Jakarta EE) application to JBoss EAP on Azure App Service
+
+
+./mvnw com.microsoft.azure:azure-webapp-maven-plugin:2.9.0:config
+
+
+<!-- Please add following lines -->
+              <resource>
+                <type>startup</type>
+                <directory>${project.basedir}/src/main/webapp/WEB-INF/</directory>
+                <includes>
+                  <include>createMySQLDataSource.sh</include>
+                </includes>
+              </resource>
+              <!-- Please add following lines -->
+
+<resourceGroup>jakartaee-app-on-jboss-1625038814881-rg</resourceGroup>
+<appName>jakartaee-app-on-jboss-1625038814881</appName>
+
+export RESOURCEGROUP_NAME=jakartaee-app-on-jboss-1625038814881-rg
+export WEBAPP_NAME=jakartaee-app-on-jboss-1625038814881
+
+
+./mvnw clean package
+
+./mvnw azure-webapp:deploy
+
+
+
+az webapp log tail --name <your_app_name> -g <resource_group_name>
+
+
+Create a TCP tunnel
+az webapp create-remote-connection -n ${WEBAPP_NAME} -g ${RESOURCEGROUP_NAME}
+
+
+export PORT_NUMBER=<the port number from above>
+ssh root@127.0.0.1 -L 9990:localhost:9990 -p $PORT_NUMBER
+
+
+Connect to JBoss EAP by using the following command:
+/opt/eap/bin/jboss-cli.sh --connect
+Picked up JAVA_TOOL_OPTIONS: -Xmx2402M -Djava.net.preferIPv4Stack=true
+
+
+az webapp log tail --name ${WEBAPP_NAME} --resource-group ${RESOURCEGROUP_NAME}
+
+
+1. What is the current name and version of the enterprise Java platform?
+A: Jakarta Enterprise Edition (Jakarta EE)
+Correct. Starting with Jakarta EE 8, the project was moved to The Jakarta Project under the Eclipse Foundation.
+
+2. How do you manage data sources for JBoss EAP on Azure App Service?
+A: Startup shell script
+
+
+3. How can you access your application logs for JBoss on Azure App Service?
+
+
+Clean up 
+az group delete --name <name of your MySQL resource>
+az group delete --name <name of your JBoss EAP on Azure App Service resource>
+
+az configure --defaults location=''
+
+
+
