@@ -1,0 +1,194 @@
+Containerize and deploy a Java app to Azure
+https://learn.microsoft.com/en-us/training/modules/containerize-deploy-java-app-aks/
+
+• Containerize a Java app.
+• Build a container image for the Java app.
+• Run the container image locally.
+• Push the container image to Azure Container Registry.
+• Deploy the container image to Azure Kubernetes Service.
+
+
+az login
+
+
+az account set --subscription "<YOUR_SUBSCRIPTION_ID>"
+
+
+AZ_RESOURCE_GROUP=javacontainerizationdemorg
+AZ_CONTAINER_REGISTRY=<YOUR_CONTAINER_REGISTRY>
+AZ_KUBERNETES_CLUSTER=javacontainerizationdemoaks
+AZ_LOCATION=<YOUR_AZURE_REGION>
+AZ_KUBERNETES_CLUSTER_DNS_PREFIX=<YOUR_UNIQUE_DNS_PREFIX_TO_ACCESS_YOUR_AKS_CLUSTER>
+
+
+az group create \
+    --name $AZ_RESOURCE_GROUP \
+    --location $AZ_LOCATION \
+    | jq
+
+
+Create an Azure Container Registry
+az acr create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name $AZ_CONTAINER_REGISTRY \
+    --sku Basic \
+    | jq
+
+
+az configure \
+    --defaults acr=$AZ_CONTAINER_REGISTRY
+
+
+az acr login -n $AZ_CONTAINER_REGISTRY
+
+
+Create an Azure Kubernetes Cluster
+az aks create \
+    --resource-group $AZ_RESOURCE_GROUP \
+    --name $AZ_KUBERNETES_CLUSTER \
+    --attach-acr $AZ_CONTAINER_REGISTRY \
+    --dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX \
+    --generate-ssh-keys \
+    | jq
+
+
+Docker overview
+
+The Docker runtime is used to build, pull, run, and push container images. 
+
+git clone https://github.com/Azure-Samples/containerize-and-deploy-Java-app-to-Azure.git
+
+cd containerize-and-deploy-Java-app-to-Azure/Project/Airlines
+
+mvn clean install
+
+[INFO] --- install:3.1.1:install (default-install) @ AirlinesReservationSample ---
+[INFO] Installing /Users/sjia/dev/training/azure/containerize-and-deploy-Java-app-to-Azure/Project/Airlines/pom.xml to /Users/sjia/.m2/repository/AirlinesReservationSample/AirlinesReservationSample/0.0.1-SNAPSHOT/AirlinesReservationSample-0.0.1-SNAPSHOT.pom
+[INFO] Installing /Users/sjia/dev/training/azure/containerize-and-deploy-Java-app-to-Azure/Project/Airlines/target/AirlinesReservationSample-0.0.1-SNAPSHOT.war to /Users/sjia/.m2/repository/AirlinesReservationSample/AirlinesReservationSample/0.0.1-SNAPSHOT/AirlinesReservationSample-0.0.1-SNAPSHOT.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.603 s
+[INFO] Finished at: 2024-04-13T10:55:53-07:00
+
+
+Construct a Dockerfile
+
+
+vi Dockerfile
+
+Add the following contents to Dockerfile, then save and exit by pressing ESC, then typing :wq! and pressing Enter:
+
+
+docker build -t flightbookingsystemsample .
+zsh: command not found: docker
+
+docker image ls
+
+docker run -p 8080:8080 flightbookingsystemsample
+
+
+sdk
+
+Push the container image to Azure Container Registry
+az acr login
+
+docker tag flightbookingsystemsample $AZ_CONTAINER_REGISTRY.azurecr.io/flightbookingsystemsample
+
+
+docker push $AZ_CONTAINER_REGISTRY.azurecr.io/flightbookingsystemsample
+
+
+az acr repository show -n $AZ_CONTAINER_REGISTRY --image flightbookingsystemsample:latest
+
+
+Deploy a container image
+vi deployment.yml
+
+Update with your AZ_CONTAINER_REGISTRY environment variable value that you set earlier; for example, javacontainerizationdemoacr.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flightbookingsystemsample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flightbookingsystemsample
+  template:
+    metadata:
+      labels:
+        app: flightbookingsystemsample
+    spec:
+      containers:
+      - name: flightbookingsystemsample
+        image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
+        resources:
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flightbookingsystemsample
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: flightbookingsystemsample
+
+
+
+az aks install-cli
+
+
+az aks get-credentials --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER
+
+
+kubectl apply -f deployment.yml
+
+
+kubectl get all
+
+
+kubectl logs pod/flightbookingsystemsample-<POD_IDENTIFIER_FROM_YOUR_RUNNING_POD>
+
+
+1. Which tool allows developers to write instructions that are used to build container images?
+A: Docker Runtime
+
+2. Which service allows you to build, store, and manage container images and artifacts in a private registry?
+A: Azure Container Registry
+
+3. Which is NOT a Dockerfile instruction?
+A: START
+
+Run
+Cmd
+
+
+4. What is a multi-stage Docker build?
+A: A feature that enables you to create a smaller container image with better caching and a smaller security footprint.
+
+
+Cleanup
+az group delete --name $AZ_RESOURCE_GROUP --yes
+
+
+
+Completed learning path:
+Get started with Java on Azure
+
+
+
+
+
