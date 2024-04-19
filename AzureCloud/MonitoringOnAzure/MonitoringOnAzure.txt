@@ -1,0 +1,150 @@
+Monitoring Java applications on Azure
+https://learn.microsoft.com/en-us/training/modules/monitor-java-azure/
+
+• Understand monitoring Java applications on Azure.
+• Build and deploy a sample microservice application and configure it for application performance monitoring (APM).
+• Debug using application log streams on development machines.
+• Troubleshoot using incredible views, meaningful insights, and actionable logs and metrics.
+• Monitor the entire solution - applications, databases, and any other backend services.
+
+ zzz
+This course will create a storage account,
+But did not see command to delete a storage account
+
+
+Monitoring forms
+Logs
+
+Metrics
+
+Traces
+
+Alerts
+
+
+Azure Monitoring Platforms
+Azure Log Analytics
+
+Application Insights
+
+Azure Alerts
+
+
+Exercise - sample application environment
+
+
+Set up the sample microservice application
+
+You have no storage mounted
+Azure Cloud Shell requires an Azure file share to persist files.
+ Learn more
+This will create a new storage account for you and this will incur a small monthly cost.
+ View pricing
+Azure Cloud Shell will register your subscription with Microsoft.CloudShell resource provider.
+
+
+git clone https://github.com/MicrosoftDocs/mslearn-monitoring-java
+cd mslearn-monitoring-java
+code deployPetClinicApp.sh
+
+
+Type "az" to use Azure CLI
+Type "help" to learn about Cloud Shell
+
+Storage fileshare subscription 63dfb9ff-f0ae-457e-b369-d1e602f0c472 is not registered to Microsoft.CloudShell Namespace. Please follow these instructions "https://aka.ms/RegisterCloudShell" to register. In future, unregistered subscriptions will have restricted access to CloudShell service.
+
+git clone https://github.com/MicrosoftDocs/mslearn-monitoring-java
+Cloning into 'mslearn-monitoring-java'...
+remote: Enumerating objects: 78, done.
+remote: Counting objects: 100% (78/78), done.
+remote: Compressing objects: 100% (60/60), done.
+remote: Total 78 (delta 44), reused 33 (delta 17), pack-reused 0
+Receiving objects: 100% (78/78), 23.42 KiB | 1.67 MiB/s, done.
+Resolving deltas: 100% (44/44), done.
+
+
+cd mslearn-monitoring-java
+
+code deployPetClinicApp.sh
+
+
+Save the file by selecting the ... action panel in the top right of the editor and select "Save".
+
+No "…"
+
+
+
+
+
+bash deployPetClinicApp.sh
+Test the application
+Next, we'll verify your environment via the Azure portal.
+	1. Open the Azure portal
+	2. Select "Azure Spring Apps" from the list of Azure services
+	3. Select your Azure Spring Apps instance
+	4. On the right-hand side, select "Apps" under settings
+	5. Verify all the applications are running and registered
+
+
+https://portal.azure.com/#@nisum0.onmicrosoft.com/resource/subscriptions/63dfb9ff-f0ae-457e-b369-d1e602f0c472/resourceGroups/cloud-shell-storage-westus/providers/Microsoft.Storage/storageAccounts/cs410037ffea1ea1479/overview
+
+A new storage was created
+
+
+Deleted the storage account
+
+Log streaming
+az spring app logs --name <application> --resource-group <resource group name> --service <service instance name> -f
+
+Tail log
+az spring app logs -f --name customers-service
+
+
+az spring app logs -f --name customers-service --instance customers-service-default-17-7bc5f9dd79-fshb9
+
+az spring app logs --name customers-service
+
+Continuously stream new logs
+az spring app logs --name customers-service -f
+
+
+az spring app logs --name customers-service -f
+
+
+
+Monitor the Application with Azure Application Insights
+Application Map helps you spot performance bottlenecks or failure hot-spots across all components of your distributed application.
+	1. Open the Azure portal
+	2. Select "Azure Spring Apps" from the list of Azure services
+	3. Select your Azure Spring Apps instance
+	4. Select Application Insights to jump to the overview page of Application Insights.
+
+
+1. Open the Azure portal
+2. Select "Azure Spring Apps" from the list of Azure services
+3. Select your Azure Spring Apps instance
+4. Next, under the Monitoring section, select Logs.
+5. In the Query search box:
+
+
+
+1. Which of the following monitoring forms involve records of events?
+A: Logs
+Logs are records of events stored in a consistent, tabular format.
+Metrics are values that represent the relative health, stability, and availability of resources.
+
+
+2. Which feature of Application Insights allow you to view your application's performance in real time?
+ A: Live Metrics.
+
+3. What query language is supported in Log Analytics to query logs, metrics and traces?
+A: Kusto Query Language (KQL)
+Log queries in Query Analytics are written in the Kusto Query Language (KQL).
+
+
+az monitor log-analytics workspace delete --force true --resource-group <your Resource Group Name> --workspace-name <your log analytics workspace name>
+
+
+
+
+
