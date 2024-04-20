@@ -1,0 +1,74 @@
+Drive higher utilization of your Java apps - autoscaling
+https://learn.microsoft.com/en-us/training/modules/autoscale-java-azure/
+
+• Set up a sample Azure Spring Apps architecture that scales up and down based on load.
+• Understand autoscaling concepts.
+• Monitor the effects of autoscaling.
+• Understand common design patterns for autoscaling.
+
+
+
+Exercise - Sample application environment
+
+git clone https://github.com/MicrosoftDocs/mslearn-autoscale-java
+cd mslearn-autoscale-java
+code deployPetClinicApp.sh
+
+
+bash deployPetClinicApp.sh
+
+Vertical scaling, also called scaling up
+
+Horizontal scaling, also called scaling out and in
+
+
+Real-world example
+Raley’s grocery stores needed to modernize the code and infrastructure for their Java-powered e-commerce sites hosted on Azure.
+
+
+Autoscale conditions
+There are two rule types:
+	• Metric-based rules
+	• Schedule-based rules
+
+
+
+Trigger the scale-out action with a script
+
+export SPRING_APPS_SERVICE=<spring-apps-instance-name>
+
+cd mslearn-autoscale-java
+sh loadTest.sh
+
+Data is retrieved from a Log Analytics workspace using a log query, which is a read-only request to process data and return results. Log queries are written in Kusto Query Language (KQL),
+
+
+AutoscaleEvaluationsLog
+
+
+
+1. Which of these statements best describes autoscaling?
+A: Autoscaling is a scale out/scale in solution. The system can scale out when specified resource metrics indicate increasing usage, and scale in when these metrics drop.
+
+
+2. Which of these scenarios is a suitable candidate for autoscaling?
+ A: The number of users requiring access to an application varies according to a regular schedule. For example, more users use the system on a Friday than other days of the week.
+
+Your organization is running a promotion and expects to see increased traffic to their web site for the next couple of weeks. You base your autoscaling strategy on counters that measure business processes.
+If you base your autoscaling strategy on counters that measure business processes, such as the number of orders placed per hour or the average execution time of a complex transaction, ensure that you fully understand the relationship between the results from these types of counters and the actual compute capacity requirements.
+
+
+
+
+3. The DevOps team for a large food delivery company is configuring an Azure Spring Apps implementation. Friday night is typically the busiest time. Conversely, 7 AM on Wednesday is generally the quietest time. Which of the following autoscale rule types should be configured?
+ A: A schedule-based rule.
+
+
+Clean up
+az group delete --name <your Resource Group Name> --yes
+
+
+
+
+
+
