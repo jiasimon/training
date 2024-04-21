@@ -1,0 +1,115 @@
+Rapidly develop and deploy Java apps using GitHub Actions or Azure Pipelines
+
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/
+
+• Create a Terraform configuration for your Azure resources.
+• Provision your infrastructure and deploy it to Azure.
+• Set up your project for continuous integration and continuous delivery (CI/CD) by using either GitHub Actions or Azure Pipelines.
+
+Automation ordinarily uses three tracks: Provision, Build, and Deploy
+
+HashiCorp Terraform is great at deploying infrastructure across cloud providers.
+
+HashiCorp Configuration Language (HCL) syntax
+
+The configuration files are stored as plain text files with a .tf extension. They are:
+	• main.tf: (required) Defines the main structure, deploying the complete infrastructure directly or through calls to modules
+	• outputs.tf: Identifies each return value of a Terraform module
+	• variables.tf: Defines the variables in main.tf, whether they're required or not
+
+
+About GitHub Actions
+
+Workflow
+Job
+Step
+Action
+
+The hashicorp/setup-terraform action sets up the Terraform CLI in your GitHub Actions workflow
+
+• When you use Terraform interactively, we recommend that you authenticate via a Microsoft account.
+• When you use Terraform from code or by automation, we recommend that you authenticate via an Azure Service Principal.
+
+
+
+Exercise - Provision Azure resources
+
+https://github.com/MicrosoftDocs/mslearn-java-petclinic-simplified
+
+Above the file list, select Use this template, then select Create a new repository.
+
+mslearn-java-petclinic-sj
+
+https://github.com/jiasimon/mslearn-java-petclinic-sj
+
+
+In the Azure CLI, create a service principal by running the following command:
+az ad sp create-for-rbac --name "<yourServicePrincipalName>" --role contributor --scopes /subscriptions/<subscriptionId> --sdk-auth
+
+
+az ad sp create-for-rbac --name "g-spn-sj01" --role contributor --scopes /subscriptions/63dfb9ff-f0ae-457e-b369-d1e602f0c472 --sdk-auth
+
+az ad sp create-for-rbac --name "g-spn-sj01" --role contributor --scopes /subscriptions/63dfb9ff-f0ae-457e-b369-d1e602f0c472 --sdk-auth
+Option '--sdk-auth' has been deprecated and will be removed in a future release.
+Directory permission is needed for the current user to register the application. For how to configure, please refer 'https://docs.microsoft.com/azure/azure-resource-manager/resource-group-create-service-principal-portal'. Original error: Insufficient privileges to complete the operation.
+
+
+Verify the GitHub Actions build
+	1. In your repository, select Actions, and then select the TERRAFORM workflow on the left pane.
+	2. In the list of steps, verify that Terraform Init, Terraform Plan, and Terraform Validate have been triggered.
+
+3. In the list of steps, expand Terraform Apply, and verify that:
+• Terraform has created the resources and displays the Azure instance URL.
+• Your Azure app instance is publicly available.
+
+
+Exercise - Deploy a sample Spring Boot application
+
+To create your Maven GitHub workflow, you'll use the built-in continuous integration and continuous delivery (CI/CD) wizard tool that's available at the Deployment Center in the Azure App Service portal.
+
+
+1. In the Azure portal, go to your Azure App Service web app.
+2. On the left pane, expand Deployment and select Deployment Center.
+3. In the Source drop-down, Under Continuous Deployment (CI/CD), select GitHub.
+4. Select GitHub Actions. (This should be the default, but if it's not, select Change provider to load the provider options.)
+5. Under Settings, in the drop-down lists, do the following:
+a. Select your GitHub repository.
+b. For branch, select main.
+c. For application stack, select JAVA 8.
+6. On the final page, review your selections and preview the workflow file that will be committed to the repository.
+7. Select Save to commit the workflow file to the repository
+
+
+1. Which of the following Terraform commands will initialize your directory to be used for Terraform?
+A: plan; apply; destroy
+None of above
+
+Init, The init command is used to initialize a working directory that contains Terraform configuration files.
+
+
+2. What is the recommended way to restrict access to Azure resources?
+A: Use an Azure Service Principal
+An Azure Service Principal is an identity created for use with applications, hosted services, and automated tools to access Azure resources.
+
+
+3. Which of the following options are benefits of automating infrastructure?
+ A: Automation is an effective way of reducing errors, establishing consistency, and increasing speed and flexibility of development.
+
+
+4. Which of the following automation tools does Azure support?
+ A: GitLab; GitHub Actions; Azure Pipelines; Jenkins
+
+
+az group delete --name <your Resource Group Name> --yes
+
+az ad sp delete --id <your Service Principal Name>
+
+az ad sp delete --id g-spn-sj01
+
+az ad sp delete --id g-spn-sj01
+Service principal 'g-spn-sj01' doesn't exist
+
+
+
+
+
