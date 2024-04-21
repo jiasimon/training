@@ -1,0 +1,67 @@
+Develop Java web app on Azure using IntelliJ
+https://learn.microsoft.com/en-us/training/modules/publish-azure-web-app-with-azure-toolkit-intellij/
+
+• Create a web app in IntelliJ IDEA.
+• Deploy the app to Azure by using the Azure Toolkit for IntelliJ.
+• Manage deployed web app configurations using the Azure Toolkit.
+
+installing the Azure Toolkit for IntelliJ
+
+use the Azure Explorer with the Azure Toolkit for IntelliJ
+
+
+Sandbox needs verification and permission
+
+1. Start IntelliJ IDEA.
+2. In the Welcome to IntelliJ IDEA window, select Create new project.
+3. In the menu on the left, select Maven Archetype.
+4. In the list of archetypes, search for and select maven-archetype-webapp.
+5. Type webapp in the Name field.
+6. To accept the default Maven settings, select Create.
+
+
+1. In the Project window, expand src/main/webapp and then open index.jsp.
+2. Remove all of the existing code and replace it with the following HTML:
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import ="java.util.*" %>
+<%@ page import ="java.text.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample Web App</title>
+</head>
+<body>
+    <%! DateFormat fmt = new SimpleDateFormat("dd/MM/yy HH:mm:ss"); %> 
+    <p>Today's date is <%= fmt.format(new Date()) %></p>
+    <p>Your IP address is <%= request.getRemoteAddr() %></p>
+</body>
+</html>
+
+3. On the File menu, select Save All.
+
+
+Set up the Azure App service
+
+When you create an App Service to host your application, you also create these supporting objects:
+	• Resource Group
+	• App Service Plan
+
+
+Configure and deploy the web app
+
+
+IntelliJ provides powerful tools to troubleshoot the app deployed from your IDE, including:
+	• Log streaming
+	• Remote file explorer
+	• One click SSH to the app
+	• Profiling on the fly
+
+
+Note: 
+Deployment slots aren't supported in the Free, Shared, or Basic service plan tiers.
+
+
+
+
