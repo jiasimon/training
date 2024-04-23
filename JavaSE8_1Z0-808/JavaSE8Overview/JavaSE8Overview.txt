@@ -1,0 +1,82 @@
+Java SE 8 Programmer I Certification 1Z0-808 Overview
+https://app.pluralsight.com/library/courses/java-se-8-programmer-1z0-808-overview-cert/table-of-contents
+
+150 minutes,  70 questions
+
+Type of questions
+
+Access the result
+
+Why get certified?
+
+A deeper understanding of java
+
+Resume boost
+
+No need to prove X years of experiences
+
+Be the compiler
+
+60 hours,  ideally 80 hours
+
+3-8 weeks
+
+It takes times to convert   information to knowledge
+
+Suggest 80% of mock exam
+
+
+Pluralsight Study Path
+
+Google "java 8 mock 1Z0-808 mock exam"
+
+Kaplan IT Training
+
+Required 3 accounts
+====
+Oracle accounts
+
+Pearson VUE  (exam vendor)
+
+CertView (score reports)
+
+Use the same email address
+
+Go to "Oracle University"
+
+
+M3: Exam experience
+====
+
+70 questions
+
+Passing score: 65%
+
+2m8s per question
+
+46/70
+
+30 minutes early to exam center
+
+
+Home exam:
+More time slots
+No need to travel
+
+Fast and stable internet
+
+
+Multiple choices 
+
+Tip1:
+Code question
+
+Check if it compiles
+
+Time management
+
+ education.oracle.com
+
+
+
+
