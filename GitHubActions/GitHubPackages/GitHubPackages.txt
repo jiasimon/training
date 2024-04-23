@@ -1,0 +1,91 @@
+Leverage GitHub Actions to publish to GitHub Packages
+https://learn.microsoft.com/en-us/training/modules/github-actions-packages/
+
+• Understand what a Package Repository is and when to use it.
+• Set up a Continuous Integration (CI) workflow with GitHub Actions to publish to GitHub Packages.
+• Validate your knowledge with an exercise that checks your ability to publish to a GitHub Packages registry.
+• Identify how to authenticate, install, and manage GitHub Packages.
+
+
+Package registries allow developers to easily share and use code libraries and use them across development workstations. Some developers are already familiar with public package registries, like npm or NuGet. Deploying private packages has many similarities.
+
+GitHub Packages is a package-management service that makes it easy to publish public or private packages next to your source code.
+
+GitHub Packages is compatible with common package-management clients, so you can publish packages with your choice of tools. If your repository is more complex, you may need to publish multiple packages of different types. You can also use webhooks or GitHub Actions to fully customize 
+
+
+At the time of writing, GitHub Packages is compatible with the following package managers:
+  • npm, a NodeJS package manager
+  • NuGet, the .NET package manager
+  • RubyGems, a Ruby package manager
+  • Maven and Gradle, two package managers for Java
+
+
+GitHub Packages is also a container registry
+
+If you want to learn more about GitHub Actions, check out the Build continuous integration (CI) workflows by using GitHub Actions Learn module.
+
+
+Use a workflow to publish to GitHub Packages
+name: Node.js Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm test
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+
+
+Use GitHub Container Registry to host and manage Docker container images
+
+
+After you've built the image and authenticated and signed in to the GitHub Container Registry service at ghcr.io, you can then tag and push the latest version of the image to the container registry using these commands:
+
+echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+
+docker tag IMAGE_ID ghcr.io/OWNER/IMAGE_NAME:latest
+
+docker push ghcr.io/OWNER/IMAGE_NAME:latest
+
+
+1. In which file do you define the steps to execute in your GitHub Action?
+A: In a workflow.yml (YAML) file
+
+2. Which action do you use to publish the latest version of a Docker image to GitHub Container Registry?
+A: docker push ghcr.io/OWNER/IMAGE_NAME:latest
+
+
+3. When pulling an image to your local environment, which credentials are needed?
+A: Your GitHub username and a Personal Access Token
+
+The name of the organization and an API Key, While you can share packages only within your organization, you need to use your GitHub identity to log in.
+
+
+
+
+
+
