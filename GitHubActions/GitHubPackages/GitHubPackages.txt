@@ -87,5 +87,320 @@ The name of the organization and an API Key, While you can share packages only w
 
 
 
+Exercise - Publish to a GitHub Packages registry
+
+https://github.com/skills/publish-packages
+
+We recommend creating a public repository, as private repositories will use Actions minutes.
+
+https://github.com/jiasimon/skills-publish-packages
+
+In this course, you will:
+  1. Create a workflow
+  2. Add a Dockerfile
+  3. Merge your pull request
+
+
+"refresh"
+
+Publish to GitHub Packages
+Use GitHub Actions to publish your project to a Docker image.
+Step 1: Create the workflow file
+
+Continuous integration (CI) is a practice where developers integrate tested code into a shared branch several times per day. Continuous delivery (CD) is the next phase of continuous integration (CI) where we also make sure to package the code in a release and store it somewhere - preferably, in an artifact repository.
+
+
+Activity: Create the workflow file
+• Open a new browser tab, and work on the steps in your second tab while you read the instructions in this tab.
+• Navigate to the Code tab.
+• From the main branch dropdown, click on the cd branch.
+• Navigate to the .github/workflows/ folder, then select Add file and click on Create new file.
+
+
+
+
+name: Publish to Docker
+on:
+  push:
+    branches:
+      - main
+permissions:
+  packages: write
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Add your test steps here if needed...
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/jiasimon/publish-packages/game
+          tags: type=sha
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+
+
+Step 2: Add a Dockerfile
+You created a publishing workflow! 🎉
+We will add a Dockerfile to the cd branch. The Dockerfile contains a set of instructions that get stored in a Docker Image. If you'd like, you can learn more about Dockerfiles.
+⌨️ Activity: Add a Dockerfile
+• In the cd branch, create Dockerfile at the project root and include: 
+FROM nginx:1.24-alpine
+COPY . /usr/share/nginx/html
+• Commit your changes.
+• Wait about 20 seconds then refresh this page (the one you're following instructions from). GitHub Actions will automatically update to the next step.
+
+
+Step 3: Merge your changes
+Let's get publishing! ❤️
+You can now merge your changes!
+⌨️ Activity: Merge your changes
+  1. Merge your changes from cd into main. If you created the pull request in step 1, just open that PR and click on Merge pull request. If you did not create the pull request earlier, you can do it now by following the instructions in step 1.
+  2. (optional) Delete the branch cd.
+  3. Wait about 20 seconds then refresh this page (the one you're following instructions from). GitHub Actions will automatically update to the next step.
+
+
+This branch is 6 commits ahead of, 2 commits behind main.
+
+
+Step 4: Pull your image
+Now things are running! ✨
+Whoa, now things are running! This may take a few minutes. This might take a tiny amount of time, so grab your popcorn 🍿 and wait for the build to finish before moving on.
+To pull the Docker image, we need to log into Docker first.
+Before we can use this Docker image, you will need to generate a personal access token that contains the following permissions:
+  • repo (all)
+  • write:packages
+  • read:packages
+
+We will use this token to log in to Docker, and authenticate with the package.
+  1. Open your terminal (Bash or Git Bash recommended).
+  2. Use the following command to log in: 
+docker login ghcr.io -u USERNAME
+  3. Replace USERNAME with your GitHub username.
+  4. Enter your new Personal Access Token as the password.
+  5. Press Enter.
+If everything went well, 🤞 you should see Login Succeeded in your terminal.
+⌨️ Activity: Pull your image
+  1. Copy and paste the pull command from the package instructions into your terminal. It should look something like this: 
+    ○ docker pull ghcr.io/YOURNAME/publish-packages/game:TAG 
+    
+    ○ Tip: To reach this page, click the Code tab at the top of your repository. Then, find the navigation bar below the repository description, and click the Packages heading link
+  2. Replace YOURNAME with your GitHub username.
+  3. Replace TAG with the image tag.
+  4. Press Enter.
+  5. You should see output indicating that the pull was successful, like Status: Downloaded newer image for ghcr.io/YOURNAME/publish-packages/game:TAG. 
+  
+  6. We can't automatically verify this step for you, so please continue on to the next step below!
+Step 5: Run your image
+Nicely done grabbing your Docker image! ☺️
+Let's trying running it.
+⌨️ Activity: Run your image
+• Find your image information by typing docker image ls. 
+
+• Use the following command to run a container from your image: 
+docker run -dp 8080:80 --rm <YOUR_IMAGE_NAME:TAG>
+• Replace YOUR_IMAGE_NAME with your image name under the REPOSITORY column.
+• Replace TAG with the image tag under the TAG column.
+• Press Enter.
+• If everything went well, you will see hash value as output on your screen.
+• Optionally, you can open localhost:8080 to see the page you just created.
+• We can't automatically verify this step for you, so please continue on to the next step below!
+
+
+https://github.com/settings/profile
+-> https://github.com/settings/apps
+
+https://github.com/settings/tokens?type=beta
+
+
+Token name:
+githubActionsPublishPackage
+
+
+
+docker login ghcr.io -u jiasimon
+Password: 
+Get https://ghcr.io/v2/: denied: denied
+
+
+Should choose "Creating a personal access token (classic)"
+
+https://github.com/jiasimon/skills-publish-packages/commits/main/
+
+
+New Token name:
+githubActionsPublish
+
+
+docker login ghcr.io -u jiasimon
+Password: 
+Login Succeeded
+
+ docker pull ghcr.io/jiasimon/publish-packages/game:TAG
+
+https://github.com/jiasimon/skills-publish-packages/pkgs/container/publish-packages%2Fgame
+docker pull ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+
+
+docker pull ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+sha-e277cfc: Pulling from jiasimon/publish-packages/game
+3c854c8cbf46: Pull complete 
+de5d475193dd: Pull complete 
+b407bcc80638: Pull complete 
+da33b1ad0ac4: Pull complete 
+a0fbd691d7c1: Pull complete 
+16eaaaf5f1c0: Pull complete 
+5e845cc16269: Pull complete 
+d803cc5debfa: Pull complete 
+Digest: sha256:adcfc8eb7d6b1350ac0f9a81d2bc6ef188f9aa1e9a1d10bea6e16a93e34cb619
+Status: Downloaded newer image for ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+
+
+ docker image ls
+REPOSITORY                                                       TAG                                              IMAGE ID            CREATED             SIZE
+ghcr.io/jiasimon/publish-packages/game                           sha-e277cfc                                      ed448ed0fea9        31 minutes ago      41.2MB
+redis                                                            latest                                           16ecd2772934        3 years ago         104MB
+busybox                                                          latest                                           f0b02e9d092d        3 years ago         1.23MB
+nginx                                                            latest                                           f35646e83998        3 years ago         133MB
+docker/desktop-kubernetes                                        kubernetes-v1.18.8-cni-v0.8.5-critools-v1.17.0   e777077bd5d8        3 years ago         292MB
+k8s.gcr.io/kube-proxy                                            v1.18.8                                          0fb7201f92d0        3 years ago         117MB
+k8s.gcr.io/kube-controller-manager                               v1.18.8                                          6a979351fe5e        3 years ago         162MB
+k8s.gcr.io/kube-apiserver                                        v1.18.8                                          92d040a0dca7        3 years ago         173MB
+k8s.gcr.io/kube-scheduler                                        v1.18.8                                          6f7135fb47e0        3 years ago         95.3MB
+rabbitmq                                                         3.7-management-alpine                            0b44e053f378        3 years ago         144MB
+greenmail/standalone                                             latest                                           745887133f04        3 years ago         187MB
+confluentinc/cp-kafka                                            5.5.1                                            3020f0651d7f        3 years ago         598MB
+confluentinc/cp-kafka                                            latest                                           3020f0651d7f        3 years ago         598MB
+confluentinc/cp-schema-registry                                  5.5.1                                            f51e4f854dc1        3 years ago         1.19GB
+confluentinc/cp-schema-registry                                  latest                                           f51e4f854dc1        3 years ago         1.19GB
+confluentinc/cp-zookeeper                                        5.5.1                                            7149731cc563        3 years ago         598MB
+confluentinc/cp-zookeeper                                        latest                                           7149731cc563        3 years ago         598MB
+quay.io/kubernetes-ingress-controller/nginx-ingress-controller   0.33.0                                           3dcce3af0ed0        3 years ago         327MB
+<none>                                                           <none>                                           30c26b8bcee9        3 years ago         174MB
+governmentpaas/curl-ssl                                          latest                                           b815fb3da901        3 years ago         14.6MB
+python                                                           3.8-slim-buster                                  9d84edf35a0a        3 years ago         165MB
+prom/prometheus                                                  latest                                           39d1866a438a        3 years ago         142MB
+mysql                                                            5.7.30                                           9cfcce23593a        3 years ago         448MB
+node-configmap                                                   latest                                           44d1c946a6db        3 years ago         117MB
+grafana/grafana                                                  latest                                           22fccd4fab0a        3 years ago         158MB
+node                                                             alpine                                           3bf5a7d41d77        3 years ago         117MB
+docker                                                           latest                                           0bfe00e7bcd5        3 years ago         211MB
+busybox                                                          1.31.1                                           1c35c4412082        3 years ago         1.22MB
+nginx                                                            alpine                                           7d0cdcc60a96        3 years ago         21.3MB
+alpine                                                           latest                                           a24bb4013296        3 years ago         5.57MB
+mongo                                                            latest                                           66c68b650ad4        3 years ago         388MB
+debezium/connect                                                 1.0                                              d9cc8e8f9773        3 years ago         683MB
+debezium/kafka                                                   1.0                                              373097761e04        3 years ago         660MB
+mysql                                                            5.7                                              b84d68d0a7db        3 years ago         448MB
+mysql                                                            latest                                           94dff5fab37f        3 years ago         541MB
+redis                                                            <none>                                           f9b990972689        3 years ago         104MB
+mongo                                                            <none>                                           3f3daf863757        3 years ago         388MB
+alpine                                                           <none>                                           f70734b6a266        4 years ago         5.61MB
+k8s.gcr.io/metrics-server/metrics-server                         v0.3.7                                           07c9e703ca2c        4 years ago         55.4MB
+docker/desktop-storage-provisioner                               v1.1                                             e704287ce753        4 years ago         41.8MB
+docker/desktop-storage-provisioner                               v1.0                                             605a0f683b7b        4 years ago         33.1MB
+docker/desktop-vpnkit-controller                                 v1.0                                             79da37e5a3aa        4 years ago         36.6MB
+k8s.gcr.io/pause                                                 3.2                                              80d28bedfe5d        4 years ago         683kB
+k8s.gcr.io/coredns                                               1.6.7                                            67da37a9a360        4 years ago         43.8MB
+sixeyed/numbers-web                                              psod-istio                                       a572651bd37e        4 years ago         211MB
+sixeyed/numbers-api                                              psod-istio                                       ecedd5b952f8        4 years ago         208MB
+nginx                                                            1.16.1-alpine                                    5fad07aba15a        4 years ago         21.8MB
+nginx                                                            1.17.8-alpine                                    48c8a7c47625        4 years ago         21.8MB
+sixeyed/bookinfo-details                                         v3                                               046f1b6a4900        4 years ago         208MB
+sixeyed/bookinfo-productpage                                     v2                                               9a97953038cd        4 years ago         230MB
+sixeyed/bookinfo-details                                         v2                                               d1bc4790979f        4 years ago         208MB
+sixeyed/bookinfo-details                                         v1                                               9f6ee6ecefb9        4 years ago         208MB
+sixeyed/bookinfo-productpage                                     v1                                               efd883091399        4 years ago         230MB
+hello-world                                                      latest                                           bf756fb1ae65        4 years ago         13.3kB
+istio/kubectl                                                    1.4.2                                            dbdd939f73fc        4 years ago         219MB
+istio/sidecar_injector                                           1.4.2                                            63e64b901e69        4 years ago         196MB
+istio/galley                                                     1.4.2                                            3b97c37f24d3        4 years ago         212MB
+istio/citadel                                                    1.4.2                                            9a48168d5ab2        4 years ago         188MB
+istio/mixer                                                      1.4.2                                            bbd294a346f8        4 years ago         80.5MB
+istio/proxyv2                                                    1.4.2                                            94c724105ca6        4 years ago         237MB
+istio/pilot                                                      1.4.2                                            1ded22538271        4 years ago         208MB
+kubernetesui/dashboard                                           v2.0.0-beta8                                     eb51a3597525        4 years ago         90.8MB
+quay.io/kiali/kiali                                              v1.9                                             ad4fe9a50163        4 years ago         185MB
+jettech/kube-webhook-certgen                                     v1.2.0                                           b7f5a2787829        4 years ago         49MB
+k8s.gcr.io/etcd                                                  3.4.3-0                                          303ce5db0e90        4 years ago         288MB
+elasticsearch                                                    7.4.1                                            b5ec59afe6df        4 years ago         855MB
+zookeeper                                                        3.5.5                                            5a65375c17a4        4 years ago         225MB
+grafana/grafana                                                  6.4.3                                            a532fe3b344a        4 years ago         206MB
+k8s.gcr.io/kube-controller-manager                               v1.15.5                                          1399a72fa1a9        4 years ago         159MB
+k8s.gcr.io/kube-apiserver                                        v1.15.5                                          e534b1952a0d        4 years ago         207MB
+k8s.gcr.io/kube-proxy                                            v1.15.5                                          cbd7f21fec99        4 years ago         82.4MB
+k8s.gcr.io/kube-scheduler                                        v1.15.5                                          fab2dded59dd        4 years ago         81.1MB
+k8s.gcr.io/metrics-server-amd64                                  v0.3.6                                           9dd718864ce6        4 years ago         39.9MB
+quay.io/coreos/kube-state-metrics                                v1.8.0                                           9bc8e75a1a21        4 years ago         33.6MB
+jaegertracing/all-in-one                                         1.14                                             18e2a2315119        4 years ago         49.8MB
+prom/prometheus                                                  v2.12.0                                          d5b9d7ed160a        4 years ago         138MB
+kubernetesui/metrics-scraper                                     v1.0.1                                           709901356c11        4 years ago         40.1MB
+istio/examples-bookinfo-reviews-v2                               1.15.0                                           13503407db9c        4 years ago         540MB
+istio/examples-bookinfo-reviews-v1                               1.15.0                                           b510820c904f        4 years ago         540MB
+istio/examples-bookinfo-ratings-v1                               1.15.0                                           c5525808d27e        4 years ago         155MB
+docker/kube-compose-controller                                   v0.4.23                                          a8c3d87a58e7        4 years ago         35.3MB
+docker/kube-compose-api-server                                   v0.4.23                                          f3591b2cb223        4 years ago         49.9MB
+phico/frontend                                                   2.0                                              f6d1b54995b2        4 years ago         18.6MB
+phico/frontend                                                   1.1                                              86b31f3cce09        4 years ago         18.6MB
+phico/frontend                                                   1.0                                              44fa7ac60c17        4 years ago         18.6MB
+phico/backend                                                    2.0                                              af15b207a316        5 years ago         73MB
+k8s.gcr.io/coredns                                               1.3.1                                            eb516548c180        5 years ago         40.3MB
+fluent/fluentd-kubernetes-daemonset                              v1.3-debian-elasticsearch                        76929cb73738        5 years ago         226MB
+k8s.gcr.io/etcd                                                  3.3.10                                           2c4adeb21b4f        5 years ago         258MB
+k8s.gcr.io/pause                                                 3.1                                              da86e6ba6ca1        6 years ago         742kB
+docker.elastic.co/kibana/kibana-oss                              6.1.1                                            d5784471679f        6 years ago         501MB
+docker.elastic.co/elasticsearch/elasticsearch-oss                6.1.1                                            cb5d42dc520d        6 years ago         457MB
+gcr.io/google-samples/hello-app                                  1.0                                              bc5c421ecd6c        6 years ago         9.86MB
+rabbitmq                                                         3.6.9-management                                 281ee777b811        6 years ago         180MB
+
+
+docker run -dp 8080:80 --rm ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+
+docker run -dp 8080:80 --rm ghcr.io/jiasimon/publish-packages/game:sha-e277cfc
+c10421ed1ca70651d1dc966681b101214e3445dd5c0ca71e0ef6d07a3c202573
+
+
+http://localhost:8080/
+Tic Tac Toe 
+
+
+
+Authenticate to GitHub Packages
+
+Generate a Personal Access Token
+To install, publish, or delete a package, you need an access token. When using your package manager, you must generate a Personal Access Token (PAT). You can generate a PAT via your profile settings
+
+The endpoint will look like https://PACKAGE_TYPE.pkg.github.com/OWNER/REPOSITORY, where PACKAGE_TYPE is the type of package ecosystem you're using.
+
+
+1. In which scenarios should you NOT use GitHub Packages?
+A: When I want to share code between methods of my application.
+That's correct. Sharing code within your project is done through code constructs and design patterns.
+
+2. When pulling an image to your local environment, which credentials are needed?
+A: Your GitHub username and a Personal Access Token
+GitHub Packages use your GitHub identity to authenticate you.
+
+3. How can you authenticate to GitHub Packages from your local development environment?
+A: With a Personal Access Token
+
+
+
 
 
