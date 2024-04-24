@@ -1,0 +1,129 @@
+Create and publish custom GitHub actions
+https://learn.microsoft.com/en-us/training/modules/create-custom-github-actions/
+
+• Identify the metadata and syntax needed to create custom GitHub actions.
+• Learn best practices to publish a private or public GitHub action.
+• Consume actions within a workflow file.
+• Create custom JavaScript based actions.
+• Publish a newly created action to the GitHub Marketplace.
+
+
+Create a custom GitHub action
+
+Types of GitHub actions
+three different types of actions: Docker container actions, JavaScript actions, and composite run steps actions. 
+
+Docker container actions
+The steps to take to build a Docker container action are then minimal and straightforward:
+  1. Create a Dockerfile to define the commands to assemble the Docker image.
+  2. Create an action.yml metadata file to define the inputs and outputs of the action. Set the runs: using: value to docker and the runs: image: value to Dockerfile in the file.
+  3. Create an entrypoint.sh file to describe the docker image.
+  4. Commit and push your action to GitHub with the following files: action.yml, entrypoint.sh, Dockerfile, and README.md.
+
+
+
+JavaScript actions
+
+The steps to build a JavaScript action are minimal and straightforward:
+  1. Create an action.yml metadata file to define the inputs and outputs of the action, as well as tell the action runner how to start running this JavaScript action.
+  2. Create an index.js file with context information about the Toolkit packages, routing, and other functions of the action.
+  3. Commit and push your action to GitHub with the following files: action.yml, index.js, node_modules, package.json, package-lock.json, and README.md.
+
+
+Composite run steps actions
+Composite run steps actions allow you to reuse actions by using shell scripts. You can even mix multiple shell languages within the same action.
+
+
+Inputs are the parameters that allow you to specify data that the action expects to use during its runtime. GitHub stores these input parameters as environment variables.
+
+inputs:
+  firstNameStudent:
+    description: 'First name of student'
+    required: false
+    default: '1'
+  studentGrade:
+    description: 'Grade of the student'
+    required: true
+
+
+Outputs are the parameters that allow you to declare data.
+outputs:
+  average:
+    description: 'The average grade of the students'
+
+
+Docker container actions require the runs statement to configure the image the Docker action uses with the following arguments:
+  • using: Needs to be set to docker to run a Docker container action
+  • image: Docker image used as the container to run the action
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+
+runs for JavaScript actions
+JavaScript actions require that the runs statement take the following two arguments:
+  • using: Application used to execute the code as defined in main
+  • main: File that contains the action code; the application defined in using executes this file
+
+runs:
+  using: 'node12'
+  main: 'main.js'
+
+
+runs for composite run steps actions
+
+the runs statement take the following three arguments:
+  • using: Needs to be set to "composite" to run a composite run step
+  • steps: Run steps to run the action
+  • steps[*].run: Command you want to run (can be inline or a script in your action repository)
+
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/test/script.sh
+      shell: bash
+
+
+need to specify the icon and color you wish to use.
+branding:
+  icon: 'shield'  
+  color: 'blue'
+
+
+Most workflow commands use the echo command in the following specific format, while others can be invoked by writing to a file:
+
+echo "::workflow-command parameter1={data},parameter2={data}::{command value}"
+
+- name: workflow commands logging messages
+  run: |
+    echo "::debug::This is a debug message"
+    echo "This is an info message"
+    echo "::error::This is an error message"
+    echo "::warning::This is a warning message"
+
+
+It's important to note that these workflow commands need to be on a single line. Characters that interfere with parsing, such as commas and line breaks, will need to be URL-encoded.
+
+This text spans
+across multiple lines
+
+
+When creating an action, it's important to first decide where you want that action to live and the visibility of that action, whether it will be public or private. 
+
+we recommend storing the action in the .github directory. For example, .github/actions/action-a and .github/actions/action-b.
+
+
+Tags
+steps:
+    - uses: actions/javascript-action@v1
+    - uses: actions/javascript-action@v1.0.1
+    - uses: actions/javascript-action@v1-beta
+
+
+Use a commit's SHA
+steps:
+    - uses: actions/javascript-action@2522385f6f7ba04fe7327647b213799853a8f55c
+
+
+
