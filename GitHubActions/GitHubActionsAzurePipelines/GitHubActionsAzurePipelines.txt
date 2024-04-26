@@ -1,0 +1,186 @@
+Deploy a cloud-native .NET microservice automatically with GitHub Actions and Azure Pipelines
+https://learn.microsoft.com/en-us/training/modules/microservices-devops-aspnet-core/
+
+
+• Authenticate GitHub Actions to a container registry.
+• Securely store sensitive information that GitHub Actions uses.
+• Implement an action to build the container image for a microservice.
+• Modify and commit the microservice code to trigger a build.
+• Implement an action to deploy the updated container to an Azure Kubernetes Service (AKS) cluster.
+• Revert the microservice to the previous deployment.
+• Implement Azure Pipelines to build and deploy a microservice to Azure Kubernetes Service (AKS) cluster.
+
+
+
+Manually deploy your cloud-native app to Azure Kubernetes Service
+
+Fork the https://github.com/MicrosoftDocs/mslearn-dotnet-cloudnative-devops repository to your own GitHub account. Then on your new fork:
+  1. Select Code.
+  2. Select the Codespaces tab.
+  3. Select the + icon to create your codespace.
+
+
+What are the use of Codespaces  ?
+
+https://laughing-happiness-j45x45j9572vpw.github.dev/
+
+In the terminal pane, run this dotnet CLI command:
+dotnet publish /p:PublishProfile=DefaultContainer
+
+dotnet publish /p:PublishProfile=DefaultContainer 
+MSBuild version 17.9.8+b34f75857 for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  DataEntities -> /workspaces/mslearn-dotnet-cloudnative-devops/DataEntities/bin/Release/net8.0/DataEntities.dll
+/usr/share/dotnet/sdk/8.0.204/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets(204,5): warning NETSDK1198: A publish profile with the name 'DefaultContainer' was not found in the project. Set the PublishProfile property to a valid file name. [/workspaces/mslearn-dotnet-cloudnative-devops/DataEntities/DataEntities.csproj]
+  DataEntities -> /workspaces/mslearn-dotnet-cloudnative-devops/DataEntities/bin/Release/net8.0/publish/
+  Products -> /workspaces/mslearn-dotnet-cloudnative-devops/Products/bin/Release/net8.0/Products.dll
+  Store -> /workspaces/mslearn-dotnet-cloudnative-devops/Store/bin/Release/net8.0/Store.dll
+  Store -> /workspaces/mslearn-dotnet-cloudnative-devops/Store/bin/Release/net8.0/publish/
+  Products -> /workspaces/mslearn-dotnet-cloudnative-devops/Products/bin/Release/net8.0/publish/
+  Building image 'store' with tags 'latest' on top of base image 'mcr.microsoft.com/dotnet/aspnet:8.0'.
+  Building image 'products' with tags 'latest' on top of base image 'mcr.microsoft.com/dotnet/aspnet:8.0'.
+  Pushed image 'store:latest' to local registry via 'docker'.
+  Pushed image 'products:latest' to local registry via 'docker'.
+
+az account show -o table
+
+
+
+
+In the terminal pane, sign in to Azure with this Azure CLI command:
+az login --use-device-code
+
+
+az account show -o table
+
+Run the following Azure CLI command to get a list of Azure regions and the Name associated with it:
+az account list-locations -o table
+
+export LOCATION=[Closest Azure region]
+export RESOURCE_GROUP=rg-eshop
+export CLUSTER_NAME=aks-eshop
+export ACR_NAME=acseshop$SRANDOM
+
+
+
+az group create --name $RESOURCE_GROUP --location $LOCATION
+az acr create --resource-group $RESOURCE_GROUP --name $ACR_NAME --sku Basic
+az acr login --name $ACR_NAME
+
+
+
+
+
+Exercise - Create a GitHub action to build a container image
+Complete the following steps to create the GitHub Actions build action:
+  1. Go to your forked repository in GitHub, select the Actions tab.
+  2. On the Get started with GitHub Actions page, select the set up a workflow yourself link.
+
+
+On the next page, paste the following YAML code into the editor.
+YAML 
+name: Build and deploy an app to AKS
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+env:
+  # Local environment variables used later in the workflow
+  AZURE_CONTAINER_REGISTRY: 'name of your Azure Container Registry'
+  CONTAINER_NAME: 'productservice'
+  RESOURCE_GROUP: 'rg-eshop'
+  CLUSTER_NAME: 'aks-eshop'
+  DEPLOYMENT_MANIFEST_PATH: './product.yml'
+  DOCKER_PATH: './DockerfileProducts'
+jobs:
+  buildImage:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+# Logs in with your Azure credentials stored in GitHub secrets
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+# Builds and pushes an image up to your Azure Container Registry
+      - name: Build and push image to ACR
+        run: |
+          az acr build --file ${{ env.DOCKER_PATH }} --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+Replace the name of your Azure Container Registry with the ACR name you created in the previous unit; for example, acseshop186748394.
+
+
+• Replace the default workflow main.yml file name with azure-kubernetes-service.yml, and then select Commit changes.
+• On the Commit changes screen, select Commit directly to the main branch and then select Commit changes.
+You've finished creating the build workflow for your CI/CD pipeline.
+• In your terminal, run this command to view the current versions of the product service stored in the ACR:
+
+az acr repository show-tags -n AZURE_CONTAINER_REGISTRY --repository productservice --orderby time_desc --output table
+
+
+Trigger the build
+1. In your repository, select the Actions tab.
+2. On the left, under All workflows, select the Build and deploy an app to AKS workflow, and then select Run workflow.
+
+
+1. What's the best place to store sensitive information, such as credentials, for GitHub Actions?
+A: GitHub secrets
+You can define secrets at the repository or the organization level. This information is encrypted and made accessible to GitHub Actions.
+
+
+2. What's the purpose of creating an Azure Active Directory service principal for GitHub Actions to use?
+A: The service principal is the GitHub Actions identity for doing tasks in Azure.
+GitHub Actions that interact with Azure must use a service principal.
+
+
+3. During upgrade deployment, why does AKS create a new container while the old one is still running?
+A: To avoid downtime.
+
+
+How are GitHub actions and Azure Pipelines different?
+They both support:
+  • Building and deploying your app.
+  • YAML files to define the steps to build and deploy your app.
+  • Triggers to start the build and deploy process.
+  • Monitoring the build and deploy process.
+  • Rolling back a deployment.
+
+
+Azure Pipelines has an advantage over GitHub Actions as it supports many different source repositories. Azure Pipelines supports GitHub, GitHub Enterprise Server, Bitbucket Cloud, Azure Repos Git and TFVC, Subversion, and External Git. GitHub Actions only support GitHub.
+
+
+After reviewing the differences, you decide to change your app to use Azure Pipelines.
+  1. Go to your forked repository, on the Actions tab.
+  2. Select the Build and deploy an app to AKS workflow on the left.
+  3. Select the more options menu in the top right.
+  4. Select Disable workflow.
+
+
+Create an Azure DevOps Pipeline
+Note: Before you begin you'll need to have an Azure DevOps account. If you don't have one, you can create one for free at dev.azure.com
+
+1. Sign in to dev.azure.com.
+2. Select + New project.
+3. For the Project name, enter eShop deployment.
+4. Leave the Visibility set to Private, select Create.
+5. On the left, select Pipelines, then select Create Pipeline.
+6. On the Connect page, for Where is your code?, select GitHub.
+7. If prompted, sign in to GitHub, and authorize Azure Pipelines to access your GitHub account.
+8. For Select a repository, select your forked repository.
+9. On the Configure page, select the Deploy to Azure Kubernetes Service option.
+10. In the Deploy to Azure Kubernetes Service pane, select your Azure subscription, then select Continue.
+11. If prompted, log in to your Azure subscription.
+12. For the Cluster, select the AKS cluster you created in the previous unit aks-eshop.
+13. For the Namespace, leave Existing selected, then select default.
+14. For the Container registry, select the Azure Container Registry you created in the previous unit; for example, acseshop186748394.
+15. For the Image name, enter productservice.
+16. For the Service Port, enter 8080.
+17. Select Validate and configure.
+
+
+
+
