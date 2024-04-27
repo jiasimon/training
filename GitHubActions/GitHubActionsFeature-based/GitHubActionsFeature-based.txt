@@ -1,0 +1,78 @@
+Trigger GitHub Actions with feature-based development
+https://learn.microsoft.com/en-us/training/modules/trigger-github-actions-trunk-based-development/
+
+• Work with feature-based development.
+• Protect the main branch.
+• Trigger a GitHub Actions workflow by merging a pull request.
+
+
+machine learning operations (MLOps) architecture 
+
+Note: 
+The diagram is a simplified representation of a MLOps architecture. To view a more detailed architecture, explore the various use cases in the MLOps (v2) solution accelerator.
+
+1. Setup: Create all necessary Azure resources for the solution.
+2. Model development (inner loop): Explore and process the data to train and evaluate the model.
+3. Continuous integration: Package and register the model.
+4. Model deployment (outer loop): Deploy the model.
+5. Continuous deployment: Test the model and promote to production environment.
+6. Monitoring: Monitor model and endpoint performance.
+
+
+Note: 
+No one should ever be allowed to push changes to the main branch. To safeguard your code, especially production code, you'll want to enforce that the main branch can only be updated through pull requests that need to be approved.
+
+
+Trigger a workflow
+Create a branch protection rule
+
+To protect the main branch, enable a branch protection rule in GitHub:
+  1. Navigate to the Settings tab in your repo.
+  2. In the Settings tab, under Code and automation, select Branches.
+  3. Select Add rule.
+  4. Enter main under Branch name pattern.
+  5. Enable Require a pull request before merging and Require approvals.
+  6. Save your changes.
+
+
+
+
+
+
+
+To trigger a GitHub Actions workflow, you can use on: [pull_request]. When you use this trigger, your workflow will run whenever the pull request is created.
+If you want a workflow to run whenever a pull request is merged, you'll need to use another trigger. Merging a pull request is essentially a push to the main branch. So, to trigger a workflow to run when a pull request is merged, use the following trigger in the GitHub Actions workflow:
+
+on:
+  push:
+    branches:
+      - main
+
+Exercise
+======
+• View the challenge repo on GitHub.
+• Complete challenge 3: trigger GitHub Actions with feature-based development.
+
+https://microsoftlearning.github.io/mslearn-mlops/
+
+
+
+
+1. How does a machine learning engineer enforce that data scientists can only edit code in feature branches?
+A: Add a branch protection rule.
+Correct. When the machine learning engineer protects the main branch, data scientists will only be able to edit feature branches.
+
+
+2. Which event should a machine learning engineer use to trigger a GitHub Actions workflow to run when a pull request is merged?
+A: push
+Correct. Use a push to main event to trigger a workflow whenever a pull request is merged.
+
+
+
+
+
+
+
+
+
+
