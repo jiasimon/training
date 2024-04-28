@@ -1,0 +1,108 @@
+Trigger Azure Machine Learning jobs with GitHub Actions
+https://learn.microsoft.com/en-us/training/modules/trigger-azure-machine-learn-jobs-github-actions/
+
+• Create and assign a service principal the permissions needed to run an Azure Machine Learning job.
+• Store Azure credentials securely using secrets in GitHub Secrets.
+• Create a GitHub Action using YAML that uses the stored Azure credentials to run an Azure Machine Learning job.
+
+
+Imagine you're a machine learning engineer, working together with a data science team on a diabetes classification model. 
+
+To create the GitHub Action to trigger model training using Azure Machine Learning compute, you’ll want to:
+  • Create a service principal using the Azure CLI.
+  • Store the credentials of the service principal as a secret in GitHub.
+  • Create a GitHub Action to train the model using Azure Machine Learning compute.
+
+The architecture includes:
+  1. Setup: Create all necessary Azure resources for the solution.
+  2. Model development (inner loop): Explore and process the data to train and evaluate the model.
+  3. Continuous integration: Package and register the model.
+  4. Model deployment (outer loop): Deploy the model.
+  5. Continuous deployment: Test the model and promote to production environment.
+  6. Monitoring: Monitor model and endpoint performance.
+
+
+
+Use GitHub Actions for model training
+
+A GitHub Actions workflow consist of jobs. A job groups a set of steps that you can define. One of these steps can use the CLI (v2) to run an Azure Machine Learning job to train a model.
+
+
+To automate model training with GitHub Actions, you'll need to:
+  • Create a service principal using the Azure CLI.
+  • Store the Azure credentials in a GitHub secret.
+  • Define a GitHub Action in YAML.
+
+https://github.com/jiasimon/code/settings/secrets/actions
+
+Enter your Azure credentials as a secret and name the secret AZURE_CREDENTIALS
+
+To use a secret containing Azure credentials in a GitHub Action, refer to the secret in the YAML file.
+-----
+
+on: [push]
+
+name: Azure Login Sample
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '${{secrets.AZURE_CREDENTIALS}}'
+
+
+Define the GitHub Action
+Once the GitHub Actions workflow is triggered, you can add various steps to a job. For example, you can use a step to run an Azure Machine Learning job:
+name: Manually trigger an Azure Machine Learning job
+
+on:
+  workflow_dispatch:
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Azure Machine Learning job
+      run: |
+        az ml job create --file src/job.yml
+
+
+
+Exercise
+• View the challenge repo on GitHub.
+• Complete challenge 2: trigger the Azure Machine Learning job with GitHub Actions.
+
+In the .github/workflows folder, you’ll find the 02-manual-trigger.yml file. The file defines a GitHub Action which can be manually triggered. The workflow checks out the repo onto the runner, installs the Azure Machine Learning extension for the CLI (v2), and logs in to Azure using the AZURE_CREDENTIALS secret.
+  • Create a service principal, using the Cloud Shell in the Azure portal, which has contributor access to your resource group.
+Save the output, you’ll also need it for later challenges. Update the <service-principal-name> (should be unique), <subscription-id>, and <your-resource-group-name> before using the following command:
+code
+  •   az ad sp create-for-rbac --name "<service-principal-name>" --role contributor \
+                              --scopes /subscriptions/<subscription-id>/resourceGroups/<your-resource-group-name> \
+                              --sdk-auth
+  • Create a GitHub secret in your repository. Name it AZURE_CREDENTIALS and copy and paste the output of the service principal to the Value field of the secret.
+Hint The output of the service principal which you need to paste into the field of the secret should be a JSON with the following structure: 
+  • Edit the 02-manual-trigger.yml workflow to trigger the Azure Machine Learning job you defined in challenge 1.
+
+
+
+1. When configuring a GitHub Actions workflow to run an Azure Machine Learning job, what is a convenient trigger when testing whether the workflow works as expected?
+A: on: workflow_dispatch
+Correct. Use on: workflow_dispatch to be able to manually trigger a workflow.
+
+
+
+2. Which steps need to be included in a GitHub Actions workflow to train a model?
+A: Check out the repo, sign in to Azure, install the ML extension and trigger an Azure Machine Learning job.
+Correct. The job can train a model by using Azure Machine Learning compute.
+
+Check out the repo, sign in to Azure, install CLI and run trigger an Azure Machine Learning job.
+Incorrect. You need to install the Machine Learning extension for the CLI to run a job.
+
+
+
+
+
+
