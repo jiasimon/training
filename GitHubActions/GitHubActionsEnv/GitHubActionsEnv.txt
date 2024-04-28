@@ -1,0 +1,79 @@
+Work with environments in GitHub Actions
+https://learn.microsoft.com/en-us/training/modules/work-environments-github-actions/
+
+• Set up environments in GitHub.
+• Use environments in GitHub Actions.
+• Add approval gates to assign required reviewers before moving the model to the next environment.
+
+To train, test, and deploy a machine learning model it's best to use environments as part of your machine learning operations (MLOps) strategy.
+
+
+Together with the team, you decide it's best to use different environments:
+  • Development for experimentation.
+  • Staging for testing.
+  • Production for deploying the model to the production endpoint.
+
+
+To work with environments, you'll want to:
+  • Create environments in your GitHub repository.
+  • Store credentials to each Azure Machine Learning workspace as an environment secret in GitHub.
+  • Add required reviewers to environments for gated approval.
+  • Use environments in your GitHub Actions workflows.
+
+
+The development environment is used for the inner loop:
+  1. Data scientists train the model.
+  2. The model is packaged and registered.
+The staging environment is used for part of the outer loop:
+  1. Test the code and model with linting and unit testing.
+  2. Deploy the model to test the endpoint.
+The production environment is used for another part of the outer loop:
+  1. Deploy the model to the production endpoint. The production endpoint is integrated with the web application.
+  2. Monitor the model and endpoint performance to trigger retraining when necessary.
+
+
+
+Set up environments in GitHub
+To create an environment within your GitHub repo:
+  1. Go to the Settings tab within your repo.
+  2. Select Environments.
+  3. Create a new environment.
+  4. Enter a name.
+  5. Select Configure environment.
+
+
+Note: 
+To give GitHub access to any Azure Machine Learning workspace, you need to create a service principal in Azure. Next, you need to give the service principal access to the Azure Machine Learning workspace in Azure. Learn how to integrate Azure Machine Learning with DevOps tools such as GitHub.
+
+o create an environment secret, go to the Environments tab in the Settings tab.
+  1. Go to your new environment.
+  2. Navigate to the Environment secrets section.
+
+  3. Add a new secret.
+  4. Enter AZURE_CREDENTIALS as the name.
+  5. Enter the service principal credentials in the value field.
+
+
+Exercise
+
+Note:
+This exercise requires an Azure subscription. 
+
+• View the challenge repo on GitHub.
+• Complete challenge 5: work with environments.
+
+https://microsoftlearning.github.io/mslearn-mlops/documentation/05-environments.html
+
+
+
+1. An organization uses three environments in their machine learning operations strategy. Which environment is best suited for quality assurance?
+A: Staging
+
+2. What may be a reason to add an approval for an environment when using GitHub Actions?
+A: Someone needs to verify whether all runs and tests have executed successfully before moving the model to the next environment.
+Correct. Even when GitHub Actions workflows ran successfully, someone may still need to review the output in the Azure Machine Learning workspace.
+
+
+
+
+
