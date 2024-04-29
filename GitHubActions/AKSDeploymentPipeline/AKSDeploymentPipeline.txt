@@ -37,3 +37,207 @@ Step 4: Deploy the application
 
 
 
+Exercise - Set up the project
+
+1. Fork the sample repository to your GitHub account. You don't have write permissions to the original sample repository, so you need to fork the repository to create your own GitHub Actions pipeline.
+
+https://github.com/MicrosoftDocs/mslearn-aks-deployment-pipeline-github-actions
+
+https://github.com/jiasimon/mslearn-aks-deployment-pipeline-github-actions
+
+
+2. Sign in to Azure Cloud Shell with the Azure subscription you want to deploy resources to. When Cloud Shell opens, make sure Bash is selected as the shell to run.
+3. Clone 
+git clone https://github.com/jiasimon/mslearn-aks-deployment-pipeline-github-actions
+
+4. cd mslearn-aks-deployment-pipeline-github-actions
+
+5. Run the following command to execute the init.sh file located in the root of the project:
+bash init.sh
+
+6. When the script finishes running, it outputs a list of variables. Copy and store the variable values to use in future exercises.
+  • Resource Group Name
+  • ACR Name
+  • ACR Login Username
+  • ACR Password
+  • AKS DNS Zone Name
+
+
+Run the following Azure CLI command to check whether the resource group shown in the script output is listed.
+az group list -o table
+
+Run the following command to check whether the Container Registry instance shown in the script output is listed.
+az acr list -o table
+
+
+
+Container images
+Note: The docker build command doesn't work within the Cloud Shell environment, because the use of Docker inside a running container is disallowed. If you want to test the docker build . command, clone the repository locally and run the command by using your own Docker installation.
+
+Image tags
+Tags are an important aspect of working with container images. Tags can tell you the type of image and differentiate between multiple images that have the same name
+
+1. What's a Docker image?
+A: A standalone, lightweight package that includes all you need to build and run an application in a container.
+
+
+2. How can a CI/CD pipeline use image tags?
+A: To create and deploy different versions of application images that have the same name.
+
+
+
+
+Exercise - Build the application image
+
+Create the GitHub Actions workflow
+• Select the Actions tab.
+• Select the link to set up a workflow yourself.
+At this point, the pipeline is just a blank file in the .github/workflows directory in your repository. GitHub provides the prebuilt components that you need to build most of the pipelines. To get started, copy and paste the following code into the Edit new file pane:
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+
+Above the Edit new file pane, rename the file from main.yml to build-staging.yml.
+
+Change the name key from CI to Build and push the latest build to staging.
+# This is a basic workflow to help you get started with Actions
+
+name: Build and push the latest build to staging
+
+
+Modify the 'on' trigger
+The basic workflow template comes with two triggers:
+  • Any push to the main branch.
+  • Any pull request on the main branch.
+
+
+You don't need the pipeline to run on a pull request, so modify it to keep only the push trigger by changing the triggers in the on key. Remove the second trigger and leave only the push tags.
+
+name: Build and push the latest build to staging
+
+on:
+  push:
+    branches: [ main ]
+
+
+
+Next, start working on the job steps. In this process, you implement both the build tasks and the deploy tasks in your pipeline design diagram.
+  1. Under jobs, rename the build key to build_push_image.
+  2. You want this workflow to run on Ubuntu 20.04, so change the runs-on key from ubuntu-latest to ubuntu-20.04.
+  3. Delete the last two commands in the steps key, which are just examples for the template.
+Your file, without the comments, should look like this example:
+name: Build and push the latest build to staging
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_push_image:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+
+
+Add Docker steps
+1. In the Marketplace tab in the right panel, search for docker login, and select the first result published by docker.
+2. Under Installation, select the copy icon to copy the usage YAML.
+3. Paste the copied YAML below the actions/checkout@v2 action.
+Note: 
+Be careful with indentation when you use YAML. The name key should be aligned with the preceding uses key.
+
+4. Add the following values to the registry, username, and password keys:
+• registry: ${{ secrets.ACR_NAME }}
+• username: ${{ secrets.ACR_LOGIN }}
+• password: ${{ secrets.ACR_PASSWORD }}
+
+5. Delete the other keys, because they aren't used in this exercise.
+6. In the right panel under Marketplace, search for build and push docker images, and select the first result published by docker.
+7. Under Installation, select the copy icon to copy the usage YAML.
+8. Paste the copied YAML below the last key from the previously copied docker-login action.
+9. Rename the name key from Build and push Docker images to Build and push staging images.
+10. Add the following values to the context, push, and tags keys:
+  • context: .
+  • push: true
+  • tags: ${{secrets.ACR_NAME}}/contoso-website:latest
+11. Delete the other keys, because they aren't used in this exercise.
+12. Add another action called docker/setup-buildx-action between the checkout action and the login action, to set up the build engine for Docker to use. Copy the following snippet and paste it between the checkout and login actions.
+
+- name: Set up Buildx
+  uses: docker/setup-buildx-action@v3.0.0
+
+
+To commit your changes, select the Commit changes button at upper right. On the Commit changes screen, enter a description for the commit, and then select Commit changes.
+
+Set the secrets
+To set the secrets, on your GitHub repository page, select the Settings tab, and then select Secrets and variables > Actions from the left menu. Define the following secrets that your workflow uses:
+  • ACR_NAME: The ACR_Name value returned by the setup script
+  • ACR_LOGIN: The ACR Login Username value returned by the setup script
+  • ACR_PASSWORD: The ACR Login Password value returned by the setup script
+  • RESOURCE_GROUP: The Resource Group Name value returned by the setup script
+  • CLUSTER_NAME: contoso-video
+To define each secret:
+  1. Select New repository secret.
+  2. For Name, enter the secret name from the preceding list.
+  3. For Secret, enter the value you saved from the setup script, or run a Cloud Shell query to get the value.
+  4. Select Add secret.
+Run optional queries to get the secrets values
+If you don't have the values the setup script returned, you can run the following commands in Azure Cloud Shell to get the information:
+  • ACR_NAME:
+Azure CLI 
+• az acr list --query "[?contains(resourceGroup, 'mslearn-gh-pipelines')].loginServer" -o table
+• ACR_LOGIN:
+Azure CLI 
+• az acr credential show --name <ACR_NAME> --query "username" -o table
+• ACR_PASSWORD:
+Azure CLI 
+• az acr credential show --name <ACR_NAME> --query "passwords[0].value" -o table
+• RESOURCE_GROUP:
+Azure CLI 
+  • az aks list -o tsv --query "[?name=='contoso-video'].resourceGroup"
+Run the job
+  1. Select the Actions tab.
+  2. Select the only execution in the list, the failed build-staging.yml job.
+  3. At upper right, select Re-run jobs > Re-run all jobs, and on the Re-run all jobs screen, select Re-run jobs.
+  
+  4. When the build completes, run az acr repository list --name <ACR_NAME> -o table in Cloud Shell to confirm that the contoso-website Container Registry repository appears in the results.
+Continue to the next unit to build your production workflow.
+
+
+
+
+
+
