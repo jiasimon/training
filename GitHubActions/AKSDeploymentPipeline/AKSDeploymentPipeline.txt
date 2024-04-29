@@ -241,3 +241,272 @@ Continue to the next unit to build your production workflow.
 
 
 
+Deploy with Helm
+https://learn.microsoft.com/en-us/training/modules/aks-deployment-pipeline-github-actions/8-helm
+
+Helm is an open-source packaging tool similar to Linux package managers like APT and Yum. Helm can help you install and manage the lifecycle of Kubernetes applications.
+
+One of the advantages of using Helm is to not have to deploy files individually. You can issue a single command to deploy the chart. You can even deploy multiple dependent charts, with an automatic dependency resolution.
+
+
+Look at the following example of the deployment.yaml file in the kubernetes directory of your website fork:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contoso-website
+spec:
+  selector:
+    matchLabels:
+      app: contoso-website
+  template:
+    metadata:
+      labels:
+        app: contoso-website
+    spec:
+      containers:
+        - image: !IMAGE!
+          name: contoso-website
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          ports:
+            - containerPort: 80
+              name: http
+
+
+To run the code manually, you can pipe the command to kubectl apply -f - to create the workloads:
+$ sed 's+!IMAGE!+'"$ACR_NAME"'/contoso-website+g' kubernetes/deployment.yaml
+
+run helm install to point to your image and pass your charts folder:
+$ helm install contoso-website ./chart-location --set containerImage="$ACR_NAME/contoso-website"
+
+
+1. What is Helm?
+A: An open-source packaging tool that helps developers deploy and maintain Kubernetes applications.
+
+2. What makes Helm especially useful in a CI/CD pipeline?
+A: Helm provides several features that aren't included in Kubernetes charts, such as templating.
+Besides templating, Helm also allows one-click deployment and provides a CLI to resolve chart dependencies, reducing the number of deployment steps needed.
+
+
+Exercise - Create a Helm chart for deployment
+complete the following tasks:
+  • Check the Helm installation.
+  • Create a chart.
+  • Configure the chart.
+  • Create a deployment.
+  • Create an empty YAML file.
+  • Add contents to the YAML file.
+  • Create a service.
+  • Create an ingress.
+  • Create a DNS zone name.
+
+
+Check the Helm installation.
+1. Run helm version to make sure the displayed Helm version is greater than 3.
+2. Switch to your forked repository for this module by running cd mslearn-aks-deployment-pipeline-github-actions.
+3. Run git pull origin main to pull in your changes from previous units.
+
+
+helm version
+version.BuildInfo{Version:"v3.2.3", GitCommit:"8f832046e258e2cb800894579b1b3b50c2d83492", GitTreeState:"clean", GoVersion:"go1.13.12"}
+
+
+Create a chart.
+In Cloud Shell, switch to the kubernetes directory:
+cd kubernetes
+
+Use helm create to create a new directory called contoso-website in the kubernetes directory:
+helm create contoso-website
+
+Switch to the new directory with cd.
+cd contoso-website
+
+Delete the charts and templates folders in this directory.
+rm -r charts templates
+
+
+Create a new empty templates folder.
+mkdir templates
+
+
+To start building workloads in your empty chart, create a new set of YAML files by moving the existing files in kubernetes to the new templates folder:
+mv ../*.yaml ./templates
+
+
+Configure the chart
+• Run cd ../.. to switch to the root of your repository.
+• Run code . to open the code editor in the current directory.
+• In the left menu, expand the kubernetes/contoso-website folder, and open the Chart.yaml file. Chart.yaml is the file that names the chart and is where Helm looks for information about the chart.
+• Remove all the contents of the file except for the first three lines and the chart version, and edit the description so the file looks like this example:
+YAML 
+apiVersion: v2
+name: contoso-website
+description: Chart for the Contoso company website
+version: 0.1.0
+• Save the file by selecting the top right corner of the editor toolbar and then selecting Save, or by pressing Ctrl+S.
+
+
+Create a deployment
+• rom the left menu, open the deployment.yaml file in the kubernetes/templates folder.
+• In the main metadata section, add a new key called namespace with the value {{ default "staging" .Release.Namespace }}. The metadata section should look like this example:
+YAML 
+• metadata:
+  name: contoso-website
+  namespace: {{ default "staging" .Release.Namespace }}
+
+By default, the workflow deploys this resource to the staging namespace, but if the helm install command has a Namespace option, the workflow uses that namespace instead.
+• Under the template/spec/containers section, replace !IMAGE! with the latest or tag versions from your AKS cluster.
+It's good practice to split up the registry, image, and tag parts of the image name to work with them more easily. Add three new template variables that use the values of Values.image.registry, Values.image.name, and Values.image.tag.
+- image: {{ .Values.image.registry }}.azurecr.io/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
+
+Your deployment.yaml file should look like the following example:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contoso-website
+  namespace: {{ default "staging" .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: contoso-website
+  template:
+    metadata:
+      labels:
+        app: contoso-website
+    spec:
+      containers:
+        - image: {{ .Values.image.registry }}.azurecr.io/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
+          name: contoso-website
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          ports:
+            - containerPort: 80
+              name: http
+
+Save the file.
+
+
+
+• In the root of the contoso-website directory, open the values.yaml file.
+• Delete all contents in the file, so you have an empty YAML file.
+• Add the following content to the empty file, replacing the <ACR-NAME> placeholder with your Azure Container Registry name.
+YAML 
+image:
+  registry: <ACR-NAME>
+  name: contoso-website
+  tag: latest
+
+
+Create a service
+  1. Open the service.yaml file in the templates folder.
+  2. In the metadata section of the file, add a new key called namespace that uses the same value that you used in the deployment.yaml file.
+YAML 
+   namespace: {{ default "staging" .Release.Namespace }}
+Your service.yaml file should look like the following example:
+YAML 
+• apiVersion: v1
+kind: Service
+metadata:
+  name: contoso-website
+  namespace: {{ default "staging" .Release.Namespace }}
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http
+      name: http
+  selector:
+    app: contoso-website
+  type: ClusterIP
+• Save the file.
+
+
+
+Create an ingress
+  1. Open the ingress.yaml file.
+  2. In the metadata section of the file, again add the namespace value that you used in the deployment.yaml file.
+  3. Go to the host key. You create separate hosts for staging and production deployments, so users can't access the staging namespace by using production URLs. Concatenate the namespace in the host name. The HTTP application routing add-on in the AKS cluster handles name resolution.
+YAML 
+•        - host: contoso-{{ default "staging" .Release.Namespace }}.!DNS!
+• Replace !DNS! with a new template variable for your DNS zone name.
+YAML 
+       - host: contoso-{{ default "staging" .Release.Namespace }}.{{ .Values.dns.name }}
+Your final ingress.yaml file should look like the following example:
+YAML 
+• apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: contoso-website
+  namespace: {{ default "staging" .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+    - host: contoso-{{ default "staging" .Release.Namespace }}.{{ .Values.dns.name }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: contoso-website
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+• Save the file.
+
+
+
+Add a DNS zone name value
+  1. Open the values.yaml file and add a dns.name key after the image key. Replace <ACR-NAME> with your Container Registry name and <DNS-NAME> with your AKS DNS Zone Name from the setup script output. Your file should look like the following example:
+YAML 
+image:
+  registry: <ACR-NAME>
+  name: contoso-website
+  tag: latest
+dns:
+  name: <DNS-NAME>
+If you don't have your DNS zone name from the original setup script output, run the following Azure CLI query in a different Cloud Shell window to get it, replacing the <resource-group-name> placeholder with your resource group name.
+Azure CLI 
+  1. az aks show -g <resource-group-name> -n contoso-website -o tsv --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName
+  2. Save the file.
+
+
+
+Push your changes
+Close the Cloud Shell Editor by selecting the upper right corner of the editor toolbar and then selecting Close Editor.
+To push all the changes to your fork, run the following commands in Cloud Shell in order:
+Bash 
+git add .
+Bash 
+git commit -m "Add helm"
+Bash 
+git push -u origin main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
