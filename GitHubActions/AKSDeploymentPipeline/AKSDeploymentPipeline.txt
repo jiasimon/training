@@ -499,6 +499,336 @@ git push -u origin main
 
 
 
+Exercise - Create the deployment pipeline
+https://learn.microsoft.com/en-us/training/modules/aks-deployment-pipeline-github-actions/10-exercise-deploy-workflow
+
+The deployment steps include:
+  • Create the deploy job.
+  • Set up Open ID Connect (OIDC).
+  • Deploy the application with Helm.
+  • Run the deployment on production.
+
+Add the deploy job
+  1. In GitHub, go to your fork of the repository.
+  2. Expand the .github/workflows directory and open the build-staging.yml file for editing.
+  3. Add a new deploy job at the end of the file, after the build_push_image job, as follows. Be sure to match the indentation.
+The job has three keys: runs-on, needs, and permissions.
+    ○ For runs-on, use ubuntu-20.04 to be consistent with the other job.
+    ○ For needs, use the name of the first job, build_push_image, so the application only deploys after the image is built
+    ○ For permissions, add two arguments called id-token and contents. Set id-token to write and contents to read, to grant GitHub Actions access to send requests and read the repo contents.
+  4. Add - uses: actions/checkout@v2 as the first step of the job.
+The added deploy job should look like the following code:
+deploy:
+        runs-on: ubuntu-20.04
+        needs: build_push_image
+        permissions:
+          id-token: write
+          contents: read
+
+        steps:
+          - uses: actions/checkout@v2
+
+
+
+Add the Install Helm step
+Use a GitHub action to download and install Helm version v3.3.1.
+  1. In the right panel of the editing page, search for helm tool installer. Select the first result published by Azure.
+  
+  2. Select the copy icon to copy the usage YAML.
+  
+  3. Copy and paste the YAML below the uses key in build-staging.yml.
+  4. Rename the step from Helm tool installer to Install Helm, and pin the version key to v3.3.1.
+YAML 
+    steps:
+      - uses: actions/checkout@v2
+- name: Install Helm
+        uses: Azure/setup-helm@v1
+        with:
+          version: v3.3.1
+
+
+
+Add the Azure Login authentication step
+Use OIDC to authenticate GitHub Actions to access AKS.
+  1. In the right panel, search for Azure login, and select Azure Login published by Azure.
+  
+  2. Select the copy icon to copy the usage YAML, and paste it below the Install Helm step in build-staging.yml.
+  3. Change the step name from Azure Login to Sign in to Azure with OIDC.
+  4. Azure Login requires three parameters to authenticate: client-id, tenant-id, and subscription-id. Fill these parameters with placeholders for secrets you set later.
+YAML 
+•       - name: Sign in to Azure with OIDC
+        uses: Azure/login@v1.5.1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+• In the right panel, search for set context, and select Azure Kubernetes set context published by Azure.
+
+• Select the copy icon to copy the usage YAML, and paste it below the Sign in to Azure with OIDC step in build-staging.yml. Fill the resource-group and cluster-name parameters with placeholders for the secrets you set in an earlier unit.
+YAML 
+      - name: Azure Kubernetes set context
+        uses: Azure/aks-set-context@v3
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.CLUSTER_NAME }}
+Your build-staging.yml file should look like the following example:
+YAML 
+name: Build and push the latest build to staging
+on:
+      push:
+        branches: [ main ]
+jobs:
+      build_push_image:
+        runs-on: ubuntu-20.04
+steps:
+          - uses: actions/checkout@v2
+- name: Set up Buildx
+            uses: docker/setup-buildx-action@v3.0.0
+- name: Docker Login
+            uses: docker/login-action@v3.0.0
+            with:
+              registry: ${{ secrets.ACR_NAME }}
+              username: ${{ secrets.ACR_LOGIN }}
+              password: ${{ secrets.ACR_PASSWORD }}
+- name: Build and push staging images
+            uses: docker/build-push-action@v5.0.0
+            with:
+              context: .
+              push: true
+              tags: ${{secrets.ACR_NAME}}/contoso-website:latest
+deploy:
+        runs-on: ubuntu-20.04
+        needs: build_push_image # Will wait for the execution of the previous job
+        permissions:
+          id-token: write # This is required for requesting the JWT
+          contents: read  # This is required for actions/checkout
+steps:
+          - uses: actions/checkout@v2
+- name: Install Helm
+            uses: Azure/setup-helm@v1
+            with:
+              version: v3.3.1
+- name: Sign in to Azure with OIDC
+            uses: Azure/login@v1.5.1
+            with:
+              client-id: ${{ secrets.AZURE_CLIENT_ID }}
+              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+- name: Azure Kubernetes set context
+            uses: Azure/aks-set-context@v3
+            with:
+              resource-group: ${{ secrets.RESOURCE_GROUP }}
+              cluster-name: ${{ secrets.CLUSTER_NAME }}
+
+
+
+Set up Open ID Connect (OIDC)
+Create the service principal
+  1. In Azure Cloud Shell, run az account show, and save the id value from the output.
+  2. Create a service principal by running the following command, substituting the id value from the previous command for $SUBSCRIPTION_ID:
+Azure CLI 
+az ad sp create-for-rbac --scopes /subscriptions/$SUBSCRIPTION_ID --role Contributor 
+
+
+Set the secrets
+On your GitHub repository page, select the Settings tab, and then select Secrets and variables > Actions from the left menu. Define the following three new secrets that use the output from the preceding steps.
+  • AZURE_CLIENT_ID: The "appId" value from az ad sp create-for-rbac output
+  • AZURE_TENANT_ID: The "tenant" value from az ad sp create-for-rbac output
+  • AZURE_SUBSCRIPTION_ID: The id value from az account show output
+For each secret:
+  1. Select New repository secret.
+  2. For Name, enter the secret name.
+  3. For Secret, enter the value.
+  4. Select Add secret.
+
+
+Add federated credentials
+Create federated certificates to authorize GitHub Actions to access the application.
+  1. In the Azure portal, go to App registrations.
+  2. Search for and select the application that matches the displayName value returned in the previous az ad sp create-for-rbac step. By default, the application name uses the timestamp of the service principal creation.
+  3. Verify that the values of the appID (Client ID), Object ID (Application Object ID), and Directory ID (Tenant ID) match the previous JSON output.
+  4. In the left navigation, select Certificates & secrets.
+  5. On the Certificates & secrets screen, select the Federated credentials tab.
+  6. Select Add credential.
+  7. To add the staging credential, on the Add a credential screen, select or enter the following information:
+    ○ Federated credential scenario: Select GitHub Actions deploying Azure resources.
+    ○ Organization: Enter your GitHub user name.
+    ○ Repository: Enter mslearn-aks-deployment-pipeline-github-actions.
+    ○ Entity type: Select Branch.
+    ○ GitHub branch name: Enter main.
+    ○ Name: Enter staging-cred.
+    ○ Description Enter Testing.
+  8. Select Add.
+  9. To add the production credential, select Add credential again, and on the Add a credential screen, enter all the same values as for the previous credential except:
+  • Entity type: Select Tag.
+  • GitHub tag name: Enter v2.0.0, because in the next step you deploy version 2.
+  • Name: Enter prod-cred.
+  
+  10. Select Add.
+  
+
+
+Deploy the application with Helm
+Now that you configured Helm and granted access to your cluster, you're ready to deploy the application.
+Add the Run Helm Deploy step
+  1. Back in the build-staging.yml file in GitHub, after the latest step in the deploy job, create a new step named Run Helm Deploy. Below it, add another key called run.
+YAML 
+•           - name: Run Helm Deploy
+            run:
+• You can use the run key to execute any shell command inside the container. This pipeline uses the run key to execute the following Helm command:
+Bash 
+helm upgrade --install --create-namespace --atomic --wait 
+    --namespace staging contoso-website \
+    ./kubernetes/contoso-website \
+    --set image.repository=${{ secrets.ACR_NAME }} \
+    --set dns.name=${{ secrets.DNS_NAME }}
+
+
+Add the command to the file and set it to run, starting with the | character. The Run Helm deploy step should match this example:
+YAML 
+  ...
+      - name: Run Helm Deploy
+        run: |
+          helm upgrade \
+            --install \
+            --create-namespace \
+            --atomic \
+            --wait \
+            --namespace staging \
+            contoso-website \
+            ./kubernetes/contoso-website \
+            --set image.repository=${{ secrets.ACR_NAME }} \
+            --set dns.name=${{ secrets.DNS_NAME }}
+Your completed build-staging.yml file should look like the following example:
+YAML 
+name: Build and push the latest build to staging
+on:
+      push:
+        branches: [ main ]
+jobs:
+      build_push_image:
+        runs-on: ubuntu-20.04
+steps:
+          - uses: actions/checkout@v2
+- name: Set up Buildx
+            uses: docker/setup-buildx-action@v3.0.0
+- name: Docker Login
+            uses: docker/login-action@v3.0.0
+            with:
+              registry: ${{ secrets.ACR_NAME }}
+              username: ${{ secrets.ACR_LOGIN }}
+              password: ${{ secrets.ACR_PASSWORD }}
+- name: Build and push staging images
+            uses: docker/build-push-action@v5.0.0
+            with:
+              context: .
+              push: true
+              tags: ${{secrets.ACR_NAME}}/contoso-website:latest
+deploy:
+        runs-on: ubuntu-20.04
+        needs: build_push_image # Waits for the execution of the previous job
+        permissions:
+          id-token: write # Required for requesting the JWT
+          contents: read  # Required for actions/checkout
+steps:
+          - uses: actions/checkout@v2
+- name: Install Helm
+            uses: Azure/setup-helm@v1
+            with:
+              version: v3.3.1
+- name: Sign in to Azure with OIDC
+            uses: Azure/login@v1.5.1
+            with:
+              client-id: ${{ secrets.AZURE_CLIENT_ID }}
+              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+- name: Azure Kubernetes set context
+            uses: Azure/aks-set-context@v3
+            with:
+              resource-group: ${{ secrets.RESOURCE_GROUP }}
+              cluster-name: ${{ secrets.CLUSTER_NAME }}
+- name: Run Helm Deploy
+            run: |
+              helm upgrade \
+                --install \
+                --create-namespace \
+                --atomic \
+                --wait \
+                --namespace staging \
+                contoso-website \
+                ./kubernetes/contoso-website \
+                --set image.repository=${{ secrets.ACR_NAME }} \
+                --set dns.name=${{ secrets.DNS_NAME }}
+
+
+Set the DNS_NAME secret
+  1. In a new browser tab, go to your fork of the repository, select the Settings tab, and then select Secrets and variables > Actions from the left menu.
+  2. Select New repository secret.
+  3. For Name, enter DNS_NAME.
+  4. For Secret, enter the AKS DNS Zone Name value from your original setup script output.
+If you don't have this value, run the following command in Cloud Shell, substituting your values for <resource-group-name> and <aks-cluster-name>:
+Azure CLI 
+• az aks show -g <resource-group-name> -n <aks-cluster-name> -o tsv --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName
+• Select Add secret.
+
+
+
+Commit the changes and test the staging deployment
+  1. To commit your changes, select Commit changes. Enter a description for the commit, and then select Commit changes.
+  2. Select the Actions tab to see the build running.
+  3. After the build succeeds, in your browser go to contoso-staging.<aks-dns-zone-name> to confirm that the website appears.
+
+
+Run the deployment on production
+The next step is to create the production workflow.
+  1. In the .github/workflows directory in your repository, open the build-production.yml file for editing.
+  2. Copy the deploy job from the staging pipeline and paste it below the last line in the build-production.yml file.
+  3. Change the Run Helm Deploy step to deploy to the production namespace by changing the --namespace flag from staging to production.
+  4. At the end of the Helm command, add a new parameter, --set image.tag=${GITHUB_REF##*/}.
+Here, you use a Bash feature called parameter expansion. The expansion ${ENV##<wildcard><character>} returns the last occurrence of the string after character.
+In this case, you want to get only the tag name, which is represented as the GitHub Actions runtime, GITHUB_REF. Branches are refs/heads/<branch>, while tags are refs/tags/<tag>.
+You want to remove refs/tags/ to get only the tag name, so you pass ${GITHUB_REF##*/} to return everything after the last / in the GITHUB_REF environment variable.
+Your final build-production.yml file should look like the following example:
+
+
+Production changes
+Every time you run the production workflow, you need to update the federated certificate with the corresponding tag version, as follows:
+  1. In the Azure portal, go to your application page and select Certificates & secrets in the left navigation.
+  2. Select the Federated credentials tab.
+  3. Select the prod-cred credential.
+  4. On the Edit a credential screen, next to Based on selection, increment the tag number to a new v.x.x.x such as v.2.0.1.
+  5. Select Update.
+  6. In Cloud Shell, run git pull to fetch the latest changes. Then, run the following command to tag and push the changes, substituting your new version tag for the placeholder:
+Bash 
+• git tag -a v<new version tag> -m 'Create new production deployment' && git push --tags
+• When prompted, provide the PAT from previous exercises as the password.
+• In GitHub, open the Actions tab and see the running process.
+• After the workflow succeeds, to test the production deployment, go to contoso-production.<aks-dns-zone-name> in your browser and confirm that the website appears.
+
+
+Clean up resources
+Azure resources
+  1. In the Azure portal, search for and select resource groups, and then select the resource group you used for this module from the list.
+  2. On the Overview page, select Delete resource group.
+  3. To confirm the deletion and delete all the resources you created in this module, enter the name of the resource group, and select Delete.
+  4. Repeat the preceding steps for the corresponding resource group that starts with MC_mslearn-gh-pipelines.
+  5. Go to App registrations and select your app from the list.
+  6. On the Overview page, select Delete.
+  7. On the Delete app registration page, select Delete, which also deletes the federated credentials.
+GitHub
+  1. Go to your fork of the Contoso Video repository.
+  2. Select the Settings tab.
+  3. Scroll down and select the red Delete this repository button. To confirm the deletion, enter the full name of the repository.
+  4. To delete the PAT you created, select your profile photo, then select Settings.
+  5. Select Developer settings.
+  6. Select Personal access tokens.
+  7. Select Delete. When the pop-up window appears, select I understand, delete this token.
+
+
+
+
+
+
 
 
 
