@@ -1,0 +1,22 @@
+Deploy Azure resources by using Bicep and GitHub Actions
+https://learn.microsoft.com/en-us/training/paths/bicep-github-actions/
+
+Take this learning path to learn how to:
+	• Build a workflow that deploys your Bicep files.
+	• Create a service principal that can securely connect your workflow to Azure.
+	• Ensure your Bicep code quality by validating and testing it within your workflow.
+	• Work with multiple environments, and handle parameters and approvals.
+	• Deploy other Azure configuration settings, applications, and databases.
+	• Use pull requests to automatically validate and deploy your Bicep code as part of your review process.
+	• Build workflows that publish reusable Bicep files to template specs and modules.
+	• Secure your workflows, and ensure all of your Azure deployments follow your organization's standards.
+
+
+Part 1: Fundamentals of Bicep
+
+Part 2: Intermediate Bicep
+
+Part 3: Advanced Bicep
+
+
+
