@@ -20,3 +20,137 @@ Part 3: Advanced Bicep
 
 
 
+
+Example scenario
+Suppose you're responsible for deploying and configuring the Azure infrastructure to support a website at a toy company
+
+You've built a Bicep template to deploy the website
+
+A workflow is a configurable repeatable process that's defined in a file that's used to test and deploy your code. A workflow consists of all the steps, in the proper order, that you need to execute.
+
+
+Until now, you've deployed your Bicep files from your local computer. After you write a Bicep template, you deploy it to Azure by using the Azure CLI or Azure PowerShell.
+
+Triggers
+You use a trigger to instruct GitHub Actions when to run your workflow.
+
+
+Steps
+A step represents a single operation that the workflow performs.
+
+GitHub Actions offers two types of steps:
+Run steps: use a run step to run a single command or a sequence of commands in Bash, PowerShell,
+
+Action steps: An action step is a convenient way to access many different capabilities without writing script statements.
+
+Jobs
+In GitHub Actions, a job represents an ordered set of steps. 
+
+
+a simple workflow definition in YAML:
+
+name: learn-github-actions
+
+on: [workflow_dispatch]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Run a one-line command'
+        run: echo "hello from GitHub Actions"
+      - name: 'Run a multi-line command'
+        run: |
+          echo "We'll add more steps soon."
+          echo "For example, we'll add our Bicep deployment step."
+
+
+
+
+Deploy Bicep files by using a workflow
+To check out your code, you can use the actions/checkout@v3 action:
+
+name: MyWorkflow
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: repo
+
+Notice that the workflow includes the uses keyword. The keyword indicates you want to use a predefined action named actions/checkout.
+
+
+Authenticate to Azure
+Note: It might seem easier to store your user credentials in your YAML file, then sign in by using the az login command. You should never use this approach to authenticate your workflow.
+
+There's an action named azure/login that handles the sign-in process. You also need to grant permission for your workflow to work with authentication tokens.
+
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: repo
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+The azure/login action requires that you provide three pieces of information to use a workload identity: a Microsoft Entra application ID, your Microsoft Entra tenant (directory) ID, and the Azure subscription ID that you want to work with.
+
+Here's an example of how you can configure a step to use the azure/arm-deploy action:
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: repo
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./deploy/main.bicep
+        parameters: environmentType=Test
+
+
+Create a variable
+
+env:
+    AZURE_RESOURCEGROUP_NAME: gh-actions
+    AZURE_WEBAPP_NAME: webapp-gh-actions
+
+
+After you've created a variable, you use a special syntax to refer to it within your workflow's YAML file, like this:
+
+${{ env.AZURE_RESOURCEGROUP_NAME }}
+
+
+
+
