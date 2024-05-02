@@ -154,3 +154,256 @@ ${{ env.AZURE_RESOURCEGROUP_NAME }}
 
 
 
+
+Exercise - Add a Bicep deployment action to the workflow
+Add your website's Bicep file to the GitHub repository
+
+• Open the Visual Studio Code Explorer.
+• At the root of your repository, create a deploy folder.
+• In the deploy folder, create a new file named main.bicep. Make sure you create the file inside the deploy folder:
+
+Copy the following code into the main.bicep file:
+
+@description('The Azure region into which the resources should be deployed.')
+param location string = resourceGroup().location
+
+@description('The type of environment. This must be nonprod or prod.')
+@allowed([
+  'nonprod'
+  'prod'
+])
+param environmentType string
+
+@description('A unique suffix to add to resource names that need to be globally unique.')
+@maxLength(13)
+param resourceNameSuffix string = uniqueString(resourceGroup().id)
+
+var appServiceAppName = 'toy-website-${resourceNameSuffix}'
+var appServicePlanName = 'toy-website-plan'
+var toyManualsStorageAccountName = 'toyweb${resourceNameSuffix}'
+
+// Define the SKUs for each component based on the environment type.
+var environmentConfigurationMap = {
+  nonprod: {
+    appServicePlan: {
+      sku: {
+        name: 'F1'
+        capacity: 1
+      }
+    }
+    toyManualsStorageAccount: {
+      sku: {
+        name: 'Standard_LRS'
+      }
+    }
+  }
+  prod: {
+    appServicePlan: {
+      sku: {
+        name: 'S1'
+        capacity: 2
+      }
+    }
+    toyManualsStorageAccount: {
+      sku: {
+        name: 'Standard_ZRS'
+      }
+    }
+  }
+}
+
+var toyManualsStorageAccountConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${toyManualsStorageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${toyManualsStorageAccount.listKeys().keys[0].value}'
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: appServicePlanName
+  location: location
+  sku: environmentConfigurationMap[environmentType].appServicePlan.sku
+}
+
+resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
+  name: appServiceAppName
+  location: location
+  properties: {
+    serverFarmId: appServicePlan.id
+    httpsOnly: true
+    siteConfig: {
+      appSettings: [
+        {
+          name: 'ToyManualsStorageAccountConnectionString'
+          value: toyManualsStorageAccountConnectionString
+        }
+      ]
+    }
+  }
+}
+
+resource toyManualsStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: toyManualsStorageAccountName
+  location: location
+  kind: 'StorageV2'
+  sku: environmentConfigurationMap[environmentType].toyManualsStorageAccount.sku
+}
+
+
+• Save your changes to the file.
+• In the Visual Studio Code terminal, run this code to stage the changes, commit the changes, and push the changes to your repository:
+
+git add deploy/main.bicep
+git commit -m 'Add Bicep file'
+git push
+
+
+
+update your workflow definition to deploy your Bicep file to Azure.
+
+• In Visual Studio Code, open the .github/workflows/workflow.yml file.
+• At the top of the file, between on: and jobs:, add a permissions: section.
+YAML 
+name: deploy-toy-website
+on: [workflow_dispatch]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+
+
+
+
+Rename the say-hello job to deploy:
+YAML 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+
+• To remove the placeholder step from the workflow definition, delete the bottom two lines of the file.
+• As a first step you'll add a task to check out the code to the runner's file system. Add a new step at the bottom of the file:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+
+Below the step that you just added, add a task to sign in to your Azure environment. This task uses the secrets you defined earlier to sign in by using a workload identity:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+
+Below the step that you just added, add another step to perform the Bicep deployment:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./deploy/main.bicep
+        parameters: environmentType=${{ env.ENVIRONMENT }}
+
+
+Add these variables and their values at the top of your workflow file, between permissions: and jobs:
+YAML 
+• name: deploy-toy-website
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+    AZURE_RESOURCEGROUP_NAME: ToyWebsite
+    ENVIRONMENT: nonprod
+
+jobs:
+• Save your changes to the file. Your file should look like this example:
+YAML 
+• name: deploy-toy-website
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+    AZURE_RESOURCEGROUP_NAME: ToyWebsite
+    ENVIRONMENT: nonprod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./deploy/main.bicep
+        parameters: environmentType=${{ env.ENVIRONMENT }}
+• In the Visual Studio Code terminal, stage your changes, commit them to your repository, and push them to Azure Repos:
+Bash 
+
+git add .
+git commit -m 'Add Azure CLI tasks to workflow'
+git push
+
+
+
+Now, you're ready to run your workflow!
+	1. In your browser, open the workflow by selecting Actions > deploy-toy-website.
+	2. Select Run workflow > Run workflow.
+	3. A new run of your workflow will appear in the runs list. If it doesn't appear, refresh your browser page.
+	4. Select the running workflow to view the details of the run.
+Wait for the run to finish.
+	5. Select the deploy job.
+	6. Select Run azure/arm-deploy@v1. This displays the task details.
+	7. Select Run azure/arm-deploy@v1 in the task details.
+	8. Inspect the rest of your workflow output.
+The workflow shows a successful deployment.
+
+
+
+Verify the deployment
+	1. Go to the Azure portal.
+	2. In the left menu, select Resource groups.
+	3. Select ToyWebsite.
+	4. In Overview, view the deployment status. You can see that one deployment succeeded.
+	5. Select the 1 Succeeded link to see the details of the deployment.
+	
+
+
+Use triggers to control when your workflow runs
+
+
+
+
+
+
+
+
