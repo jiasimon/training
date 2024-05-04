@@ -1,0 +1,191 @@
+Authenticate your Azure deployment workflow by using workload identities
+https://learn.microsoft.com/en-us/training/modules/authenticate-azure-deployment-workflow-workload-identities/
+
+• Explain what a workload identity is and describe three types of workload identities: service principals, managed identities, and federated credentials
+• Create a workload identity and link it to a GitHub Actions deployment workflow
+• Configure the appropriate authorization for a workload identity to deploy Azure resources
+
+
+Understand workload identities
+
+When you deploy a Bicep file, you effectively ask Azure Resource Manager to create or modify your Azure resources.
+
+
+• The ability to create deployments. Deployments are resources with a type of Microsoft.Resources/deployments.
+• The ability to create and modify App Service plans and apps.
+• The ability to create and modify Application Insights instances.
+
+
+A managed identity is associated with an Azure resource. Azure manages the credentials automatically.
+
+When you work with deployment workflows, you usually don't use managed identities
+
+organizations use extra security checks during authentication. These checks include MFA, CAPTCHA checks, and inspecting the device and network that the user is using so that they can verify the legitimacy of a request to sign in.
+
+When you create an application and tell Microsoft Entra ID about it, you create an object called an application registration. An application registration represents the application in Microsoft Entra ID.
+
+
+Create a Microsoft Entra application
+
+Here's an example Azure CLI command to create a new Microsoft Entra application:
+az ad app create --display-name $applicationRegistrationName
+
+The output of the preceding command includes important pieces of information, including:
+  • Application ID: The application registration has a unique identifier, often called an application ID or sometimes a client ID. You use this identifier when your workflow needs to sign in to Azure.
+  • Object ID: The application registration has an object ID, which is a unique identifier that Microsoft Entra ID assigns. You'll see an example of how to use an object ID later in this module.
+
+
+
+Create a federated credential
+When you use the Azure CLI, you define a federated credential by creating a JSON file or variable. For example, look at the following JSON file:
+
+{
+  "name": "MyFederatedCredential",
+  "issuer": "https://token.actions.githubusercontent.com",
+  "subject": "repo:my-github-user/my-repo:ref:refs/heads/main",
+  "audiences": [
+    "api://AzureADTokenExchange"
+  ]
+}
+
+az ad app federated-credential create --id $applicationRegistrationObjectId --parameters @policy.json
+
+az ad app federated-credential create \
+  --id $applicationRegistrationObjectId \
+  --parameters @policy.json
+
+
+To create a service principal, use the az ad sp create command and specify the application registration's app ID:
+
+az ad sp create --id b585b740-942d-44e9-9126-f1181c95d497
+
+To create a role assignment for a workload identity, use the az role assignment create command. You need to specify the assignee, role, and scope:
+
+az role assignment create \
+  --assignee b585b740-942d-44e9-9126-f1181c95d497 \
+  --role Contributor \
+  --scope "/subscriptions/f0750bbe-ea75-4ae5-b24d-a92ca601da2c/resourceGroups/ToyWebsite" \
+  --description "The deployment workflow for the company's website needs to be able to create resources within the resource group."
+
+Here's an example Bicep definition for the preceding role assignment:
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(principalId, roleDefinitionId, resourceGroup().id)
+  properties: {
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
+    principalId: principalId
+    description: 'The deployment workflow for the company\'s website needs to be able to create resources within the resource group.'
+  }
+}
+
+
+
+Allow the workflow to request tokens
+You need to allow your deployment workflow to request tokens. In your workflow, add the permissions property:
+YAML 
+permissions:
+  id-token: write
+  contents: read
+
+
+
+- uses: azure/login@v1
+  with:
+    client-id: '697e99b3-c238-41f9-8bdd-ca18d385bc24'
+    tenant-id: 'b46a1138-5946-40ae-95fd-999d1b67e012'
+    subscription-id: 'f0750bbe-ea75-4ae5-b24d-a92ca601da2c'
+
+
+However, some organizations treat these identifiers as secret data or don't allow identifiers to be committed to Git repositories. You can also use GitHub secrets to specify the values:
+YAML 
+- uses: azure/login@v1
+  with:
+    client-id: ${{ secrets.AZURE_CLIENT_ID }}
+    tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+    subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+
+After your workflow has signed in to Azure, you can deploy a Bicep file by using the azure/arm-deploy action. The following workflow definition shows a complete Bicep deployment workflow that uses workflow identities:
+
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: repo
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: ToyWebsite
+        template: ./deploy/main.bicep
+
+
+
+Your colleague is using workload identities with a GitHub deployment workflow. The following code is the workflow definition file:
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'deploy/**'
+
+name: AzureBicepSample
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        client-id: '555e8321-44fb-4fbe-a009-77c9b5a9ef87'
+        tenant-id: 'e091bbec-9737-44a1-afd2-48fc1fd84adf'
+        subscription-id: 'ff979187-9cfb-4e3f-ac42-4868c6a3e4f5'
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: MyResourceGroup
+        template: ./deploy/main.bicep
+
+The workflow returns the following error message:
+Output 
+Error:  Unable to get ACTIONS_ID_TOKEN_REQUEST_URL env variable. Please make sure to give write permissions to id-token in the workflow.
+
+1. What should your colleague do to fix this error?
+A: Add the permissions property to the workflow definition.
+Correct. The error message indicates that the workflow doesn't have permissions to work with tokens.
+
+
+2. Which of these statements about workload identities is true?
+A: Workload identities can use federated credentials to authenticate.
+Correct. Federated credentials enable deployment workflows to securely authenticate to Microsoft Entra ID without you storing any secrets.
+
+
+3. You need to create a deployment workflow that deploys your infrastructure to three environments - development, test, and production. Each environment is in a dedicated resource group in three subscriptions. What should you do?
+A: Create three workload identities, one per environment, and grant each identity access to a single resource group in the relevant subscription.
+Correct. When you work with multiple environments, it's best to use dedicated workload identities for each environment so that your deployment workflow can't accidentally change anything in another environment.
+
+
+4. You're creating a workload identity to run a deployment workflow. The workflow deploys a Bicep file that creates a single storage account. Which of the following options has the least privileged access that you need for your workflow?
+A: Role definition: Contributor
+Scope: Resource group
+
+Correct. The Contributor role is a good one to use. Granting it over the resource group is a good practice and is all that this workflow needs.
+
+
+
+
+
