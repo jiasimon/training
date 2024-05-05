@@ -1,0 +1,149 @@
+Automate the deployment of JSON ARM templates by using GitHub Actions
+https://learn.microsoft.com/en-us/training/modules/deploy-templates-command-line-github-actions/
+
+
+• Choose the best way to deploy JSON ARM templates, based on your needs.
+• Modularize your templates by using linked templates.
+• Deploy templates from a GitHub Actions workflow.
+
+
+Deploy your ARM templates
+
+Azure PowerShell
+• To deploy to a resource group, use New-AzResourceGroupDeployment.
+• To deploy to a subscription, use New-AzSubscriptionDeployment.
+• To deploy to a management group, use New-AzManagementGroupDeployment.
+• To deploy to a tenant, use New-AzTenantDeployment.
+
+
+Azure CLI
+• To deploy to a resource group, use az deployment group create.
+• To deploy to a subscription, use az deployment sub create.
+• To deploy to a management group, use az deployment mg create.
+• To deploy to a tenant, use az deployment tenant create.
+
+
+Exercise - Deploy your ARM templates
+
+az login
+
+
+az account list -o table
+
+az account set -s {Your subscription ID}
+
+
+az group list -o table
+
+az configure --defaults group={Resource Group Name}
+
+
+Deploy a local template
+
+To get started, copy and paste the content of the following template code into a file in a local directory. Use C:\JSON\maintemplate.json or /mnt/c/Users/you/json/maintemplate.json, for example.
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "VnetName": {
+        "type": "string",
+        "defaultValue": "VNet-001",
+        "metadata": {
+          "description": "Virtual Network Name"
+        }
+      },
+      "CostCenterIO": {
+        "type": "string",
+        "defaultValue": "12345",
+        "metadata": {
+          "description": "Cost Center IO number for cross billing"
+        }
+      },
+      "OwnerName": {
+        "type": "string",
+        "defaultValue": "John Smith",
+        "metadata": {
+          "description": "Name of the stakeholder responsible for this resource"
+        }
+      }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2018-10-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('VnetName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('CostCenterIO')]",
+                "Owner": "[parameters('OwnerName')]"
+            },  
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "enableVmProtection": false,
+                "enableDdosProtection": false,
+                "subnets": [
+                    {
+                        "name": "subnet001",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    },
+                    {
+                        "name": "subnet002",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
+
+
+
+
+templateFile=/mnt/c/Users/<UserName>/json/maintemplate.json
+today=$(date +"%Y-%m-%d")
+deploymentname="DeployLocalTemplate-"$today
+
+az deployment group create \
+  --name $deploymentname \
+  --template-file $templateFile
+
+
+
+Exercise - Deploy linked and nested ARM templates
+https://learn.microsoft.com/en-us/training/modules/deploy-templates-command-line-github-actions/5-exercise-linked-templates?pivots=cli
+
+
+
+1. When you're using linked templates, where can you store the linked artifacts?
+A: On any endpoint that's publicly accessible through HTTP or HTTPS.
+When you're referencing a linked template, you must provide a URI value that's downloadable as HTTP or HTTPS.
+
+
+2. When you're deploying a template through GitHub Actions, you must provide authentication credentials in what form?
+A: Use the user credentials part of a configured secret in GitHub repository settings.
+You can provide the service principal credentials part of a configured secret in your GitHub repository settings.
+
+
+Provide the shared access signature (SAS) part of a configured secret in GitHub repository settings.
+Shared access signatures or SAS tokens are used to provide secure delegated access to resources in your storage account without compromising the security of your data.
+
+
+
+3. What's the best way to modularize your resources for deployment?
+A: Use linked templates.
+Linked templates allow you to create reusable, composable, and modular deployments that comprise many individual ARM templates.
+
+
+
+
+
