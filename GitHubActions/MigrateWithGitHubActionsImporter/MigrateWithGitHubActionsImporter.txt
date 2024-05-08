@@ -1,0 +1,134 @@
+Migrate your CI/CD pipelines to GitHub with GitHub Actions Importer
+https://learn.microsoft.com/en-us/training/modules/migrate-cicd-pipelines-to-github-with-github-actions-importer/
+
+
+• Review how to install the GitHub Actions Importer CLI Extension and ensure it's up-to-date
+• Understand the GitHub Actions Importer commands: audit, forecast, dry-run, and migrate as well as learn what is not automatically migrated
+• Run through a mock migration lab exercise for a supported CI platform
+
+
+
+The audit command does the following actions:
+  • Fetches all of the pipelines defined in a specified scope of the existing CI/CD environment
+  • Attempts a conversion of these pipelines to their equivalent Actions workflow
+  • Writes a summary report with statistics gathered from the audit
+
+
+gh actions-importer audit jenkins --output-dir
+
+
+The forecast command fetches jobs that have been completed over a specified time period and uses that data to calculate usage metrics.
+
+What is the dry-run command?
+You can use the dry-run command to convert an existing pipeline to its equivalent GitHub Actions workflow.
+
+
+You can use the migrate command to convert an existing pipeline to its equivalent action and open a pull request with the converted workflows and associated files.
+
+gh actions-importer migrate jenkins --source-url $SOURCE_URL –target-url $TARGET_URL --output-dir
+
+
+
+GitHub Actions Importer Labs
+
+https://github.com/actions/importer-labs
+
+https://github.com/jiasimon/importer-labs-FromJenkins/blob/main/jenkins/readme.md
+
+
+@jiasimon ➜ /workspaces/importer-labs-FromJenkins (main) $ gh actions-importer version
+gh version 2.47.0 (2024-04-03)
+gh actions-importer     github/gh-actions-importer      v1.3.6
+actions-importer/cli:latest     v1.3.22039
+@jiasimon ➜ /workspaces/importer-labs-FromJenkins (main) $ 
+
+
+./jenkins/bootstrap/setup.sh
+Building Jenkins instance!
+
+Starting a new Jenkins container
+[+] Building 22.3s (11/11) FINISHED                                                                                                    docker:default
+ => [internal] load .dockerignore                                                                                                                0.2s
+ => => transferring context: 2B                                                                                                                  0.0s
+ => [internal] load build definition from Dockerfile                                                                                             0.2s
+ => => transferring dockerfile: 562B                                                                                                             0.0s
+ => [internal] load metadata for docker.io/jenkins/jenkins:2.401.3                                                                               1.1s
+ => [auth] jenkins/jenkins:pull token for registry-1.docker.io                                                                                   0.0s
+ => [1/5] FROM docker.io/jenkins/jenkins:2.401.3@sha256:1638b593a6a86649c1c9f18d62dc8f233122bb1f7518ec525b34029804b404dc                        10.0s
+ => => resolve docker.io/jenkins/jenkins:2.401.3@sha256:1638b593a6a86649c1c9f18d62dc8f233122bb1f7518ec525b34029804b404dc                         0.1s
+
+
+https://legendary-fishstick-4qwpvwjjv59fjwgp-8080.app.github.dev/login?from=%2F
+
+
+
+
+gh extension install github/gh-actions-importer
+! Extension github/gh-actions-importer is already installed
+
+
+gh actions-importer version
+gh version 2.47.0 (2024-04-03)
+gh actions-importer     github/gh-actions-importer      v1.3.6
+actions-importer/cli:latest     v1.3.22039
+
+
+Configure credentials for GitHub Actions Importer
+
+Create a Jenkins API token:
+
+Click "Admin" -> "Configure"
+
+In the API token section, click the Add new Token button and click Generate.
+1162006041ff2fe44b0ef4590d757ec588
+
+
+Run the configure CLI command:
+
+Jenkins
+  ◯ Jenkins
+» A minimum selection of 1 items is required
+
+
+• Select the TERMINAL tab from within the codespace terminal window.
+• Run the following command: gh actions-importer configure.
+• Use the down arrow key to highlight Jenkins, press the spacebar to select, and then press enter to continue.
+• At the GitHub PAT prompt, enter the GitHub PAT generated in step 3 and press enter.
+• At the GitHub URL prompt, enter the GitHub instance URL or press enter to accept the default value (https://github.com).
+• At the Jenkins token prompt, enter the Jenkins access token from step 2 and press enter.
+• At the Jenkins username prompt, enter admin and press enter.
+• At the Jenkins URL prompt, enter http://localhost:8080/ and press enter.
+
+
+✔ Which CI providers are you configuring?: Jenkins
+Enter the following values (leave empty to omit):
+✔ Personal access token for GitHub: ****************************************
+✔ Base url of the GitHub instance: https://github.com
+✔ Personal access token for Jenkins: **********************************
+✔ Username of Jenkins user: admin
+✔ Base url of the Jenkins instance: http://localhost:8080/
+Environment variables successfully updated.
+
+
+Verify your environment
+To verify your environment is configured correctly, run the update CLI command. The update CLI command will download the latest version of GitHub Actions Importer to your codespace.
+  1. In the codespace terminal run the following command:
+gh actions-importer update
+
+gh actions-importer update
+Updating ghcr.io/actions-importer/cli:latest...
+ghcr.io/actions-importer/cli:latest up-to-date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
